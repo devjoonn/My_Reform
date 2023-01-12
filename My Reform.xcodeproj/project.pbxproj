@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		370D8BB8296FCF7F00E4B65E /* CategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 370D8BB7296FCF7F00E4B65E /* CategoryViewController.swift */; };
+		370D8BC0296FE0A000E4B65E /* CategoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 370D8BBF296FE0A000E4B65E /* CategoryCell.swift */; };
 		4752661B296C85EE008D5F1D /* addNameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4752661A296C85EE008D5F1D /* addNameViewController.swift */; };
 		47FB54D12968590000B3029C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47FB54D02968590000B3029C /* AppDelegate.swift */; };
 		47FB54D32968590000B3029C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47FB54D22968590000B3029C /* SceneDelegate.swift */; };
@@ -27,6 +29,8 @@
 /* Begin PBXFileReference section */
 		0C98782F25E1596128E2DF0D /* Pods-My Reform.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-My Reform.release.xcconfig"; path = "Target Support Files/Pods-My Reform/Pods-My Reform.release.xcconfig"; sourceTree = "<group>"; };
 		34B507B16C947CBB18B3A995 /* Pods_My_Reform.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_My_Reform.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		370D8BB7296FCF7F00E4B65E /* CategoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryViewController.swift; sourceTree = "<group>"; };
+		370D8BBF296FE0A000E4B65E /* CategoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCell.swift; sourceTree = "<group>"; };
 		47526619296C7B52008D5F1D /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
 		4752661A296C85EE008D5F1D /* addNameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = addNameViewController.swift; sourceTree = "<group>"; };
 		47FB54CD2968590000B3029C /* My Reform.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "My Reform.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -99,6 +103,8 @@
 				47FB54EF296867D300B3029C /* SignUpViewController.swift */,
 				47FB5509296BE65E00B3029C /* TermsViewController.swift */,
 				4752661A296C85EE008D5F1D /* addNameViewController.swift */,
+				370D8BB7296FCF7F00E4B65E /* CategoryViewController.swift */,
+				370D8BBF296FE0A000E4B65E /* CategoryCell.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -298,6 +304,7 @@
 				47FB550A296BE65E00B3029C /* TermsViewController.swift in Sources */,
 				47FB54E829685E9000B3029C /* SearchViewController.swift in Sources */,
 				47FB54D52968590000B3029C /* MainTabBarViewController.swift in Sources */,
+				370D8BC0296FE0A000E4B65E /* CategoryCell.swift in Sources */,
 				47FB54D12968590000B3029C /* AppDelegate.swift in Sources */,
 				47FB54D32968590000B3029C /* SceneDelegate.swift in Sources */,
 				47FB54EA29685EA400B3029C /* MessageViewController.swift in Sources */,
@@ -305,6 +312,7 @@
 				4752661B296C85EE008D5F1D /* addNameViewController.swift in Sources */,
 				47FB54E629685E8300B3029C /* HomeViewController.swift in Sources */,
 				47FB54F0296867D300B3029C /* SignUpViewController.swift in Sources */,
+				370D8BB8296FCF7F00E4B65E /* CategoryViewController.swift in Sources */,
 				47FB54EE29685EBF00B3029C /* ProfileViewController.swift in Sources */,
 				47FB54F729686A2300B3029C /* UIColor.swift in Sources */,
 			);

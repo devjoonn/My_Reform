@@ -9,6 +9,9 @@ import UIKit
 
 class addNameViewController: UIViewController, UITextFieldDelegate {
 
+//    lazy var accessoryView: UIView = {
+//        return UIView(frame: CGRect(x: 0.0, y: 0.0, width: UIScreen.main.bounds.width, height: 72.0))
+//    }()
     
     lazy var label_1 = { () -> UILabel in
         let label = UILabel()
@@ -30,7 +33,7 @@ class addNameViewController: UIViewController, UITextFieldDelegate {
     }()
     lazy var input = { () -> UITextField in
         let text = UITextField()
-
+//        text.inputAccessoryView = accessoryView
         text.placeholder = "10글자 내로 입력해주세요."
         text.font = UIFont.systemFont(ofSize: 23)
 
@@ -56,6 +59,7 @@ class addNameViewController: UIViewController, UITextFieldDelegate {
         btn.isEnabled = false
         return btn
     }()
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -68,6 +72,7 @@ class addNameViewController: UIViewController, UITextFieldDelegate {
         self.view.addSubview(input)
         self.view.addSubview(btn)
         self.view.addSubview(input_length)
+        
         
         label_1.snp.makeConstraints { (make) in
             make.leading.equalTo(self.view).offset(30)
@@ -105,18 +110,32 @@ class addNameViewController: UIViewController, UITextFieldDelegate {
     }
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        
+        if (input.text!.count > 2 && input.text!.count <= 10) {
+            btn.backgroundColor = .purple
+            btn.isEnabled = true
+            btn.addTarget(self, action: #selector(NextButtonDidTap), for: .touchUpInside)
+        } else {
+            btn.backgroundColor = .systemGray
+            btn.isEnabled = false
+        }
         if (input.text!.count > 10) {
             return false
         } else if (input.text!.count == 10) {
             input_length.textColor = .red
             input_length.font = UIFont.boldSystemFont(ofSize: 22)
             input_length.alpha = 0.6
-        } else {
+        }else {
             input_length.textColor = .black
             input_length.font = UIFont.systemFont(ofSize: 23)
             input_length.alpha = 0.3
             
         }
+        
+        
+        
+        
+        
         input_length.text = "(\(input.text!.count)/10)"
         
         return true
@@ -142,6 +161,16 @@ class addNameViewController: UIViewController, UITextFieldDelegate {
                 }
             }
         }
+    
+    // 버튼 눌릴 때 다음 행위 함수
+    @objc func NextButtonDidTap() {
+        print(1)
+        
+    }
+    
+    
+    
+    
 
 }
 
