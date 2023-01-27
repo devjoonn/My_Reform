@@ -10,7 +10,7 @@ import Alamofire
 
 class SearchViewController: UIViewController,  UISearchBarDelegate, UIGestureRecognizerDelegate {
     
-    var searchViewPostModel: [SearchViewPostData] = [] {
+    var allPostModel: [AllPostData] = [] {
         didSet {
             self.exploreCollectionView.reloadData()
         }
@@ -60,19 +60,33 @@ extension SearchViewController : UICollectionViewDelegateFlowLayout {
 
 extension SearchViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return searchViewPostModel.count
+        return allPostModel.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "SearchCollectionViewCell", for: indexPath) as! SearchCollectionViewCell
         
-        let model = searchViewPostModel[indexPath.row]
+        let model = allPostModel[indexPath.row]
         
-        cell.SearchConfig(with: SearchFeedViewModel(boardId: model.boardId ?? -1, imageUrl: model.imageUrl?[0] ?? ""))
+//        guard let image = model.imageUrl?[0] else { return cell }
+        
+        cell.SearchConfig(with: SearchFeedViewModel(boardId: model.boardId ?? -1, imageUrl: model.imageUrl?.first ?? ""))
         
         
 //        cell.backgroundColor = [.systemGray, .systemGray2, .systemGray3, .systemGray4, .systemGray5, .systemGray6].randomElement()
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        print("cell indexPath = \(indexPath)")
+        collectionView.deselectItem(at: indexPath, animated: true)
+        
+        let model = allPostModel[indexPath.row]
+        
+        let vc = DetailPostViewController()
+        vc.detailPostModel = [model]
+        print("detailPostModel에 data 저장됨")
+        
     }
 }
 
@@ -147,39 +161,39 @@ extension SearchViewController : UISearchControllerDelegate  {
 //        return true
 //    }
 
-//     when clicked searchButton in keyboard
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        searchBar.resignFirstResponder()
-        guard let text = searchController.searchBar.text else { return }
+    // when clicked searchButton in keyboard
+//    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+//        searchBar.resignFirstResponder()
+//        guard let text = searchController.searchBar.text else { return }
 //        searchBtnClicked()
-
-
-        print("search result : ", text)
-    }
+//
+//
+//        print("search result : ", text)
+//    }
     
-    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        // 검색값이 비어있을 때 자동적으로 포커싱 해제(키보드 내려감)
-        if(searchText.isEmpty) {
-            // 검색바에 x를 누를 때는 포커싱해제가 안되서 아래를 이용하여 딜레이를 줌
-            DispatchQueue.main.asyncAfter(deadline: .now()+0.01, execute:{ searchBar.resignFirstResponder()})
-             // 포커싱 해제
-        }
-
-    }
+//    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+//        // 검색값이 비어있을 때 자동적으로 포커싱 해제(키보드 내려감)
+//        if(searchText.isEmpty) {
+//            // 검색바에 x를 누를 때는 포커싱해제가 안되서 아래를 이용하여 딜레이를 줌
+//            DispatchQueue.main.asyncAfter(deadline: .now()+0.01, execute:{ searchBar.resignFirstResponder()})
+//             // 포커싱 해제
+//        }
+//
+//    }
 }
 
 
 extension SearchViewController  {
     
     
-    func successSearchViewPostModel(result: [SearchViewPostData]) {
-        self.searchViewPostModel = result
-        print(searchViewPostModel.count)
+    func successSearchViewPostModel(result: [AllPostModel]) {
+        self.allPostModel = result
+        print(allPostModel.count)
         
     }
     
     func requestFunc() {
-        AF.request("\(Constants.baseURL)/boards?lastBoardId=100&size=30&keyword=",method: .get, parameters: nil ).validate().responseDecodable(of: SearchViewPostModel.self) { response in
+        AF.request("\(Constants.baseURL)/boards?lastBoardId=100&size=30&keyword=",method: .get, parameters: nil ).validate().responseDecodable(of: allPostModel.self) { response in
             debugPrint(response)
             switch(response.result) {
             case .success(let result) :
