@@ -169,6 +169,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource, UIScro
         
         let model = allPostModel[indexPath.row]
         
+        
         let vc = DetailPostViewController()
         vc.detailPostModel = [model]
         print("detailPostModel에 data 저장됨")

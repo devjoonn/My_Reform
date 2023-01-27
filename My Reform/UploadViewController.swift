@@ -287,8 +287,9 @@ extension UploadViewController : UITextViewDelegate {
 //        leftBarButtonItem.action = #selector(didTapLeftBarButton)
         
         let rightBarButtonItem = UIBarButtonItem(
-            title: "공유", style: .plain, target: self, action: #selector(didTapRightBarButton)
+            title: "완료", style: .plain, target: self, action: #selector(didTapRightBarButton)
         )
+        rightBarButtonItem.tintColor = .systemRed
         navigationItem.leftBarButtonItem?.target = self
         navigationItem.leftBarButtonItem?.action = #selector(didTapLeftBarButton)
         navigationItem.rightBarButtonItem = rightBarButtonItem
