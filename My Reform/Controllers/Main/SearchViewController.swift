@@ -186,14 +186,14 @@ extension SearchViewController : UISearchControllerDelegate  {
 extension SearchViewController  {
     
     
-    func successSearchViewPostModel(result: [AllPostModel]) {
+    func successSearchViewPostModel(result: [AllPostData]) {
         self.allPostModel = result
         print(allPostModel.count)
         
     }
     
     func requestFunc() {
-        AF.request("\(Constants.baseURL)/boards?lastBoardId=100&size=30&keyword=",method: .get, parameters: nil ).validate().responseDecodable(of: allPostModel.self) { response in
+        AF.request("\(Constants.baseURL)/boards?lastBoardId=100&size=30&keyword=",method: .get, parameters: nil ).validate().responseDecodable(of: AllPostModel.self) { response in
             debugPrint(response)
             switch(response.result) {
             case .success(let result) :
