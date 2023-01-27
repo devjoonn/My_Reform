@@ -14,6 +14,8 @@ import SDWebImage
 
 class HomeViewController: UIViewController {
     
+    var lastBoardId : Int = 100
+    var allPostDataManagerUrl: String = "\(Constants.baseURL)/boards?size=20&lastBoardId="
     
 //     데이터 모델이 추가될 때 마다 테이블 뷰 갱신
     var allPostModel: [AllPostData] = []{
@@ -34,7 +36,6 @@ class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureNavbar()
-        
         
         view.backgroundColor = .white
         view.addSubview(homeFeedTable)
@@ -67,24 +68,44 @@ class HomeViewController: UIViewController {
     }
     
     @objc func logoClicked() {
-        self.homeFeedTable.reloadData()
+        
     }
     
     
     // 데이터 새로고침
-//    private func fetchUpcoming() {
-//        APICaller.shared.메소드이름 { [weak self] result in
-//            switch result {
-//            case .success(let titles):
-//                self?.titles = titles
-//                DispatchQueue.main.async {
-//                    self?.homeFeedTable.reloadData()
-//                }
-//            case.failure(let error):
-//                print(error.localizedDescription)
-//            }
-//        }
-//    }
+    private func fetchingAll(_ lastBoardId: Int) {
+        
+        print("fetchingAll - lastBoardId = \(lastBoardId)")
+        AF.request("\(allPostDataManagerUrl)\(lastBoardId)" ,method: .get, parameters: nil).validate().responseDecodable(of: AllPostModel.self) { response in
+            DispatchQueue.main.async {
+                self.homeFeedTable.tableFooterView = nil
+            }
+            switch(response.result) {
+            case .success(let result) :
+                print("전체 게시물 추가조회 성공 - \(result)")
+                switch(result.status) {
+                case 200 :
+                    DispatchQueue.main.async {
+                        self.homeFeedTable.tableFooterView = nil
+                    }
+                    guard let data = result.data else { return }
+                    self.successAllPostModel(result: data)
+                    DispatchQueue.main.async {
+                        self.homeFeedTable.reloadData()
+                    }
+                case 404 :
+                    print("게시물이 없는 경우입니다 - \(result.message)")
+                default:
+                    print("데이터베이스 오류")
+                }
+                
+            case .failure(let error) :
+                print(error)
+                print(error.localizedDescription)
+                
+            }
+        }
+    }
     
     
     //상단 네비게이션바
@@ -106,7 +127,8 @@ class HomeViewController: UIViewController {
     // AllPostDataManager 에서 데이터를 불러오는데 성공하면 실행되는 함수
     func successAllPostModel(result: [AllPostData]) {
         // 불러온 값을 위에 전역변수로 저장
-        self.allPostModel = result
+//        self.allPostModel = result
+        self.allPostModel.append(contentsOf: result)
         print(allPostModel.count)
         
     }
@@ -116,7 +138,7 @@ class HomeViewController: UIViewController {
 
 
 //MARK: -- TableView
-extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
+extension HomeViewController: UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return allPostModel.count
@@ -130,7 +152,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
 //        guard let model = allPostModel[indexPath.row] else { return UITableViewCell() } //현재 model 은 옵셔널 스트링 값
         guard let price = model.price else { return UITableViewCell()}
 //        cell.titleCellImageView =
-        cell.configure(with: HomeFeedViewModel(imageUrl: model.imageUrl?[0] ?? "", title: model.title ?? "", minute: model.updateAt ?? "", price: price))
+        cell.configure(with: HomeFeedViewModel(imageUrl: model.imageUrl?.first ?? "", title: model.title ?? "", minute: model.updateAt ?? "", price: price))
         
         
         return cell
@@ -154,12 +176,41 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
-    //상단 네비게이션바가  스크롤하면 같이 올라가게 만듬
-//    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-//        let defaultOffset = view.safeAreaInsets.top
-//        let offset = scrollView.contentOffset.y + defaultOffset
-//
-//        navigationController?.navigationBar.transform = .init(translationX: 0, y: min(0, -offset))
-//    }
+    // 하단 로딩창
+    private func createSpinnerFooter() -> UIView {
+            let footerView = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.size.width, height: 100))
+            
+            let spinner = UIActivityIndicatorView()
+            spinner.center = footerView.center
+            footerView.addSubview(spinner)
+            spinner.startAnimating()
+            
+            return footerView
+        }
+    
+    // 하단 셀까지 가면 셀 추가
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let postion = scrollView.contentOffset.y
+        if postion > (homeFeedTable.contentSize.height-100-scrollView.frame.size.height) {
+            //fetch data
+            print("데이터 불러오는 중")
+                dataFetch()
+        }
+    }
+    
+    // 데이터 불러오는 함수
+    func dataFetch() {
+        print("dataFetch() called - ")
+        self.homeFeedTable.tableFooterView = createSpinnerFooter()
+        
+        if allPostModel.count == 0{
+            return
+        }
+        lastBoardId = allPostModel[allPostModel.count - 1].boardId!
+        print("lastBoardId = \(lastBoardId)")
+        // footerview 끄기랑 데이터 새로고침
+        fetchingAll(lastBoardId)
+    }
+    
 }
 

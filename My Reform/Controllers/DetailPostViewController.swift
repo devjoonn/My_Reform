@@ -48,13 +48,23 @@ class DetailPostViewController: UIViewController, UIScrollViewDelegate {
         $0.isPagingEnabled = true
     }
     
-    private let imageView = UIImageView().then {
-        $0.translatesAutoresizingMaskIntoConstraints = false
-        $0.contentMode = .scaleAspectFill
+    
+    private let imageStackView = UIStackView().then {
+        $0.axis = .horizontal
+        $0.alignment = .center
+        $0.distribution = .equalSpacing
+//        stackView.layoutMargins = UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8)
+//        stackView.isLayoutMarginsRelativeArrangement = true
+//        stackView.spacing = 8
     }
     
+//    private let imageView = UIImageView().then {
+//        $0.translatesAutoresizingMaskIntoConstraints = false
+//        $0.contentMode = .scaleAspectFill
+//    }
+    
     private let profileImageView = UIImageView().then {
-        $0.image = UIImage(named: "home")
+        $0.image = UIImage(named: "no_profile")
     }
     
     private let userNicknameLabel = UILabel().then {
@@ -78,10 +88,10 @@ class DetailPostViewController: UIViewController, UIScrollViewDelegate {
         $0.font = UIFont.systemFont(ofSize: 15)
     }
     
-    private let contentTextView = UITextView().then {
+    private let contentText = UILabel().then {
         $0.text = "본문은 body r 행간 160% 최대 글자수 1000자 일단 이정도로 칸 만들어두고 길게 쓴 사람 있으면 스크롤 공간이 더 길어지게 하면 될듯 합니당 아래 스크롤 길이 자유! 본문은 body r 행간 160% 최대 글자수 1000자 일단 이정도로 칸 만들어두고 길게 쓴 사람 있으면 스크롤 공간이 더 길어지게 하면 될듯 합니당 아래 스크롤 길이 자유!본문은 body r 행간 160% 최대 글자수 1000자 일단 이정도로 칸 만들어두고 길게 쓴 사람 있으면 스크롤 공간이 더 길어지게 하면 될듯 합니당 아래 스크롤 길이 자유!본문은 body r 행간 160% 최대 글자수 1000자 일단 이정도로 칸 만들어두고 길게 쓴 사람 있으면 스크롤 공간이 더 길어지게 하면 될듯 합니당 아래 스크롤 길이 자유!본문은 body r 행간 160% 최대 글자수 1000자 일단 이정도로 칸 만들어두고 길게 쓴 사람 있으면 스크롤 공간이 더 길어지게 하면 될듯 합니당 아래 스크롤 길이 자유!"
         $0.font = UIFont.systemFont(ofSize: 20)
-        $0.isScrollEnabled = false
+        $0.numberOfLines = 0
     }
     
     private let sectionLine = UIView().then {
@@ -122,12 +132,11 @@ class DetailPostViewController: UIViewController, UIScrollViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        addContentScrollView()
         imageScrollView.delegate = self
         print("detailPost 출력 - \(detailPostModel)")
         setUIView()
         setUIConstraints()
-        
+        addContentScrollView()
         setInfo()
     }
     
@@ -140,7 +149,7 @@ class DetailPostViewController: UIViewController, UIScrollViewDelegate {
         minuteLabel.text = detailPostModel[0].updateAt
         titleLabel.text = detailPostModel[0].title
         categoryLabel.text = "\(detailPostModel[0].categoryId!)"
-        contentTextView.text = detailPostModel[0].contents
+        contentText.text = detailPostModel[0].contents
         guard let price = detailPostModel[0].price else { return }
         priceLabel.text = "\(price) 원"
 
@@ -150,17 +159,29 @@ class DetailPostViewController: UIViewController, UIScrollViewDelegate {
     private func addContentScrollView() {
         
         for i in 0 ..< detailPostModel[0].imageUrl!.count {
+            // 이미지뷰를 생성해서 바로 이미지까지 지정
+            let imageView = UIImageView().then {
+                $0.contentMode = .scaleAspectFit
+                // 이미지뷰에 이미지 지정
+                guard let url = URL(string:"\(Constants.baseURL)\(detailPostModel[0].imageUrl![i])") else { return }
+                print("url 링크는 = \(url)")
+                $0.sd_setImage(with:url, completed: nil)
+            }
+            imageStackView.addArrangedSubview(imageView)
+
+            imageView.snp.makeConstraints { make in
+                make.top.leading.trailing.bottom.equalToSuperview()
+                make.centerX.equalToSuperview()
+            }
+            
             // 스크롤뷰의 길이(xPos) = 스크롤뷰 가로길이 * 현재 인덱스
-            let xPos = imageScrollView.frame.width * CGFloat(i)
-            imageView.frame = CGRect(x: xPos, y: 0, width: imageScrollView.bounds.width, height: imageScrollView.bounds.height)
-            print(imageScrollView.frame.width)
-            print(imageView.frame.width)
-            // 이미지뷰에 이미지 지정
-            guard let url = URL(string:"\(Constants.baseURL)\(detailPostModel[0].imageUrl![i])") else { return }
-            print("url 링크는 = \(url)")
-            imageView.sd_setImage(with:url, completed: nil)
-//          스크롤뷰의 컨텐츠 사이즈 = imageView 가로길이
-            imageScrollView.contentSize.width = imageView.frame.width * CGFloat(i + 1)
+//            let xPos = imageScrollView.frame.width * CGFloat(i)
+//            imageView.frame = CGRect(x: xPos, y: 0, width: imageScrollView.bounds.width, height: imageScrollView.bounds.height)
+//            print(imageScrollView.frame.width)
+//            print(imageView.frame.width)
+//
+////          스크롤뷰의 컨텐츠 사이즈 = imageView 가로길이
+//            imageScrollView.contentSize.width = imageView.frame.width * CGFloat(i + 1)
         }
     }
    
@@ -170,15 +191,16 @@ class DetailPostViewController: UIViewController, UIScrollViewDelegate {
         
         postScrollView.addSubview(postView)
         postView.addSubview(imageScrollView)
-        imageScrollView.addSubview(imageView)
+        imageScrollView.addSubview(imageStackView)
+//        imageScrollView.addSubview(imageView)
         
-        postView.addSubview(profileImageView)
-        postView.addSubview(userNicknameLabel)
-        postView.addSubview(minuteLabel)
-        postView.addSubview(titleLabel)
-        postView.addSubview(categoryLabel)
-        postView.addSubview(contentTextView)
-        postView.addSubview(sectionLine)
+        postScrollView.addSubview(profileImageView)
+        postScrollView.addSubview(userNicknameLabel)
+        postScrollView.addSubview(minuteLabel)
+        postScrollView.addSubview(titleLabel)
+        postScrollView.addSubview(categoryLabel)
+        postScrollView.addSubview(contentText)
+        postScrollView.addSubview(sectionLine)
         
         bottomView.addSubview(heartBtn)
         bottomView.addSubview(heartLabel)
@@ -204,38 +226,26 @@ class DetailPostViewController: UIViewController, UIScrollViewDelegate {
         }
         
         postView.snp.makeConstraints { make in
-            make.top.equalTo(postScrollView.snp.top)
-            make.leading.equalTo(postScrollView.snp.leading)
-            make.trailing.equalTo(postScrollView.snp.trailing)
-            make.bottom.equalTo(postScrollView.snp.bottom)
-            make.width.equalTo(postScrollView.snp.width)
-            make.height.equalTo(1200)
+            make.height.equalTo(350)
+            make.top.leading.trailing.equalToSuperview()
         }
         
         imageScrollView.snp.makeConstraints { make in
-            make.height.equalTo(350)
-            make.width.equalTo(postView.snp.width)
-            make.top.equalTo(postView.snp.top)
-            make.leading.equalTo(postView.snp.leading)
-            make.trailing.equalTo(postView.snp.trailing)
-            
+            make.top.left.right.bottom.height.equalToSuperview()
         }
         
-        imageView.snp.makeConstraints { make in
-            make.top.equalTo(imageScrollView.snp.top)
-            make.leading.equalTo(imageScrollView.snp.leading)
-            make.trailing.equalTo(imageScrollView.snp.trailing)
-            make.bottom.equalTo(imageScrollView.snp.bottom)
+        imageStackView.snp.makeConstraints { make in
+            make.top.left.right.bottom.height.equalToSuperview()
         }
         
         profileImageView.snp.makeConstraints { make in
-            make.top.equalTo(imageScrollView.snp.bottom).inset(-30)
-            make.leading.equalTo(postView.snp.leading).inset(20)
+            make.top.equalTo(postView.snp.bottom).inset(-30)
+            make.leading.equalToSuperview().inset(20)
             make.height.width.equalTo(60)
         }
         
         userNicknameLabel.snp.makeConstraints { make in
-            make.top.equalTo(imageScrollView.snp.bottom).inset(-30)
+            make.top.equalTo(postView.snp.bottom).inset(-30)
             make.leading.equalTo(profileImageView.snp.trailing).inset(-20)
         }
         
@@ -246,26 +256,26 @@ class DetailPostViewController: UIViewController, UIScrollViewDelegate {
         
         titleLabel.snp.makeConstraints { make in
             make.top.equalTo(profileImageView.snp.bottom).inset(-27)
-            make.leading.equalTo(postView.snp.leading).inset(20)
+            make.leading.equalToSuperview().inset(20)
         }
         
         categoryLabel.snp.makeConstraints { make in
             make.top.equalTo(titleLabel.snp.bottom).inset(-27)
-            make.leading.equalTo(postView.snp.leading).inset(20)
+            make.leading.equalToSuperview().inset(20)
         }
         
         sectionLine.snp.makeConstraints { make in
-            make.top.equalTo(categoryLabel.snp.bottom).inset(-10)
-            make.leading.equalTo(postView.snp.leading).inset(20)
-            make.trailing.equalTo(postView.snp.trailing).inset(20)
+            make.top.equalTo(categoryLabel.snp.bottom).inset(-20)
+            make.width.equalToSuperview().multipliedBy(0.9)
+            make.centerX.equalToSuperview()
             make.height.equalTo(1)
         }
         
-        contentTextView.snp.makeConstraints { make in
+        contentText.snp.makeConstraints { make in
             make.top.equalTo(sectionLine.snp.bottom).inset(-20)
-            make.leading.equalTo(postView.snp.leading).inset(10)
-            make.trailing.equalTo(postView.snp.trailing).inset(10)
-            make.bottom.equalTo(postView.snp.bottom).inset(-5)
+            make.width.equalToSuperview().multipliedBy(0.9)
+            make.centerX.equalToSuperview()
+            make.bottom.equalToSuperview()
         }
         
         heartBtn.snp.makeConstraints { make in
