@@ -17,7 +17,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var navigationController : UINavigationController?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        sleep(2)
+        
+        sleep(1)
         // Override point for customization after application launch.
         
         if (UserDefaults.standard.string(forKey: "refreshToken") != nil){
@@ -33,7 +34,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             self.window?.backgroundColor = .white
         }else {
 //            moveLoginViewController()
-            moveHomeViewController()
+            moveSplashViewController()
+            
+//            moveHomeViewController()
+        }
+        
+        func moveSplashViewController() {
+            self.window = UIWindow(frame: UIScreen.main.bounds)
+            self.window?.rootViewController = SplashViewController()
+            self.window?.makeKeyAndVisible()
+            self.window?.backgroundColor = .white
         }
         
         func moveHomeViewController(){

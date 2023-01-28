@@ -38,7 +38,6 @@
 		47FB54D12968590000B3029C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47FB54D02968590000B3029C /* AppDelegate.swift */; };
 		47FB54D52968590000B3029C /* MainTabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47FB54D42968590000B3029C /* MainTabBarViewController.swift */; };
 		47FB54DA2968590200B3029C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 47FB54D92968590200B3029C /* Assets.xcassets */; };
-		47FB54DD2968590200B3029C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 47FB54DB2968590200B3029C /* LaunchScreen.storyboard */; };
 		47FB54E629685E8300B3029C /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47FB54E529685E8300B3029C /* HomeViewController.swift */; };
 		47FB54E829685E9000B3029C /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47FB54E729685E9000B3029C /* SearchViewController.swift */; };
 		47FB54EA29685EA400B3029C /* MessageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47FB54E929685EA400B3029C /* MessageViewController.swift */; };
@@ -47,6 +46,7 @@
 		47FB54F729686A2300B3029C /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47FB54F629686A2300B3029C /* UIColor.swift */; };
 		47FB550A296BE65E00B3029C /* TermsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47FB5509296BE65E00B3029C /* TermsViewController.swift */; };
 		D3C0DEF2298282E3003A62B0 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3C0DEF129828291003A62B0 /* SplashViewController.swift */; };
+		D3C0DEF429850D11003A62B0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D3C0DEF329850D11003A62B0 /* LaunchScreen.storyboard */; };
 		FEA582A3655E8CAFF57EA26C /* Pods_My_Reform.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 34B507B16C947CBB18B3A995 /* Pods_My_Reform.framework */; };
 /* End PBXBuildFile section */
 
@@ -86,7 +86,6 @@
 		47FB54D02968590000B3029C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		47FB54D42968590000B3029C /* MainTabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarViewController.swift; sourceTree = "<group>"; };
 		47FB54D92968590200B3029C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		47FB54DC2968590200B3029C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		47FB54DE2968590200B3029C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		47FB54E529685E8300B3029C /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		47FB54E729685E9000B3029C /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
@@ -97,6 +96,7 @@
 		47FB5509296BE65E00B3029C /* TermsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TermsViewController.swift; sourceTree = "<group>"; };
 		5F644897E4B6FAE3A5572350 /* Pods-My Reform.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-My Reform.debug.xcconfig"; path = "Target Support Files/Pods-My Reform/Pods-My Reform.debug.xcconfig"; sourceTree = "<group>"; };
 		D3C0DEF129828291003A62B0 /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
+		D3C0DEF329850D11003A62B0 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -288,7 +288,7 @@
 			children = (
 				47FB54D92968590200B3029C /* Assets.xcassets */,
 				D3C0DEF129828291003A62B0 /* SplashViewController.swift */,
-				47FB54DB2968590200B3029C /* LaunchScreen.storyboard */,
+				D3C0DEF329850D11003A62B0 /* LaunchScreen.storyboard */,
 				47FB54F42968690000B3029C /* Font */,
 			);
 			path = Resources;
@@ -406,8 +406,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				47FB54DD2968590200B3029C /* LaunchScreen.storyboard in Resources */,
 				47FB54DA2968590200B3029C /* Assets.xcassets in Resources */,
+				D3C0DEF429850D11003A62B0 /* LaunchScreen.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -503,17 +503,6 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
-/* Begin PBXVariantGroup section */
-		47FB54DB2968590200B3029C /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				47FB54DC2968590200B3029C /* Base */,
-			);
-			name = LaunchScreen.storyboard;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
-
 /* Begin XCBuildConfiguration section */
 		47FB54DF2968590200B3029C /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -566,6 +555,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -621,6 +611,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
