@@ -10,8 +10,6 @@ import SnapKit
 import Then
 
 class SplashViewController: UIViewController {
-
-    
     
     lazy var splashTitle = { () -> UIImageView in
         let splashTitle = UIImageView()
@@ -32,23 +30,19 @@ class SplashViewController: UIViewController {
         return splashTitle3
     }()
     
-    
-    
-    
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        
         
         self.view.addSubview(splashTitle)
         self.view.addSubview(splashTitle2)
         self.view.addSubview(splashTitle3)
         
-        splashTitle.snp.makeConstraints{
+        splashTitle3.snp.makeConstraints{
             (make) in
-            make.leading.equalTo(splashTitle2.snp.leading).inset(323.24)
+            make.centerX.equalToSuperview()
             make.centerY.equalToSuperview()
-            make.width.equalTo(42.56)
-            make.height.equalTo(89.79)
+            make.width.equalTo(152.99)
+            make.height.equalTo(112.45)
         }
         
         splashTitle2.snp.makeConstraints{
@@ -59,12 +53,13 @@ class SplashViewController: UIViewController {
             make.height.equalTo(113)
         }
         
-        splashTitle3.snp.makeConstraints{
+        splashTitle.snp.makeConstraints{
             (make) in
-            make.centerX.equalToSuperview()
+            make.leading.equalTo(splashTitle2.snp.leading).inset(110.44)
+            //323.24
             make.centerY.equalToSuperview()
-            make.width.equalTo(152.99)
-            make.height.equalTo(112.45)
+            make.width.equalTo(42.56)
+            make.height.equalTo(89.79)
         }
         
         self.splashTitle.alpha=1
@@ -75,7 +70,8 @@ class SplashViewController: UIViewController {
             //애니메이션처리
             var splashTitleTopFrame = self.splashTitle.frame
             
-            splashTitleTopFrame.origin.x -= splashTitleTopFrame.size.width*5
+//            splashTitleTopFrame.origin.x -= splashTitleTopFrame.size.width*5
+            splashTitleTopFrame.origin.x -= 42.56*5
             
             self.splashTitle.frame = splashTitleTopFrame
             
@@ -85,19 +81,18 @@ class SplashViewController: UIViewController {
             self.splashTitle.alpha = 0
             self.splashTitle2.alpha = 0
             self.splashTitle3.alpha = 1
-            
-        })
+        }) { _ in
+            let mainTabBarViewController = MainTabBarViewController()
+            mainTabBarViewController.modalPresentationStyle = .fullScreen
+            mainTabBarViewController.modalTransitionStyle = .crossDissolve
+            self.present(mainTabBarViewController, animated: true)
+        }
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        
-        
-
     }
-
-
 }
 
 #if DEBUG
