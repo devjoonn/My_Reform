@@ -13,7 +13,6 @@ struct Constants {
         static let baseURL = "http://175.210.229.95:9721"
     
     
-    
     enum APIError: Error {
         case failedToGetData
     }

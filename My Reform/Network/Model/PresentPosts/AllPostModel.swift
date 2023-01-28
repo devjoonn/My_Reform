@@ -18,9 +18,11 @@ struct AllPostModel : Decodable {
 
 struct AllPostData : Decodable {
     let boardId : Int?
-    let categoryId : Int?
+    let categoryId : [Int]?
     let title : String?
+    let contents : String?
     let updateAt : String?
     let price : Int?
+    let nickname : String?
     let imageUrl : [String]?
 }

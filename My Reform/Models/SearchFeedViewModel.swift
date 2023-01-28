@@ -10,7 +10,4 @@ import UIKit
 struct SearchFeedViewModel {
     var boardId: Int
     var imageUrl: String
- 
-
-
 }

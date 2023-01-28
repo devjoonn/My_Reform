@@ -31,7 +31,7 @@ class MainTableViewCell: UITableViewCell {
     
     
     var titleCellImageView = UIImageView().then {
-        $0.contentMode = .scaleAspectFill
+        $0.contentMode = .scaleAspectFit
         $0.clipsToBounds = true
         $0.layer.cornerRadius = 10
     }
@@ -73,18 +73,18 @@ class MainTableViewCell: UITableViewCell {
         }
         
         titleCellLabel.snp.makeConstraints { make in
-            make.leading.equalTo(contentView.snp.leading).inset(110)
+            make.leading.equalTo(titleCellImageView.snp.trailing).inset(-20)
             make.top.equalTo(contentView.snp.top).inset(10)
         }
         
         minuteCellLabel.snp.makeConstraints { make in
-            make.leading.equalTo(contentView.snp.leading).inset(110)
+            make.leading.equalTo(titleCellImageView.snp.trailing).inset(-20)
             make.bottom.equalTo(priceCellLabel.snp.top).inset(-8)
         }
         
         priceCellLabel.snp.makeConstraints { make in
-            make.leading.equalTo(contentView.snp.leading).inset(110)
-            make.bottom.equalTo(contentView.snp.bottom).inset(18)
+            make.leading.equalTo(titleCellImageView.snp.trailing).inset(-20)
+            make.bottom.equalTo(contentView.snp.bottom).inset(13)
         }
         
 //        heartButton.snp.makeConstraints { make in
@@ -104,8 +104,10 @@ class MainTableViewCell: UITableViewCell {
             titleCellImageView.sd_setImage(with:url, completed: nil)
             titleCellLabel.text = model.title
             minuteCellLabel.text = model.minute
-            priceCellLabel.text = String("\(model.price)")
+            priceCellLabel.text = String("\(model.price) 원")
             
         }
+    
+    
     
 }

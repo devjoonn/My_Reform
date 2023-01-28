@@ -7,6 +7,9 @@
 
 
 import UIKit
+import SDWebImage
+import Then
+
 
 class SearchCollectionViewCell: UICollectionViewCell {
     
@@ -26,29 +29,31 @@ class SearchCollectionViewCell: UICollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.setupView()
+        contentView.addSubview(titleCellImageView)
+//        self.setupView()
+        setUIConstraints()
     }
     
-    private func setupView() {
-        self.addSubview(self.imageView)
-        self.imageView.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            self.imageView.topAnchor.constraint(equalTo: self.topAnchor),
-            self.imageView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-            self.imageView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-            self.imageView.bottomAnchor.constraint(equalTo: self.bottomAnchor)
-        ])
-        self.imageView.backgroundColor = [.systemGray, .systemGray2, .systemGray3, .systemGray4, .systemGray5, .systemGray6].randomElement()
-        self.imageView.contentMode = .scaleToFill
-    }
+//    private func setupView() {
+//        self.addSubview(self.imageView)
+//        self.imageView.translatesAutoresizingMaskIntoConstraints = false
+//        NSLayoutConstraint.activate([
+//            self.imageView.topAnchor.constraint(equalTo: self.topAnchor),
+//            self.imageView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+//            self.imageView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+//            self.imageView.bottomAnchor.constraint(equalTo: self.bottomAnchor)
+//        ])
+////        self.imageView.backgroundColor = [.systemGray, .systemGray2, .systemGray3, .systemGray4, .systemGray5, .systemGray6].randomElement()
+//        self.imageView.contentMode = .scaleToFill
+//    }
     
     required init?(coder: NSCoder) {
         fatalError()
     }
     
     public func SearchConfig(with model: SearchFeedViewModel) {
-        print(model.imageUrl)
-        guard let url = URL(string: "\(Constants.baseURL)/\(model.imageUrl)") else { return }
+//        print(model.imageUrl)
+        guard let url = URL(string: "\(Constants.baseURL)\(model.imageUrl)") else { return }
         
         print(url)
         
@@ -56,6 +61,14 @@ class SearchCollectionViewCell: UICollectionViewCell {
  
     
         
+    }
+    func setUIConstraints() {
+        titleCellImageView.snp.makeConstraints { make in
+            make.top.equalTo(contentView)
+            make.leading.equalTo(contentView)
+            make.bottom.equalTo(contentView)
+            make.trailing.equalTo(contentView)
+        }
     }
     
 //    override init(style: UICollectionViewCell, reuseIdentifier: String?) {
