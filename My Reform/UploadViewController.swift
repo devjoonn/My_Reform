@@ -9,10 +9,21 @@ import UIKit
 import PhotosUI
 import SnapKit
 
+// 클릭한 수를 통해서 최대 3개까지 되도록 만듦
+var clickCnt = 0
+
+// 이미지 저장 배열
+var selectedImages: [UIImage] = []
+
+// 재사용 cell의 오류를 방지하기 위한 수단
+var check = [0,0,0,0,0,0,0,0,0,0,0]
+
+
 class UploadViewController: UIViewController, UITabBarControllerDelegate {
     
-//    private let firebaseDBManager = firebaseDBManager()
-//    private let firebaseAuthManager = firebaseAuthManager()
+    // 서버로 전달한 가격(콤마x)
+    var price_value: Int = 0
+    let categoryList: [String] = [" ", "디지털기기", "생활/소품", "스포츠/레저", "가구/인테리어", "여성의류", "여성잡화", "남성의류", "남성잡화", "그림", "기타"]
     
     let imagePickerView = UIImageView()
     let cameraIcon = UIImageView().then {
@@ -23,6 +34,7 @@ class UploadViewController: UIViewController, UITabBarControllerDelegate {
     let numberOfSelectedImageLabel = UILabel()
     let titleTextField = UITextField()
     let descriptionTextView = UITextView()
+    let descriptionTextCnt = UILabel()
     let separatorView = UIView()
     let separatorView1 = UIView()
     let separatorView2 = UIView()
@@ -30,13 +42,35 @@ class UploadViewController: UIViewController, UITabBarControllerDelegate {
     let separatorView4 = UIView()
     let separatorView5 = UIView()
     let categoryLabel = UILabel()
-    let categoryLayout = UICollectionViewFlowLayout()
+    let categoryLabel2 = UILabel()
+    
+    
+    // flowLayout 인스턴스
+    private let flowLayout: UICollectionViewFlowLayout = {
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .horizontal
+        layout.minimumInteritemSpacing = 8.0
+        return layout
+    }()
+    
+    // 컬렉션뷰 인스턴스
+    lazy var categoryScroll: UICollectionView = {
+      let view = UICollectionView(frame: .zero, collectionViewLayout: self.flowLayout)
+      view.isScrollEnabled = true
+      view.showsHorizontalScrollIndicator = false
+      view.showsVerticalScrollIndicator = true
+      view.contentInset = .zero
+      view.backgroundColor = .clear
+      view.clipsToBounds = true
+      view.register(UploadViewCollectionViewCell.self, forCellWithReuseIdentifier: "MyCell")
+      view.translatesAutoresizingMaskIntoConstraints = false
+      return view
+    }()
+    
+
     let wonLabel = UILabel()
     let priceTextField = UITextField()
     
-//    let separatorView = UIView()
-//    let optionsTableView = UITableView()
-//    let activityIndicatorView = UIActivityIndicatorView()
     
     private var selectedImages = [UIImage]()
     
@@ -53,32 +87,100 @@ class UploadViewController: UIViewController, UITabBarControllerDelegate {
         setupNavigationBar()
         attribute()
         layout()
-        
     }
     
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-//        descriptionTextView.resignFirstResponder()
+}
+
+// 컬랙션뷰의 cell 안의 요소에 맞게 동적으로 사이즈 설정
+extension UploadViewController: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let name = self.categoryList[indexPath.row+1]
+        let attributes = [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 12)]
+        let nameSize = (name as NSString).size(withAttributes: attributes as [NSAttributedString.Key: Any])
+        return CGSize(width: (nameSize.width+18), height: 35)
+    }
+    
+}
+//컬력센뷰
+extension UploadViewController: UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        self.categoryList.count-1
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: UploadViewCollectionViewCell.id, for: indexPath) as! UploadViewCollectionViewCell
+        cell.prepare(l: self.categoryList[indexPath.item+1])
+        
+        // check 인덱스의 해당 값이 0이면 선택되지 않은 cell이니 해당 값으로 초기화
+        if check[indexPath.row+1] == 0 {
+            cell.onDeselected()
+        } else {
+            cell.onSelected()
+        }
+        
+        return cell
     }
 }
 
+extension UploadViewController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        // 클릭된 셀을 가져옴
+        let cell = collectionView.cellForItem(at: indexPath) as! UploadViewCollectionViewCell
+        clickCnt += 1
+        // 가져온 셀의 clickCount를 판단, 셀이 세개만 클릭되도록 함
+        if cell.clickCount == 1 {
+            // clickCount가 1이면 이미 선택되어 있는 셀이므로 다시 회색으로 바꿔줘야 함 -> 값을 0으로 변경
+            check[indexPath.row+1] = 0
+            cell.clickCount = 0
+            clickCnt -= 2
+        } else if clickCnt > 3 {
+            clickCnt -= 1
+            return
+        } else {
+            cell.clickCount += 1
+            check[indexPath.row+1] = 1
+        }
+        print(cell.btn.titleLabel?.text ?? " " , clickCnt)
+        print(indexPath)
+    }
+    
+}
+
 extension UploadViewController {
+    // 뒤로가기 버튼
     @objc func didTapLeftBarButton() {
         DispatchQueue.main.asyncAfter(deadline: .now()+0.01, execute:{ self.tabBarController?.tabBar.isHidden = false})
 
-                dismiss(animated: true)
+            dismiss(animated: true)
     }
     
     // 완료버튼 누를 때
     @objc func didTapRightBarButton() {
+        var selectedCategory : [Int] = [] // 선택된 categoryID
+        
+        for i in 1...10 {
+            if check[i] == 1{
+                selectedCategory.append(i)
+            }
+        }
+        print("selectedCategory :", selectedCategory)
+        print("price_value :", price_value)
         // 아이디 카테고리 이미지 남음
-        let userData = UploadInput(id: "2", categoryId: [1], title: titleTextField.text ?? "", contents: descriptionTextView.text, price: Int(priceTextField.text!) ?? -1)
-//        , images:  "camera.png"
+        let userData = UploadInput(id: "닉네임", categoryId: selectedCategory, title: titleTextField.text ?? "", contents: descriptionTextView.text, price: price_value/*, images: selectedImages*/)
         UploadDataManager.posts(self, userData)
-        dismiss(animated: true)
+        
+        
+        
+        
+        let vc = HomeViewController()
+        navigationController?.pushViewController(vc, animated: false)
         print("didTapRightBarButton is Called")
         
     }
     @objc func didTapImagePickerButton() {
+                
+        
         var config = PHPickerConfiguration()
         config.filter = .images
         config.selection = .ordered
@@ -88,11 +190,15 @@ extension UploadViewController {
         present(imagePickerViewController, animated: true)
     }
 }
+
 extension UploadViewController : PHPickerViewControllerDelegate {
     func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
         
+        // 이미지 다시 선택 시 배열 초기화 작업
+        selectedImages.removeSubrange(0..<selectedImages.count)
+        
             if !results.isEmpty {
-            selectedImages = []
+            
             results.forEach { result in
                 let itemProvider = result.itemProvider
                 if itemProvider.canLoadObject(ofClass: UIImage.self) {
@@ -101,31 +207,39 @@ extension UploadViewController : PHPickerViewControllerDelegate {
                         if let image = image as? UIImage {
                             self.selectedImages.append(image)
                             DispatchQueue.main.async {
-                                self.imagePickerView.image = image
-                                self.numberOfSelectedImageLabel.text = "\(self.selectedImages.count)"
+//                                self.imagePickerView.image = image
+                                self.numberOfSelectedImageLabel.text = "사진 업로드 하기 \(self.selectedImages.count) / 5"
                                 print(self.selectedImages.count)
+                                print(self.selectedImages)
                             }
                         }
+                        
                         if let error = error {
                             print("ERROR - UploadFeedViewController - PHPickerViewControllerDelegate - \(error.localizedDescription)")
                         }
                     }
                 }
             }
+                
         }
+        print("results:", results)
         dismiss(animated: true)
+        
     }
 }
 
-extension UploadViewController : UITextViewDelegate {
+extension UploadViewController : UITextViewDelegate, UITextFieldDelegate {
     func attribute() {
         title = "마이리폼 등록"
         view.backgroundColor = .systemBackground
         
-        imagePickerView.backgroundColor = .secondarySystemBackground
+//        imagePickerView.backgroundColor = .secondarySystemBackground
+        imagePickerView.layer.borderColor = UIColor.gray.cgColor
+        imagePickerView.layer.borderWidth = 1.5
         imagePickerButton.addTarget(self, action: #selector(didTapImagePickerButton), for: .touchUpInside)
-        numberOfSelectedImageLabel.text = "\(selectedImages.count)/5"
-        numberOfSelectedImageLabel.font = .systemFont(ofSize: 16.0, weight: .semibold)
+        imagePickerView.layer.cornerRadius = 25
+        numberOfSelectedImageLabel.text = "사진 업로드 하기 \(selectedImages.count) / 5"
+        numberOfSelectedImageLabel.font = .systemFont(ofSize: 16.0, weight: .thin)
         numberOfSelectedImageLabel.textAlignment = .center
         
         descriptionTextView.font = .systemFont(ofSize: 16.0, weight: .regular)
@@ -145,25 +259,30 @@ extension UploadViewController : UITextViewDelegate {
         
         categoryLabel.text = "카테고리"
         categoryLabel.font = .boldSystemFont(ofSize: 16.0)
+        categoryLabel2.text = "최대 3개"
+        categoryLabel2.font = .systemFont(ofSize: 10)
+        categoryScroll.delegate = self
+        categoryScroll.dataSource = self
         
-        /*
-            카테고리 버튼 넣는 곳
-        */
         
         wonLabel.text = "￦"
         wonLabel.font = .boldSystemFont(ofSize: 22.0)
         
         priceTextField.placeholder = "가격 입력"
         priceTextField.addLeftPaddingMulty()
+        priceTextField.delegate = self
         
         descriptionTextView.text = "어떤 상품을 어떻게 리폼했는지, 거래 방법 및 거래 장소 등을 자유롭게 작성해주세요."
         descriptionTextView.delegate = self
         descriptionTextView.textColor = .secondaryLabel
         
+        descriptionTextCnt.font = .systemFont(ofSize: 12)
+        descriptionTextCnt.textColor = .secondaryLabel
+        descriptionTextCnt.text = "\(descriptionTextView.text.count)/1000"
+        
     }
     func layout() {
         let commonInset: CGFloat = 16.0
-        
         [
             separatorView,
             imagePickerView,
@@ -175,12 +294,15 @@ extension UploadViewController : UITextViewDelegate {
             titleTextField,
             separatorView2,
             categoryLabel,
+            categoryLabel2,
+            categoryScroll,
             separatorView3,
             wonLabel,
             priceTextField,
             separatorView4,
             descriptionTextView,
-            separatorView5
+            separatorView5,
+            descriptionTextCnt
         ].forEach { view.addSubview($0) }
         
         separatorView.snp.makeConstraints { (make) in
@@ -188,13 +310,12 @@ extension UploadViewController : UITextViewDelegate {
             make.top.equalTo(view.safeAreaLayoutGuide)
             make.height.equalTo(0.5)
         }
-        
         imagePickerView.snp.makeConstraints { (make) in
-            make.width.height.equalTo(100.0)
-            make.leading.equalToSuperview().inset(commonInset)
+            make.width.equalTo(219)
+            make.height.equalTo(52)
+            make.centerX.equalToSuperview()
             make.top.equalTo(separatorView.snp.bottom).offset(commonInset)
         }
-        
         imagePickerButton.translatesAutoresizingMaskIntoConstraints = false
         imagePickerButton.widthAnchor.constraint(equalTo: imagePickerView.widthAnchor).isActive = true
         imagePickerButton.heightAnchor.constraint(equalTo: imagePickerView.heightAnchor).isActive = true
@@ -202,18 +323,14 @@ extension UploadViewController : UITextViewDelegate {
         imagePickerButton.centerYAnchor.constraint(equalTo: imagePickerView.centerYAnchor).isActive = true
         
         cameraIcon.snp.makeConstraints { (make) in
-            make.top.equalTo(imagePickerView.snp.top).offset(14.0)
-            make.centerX.equalTo(imagePickerView.snp.centerX)
+            make.top.equalTo(imagePickerView.snp.top).offset(10.0)
+            make.leading.equalTo(imagePickerView.snp.leading).offset(19.83)
         }
-        
         numberOfSelectedImageLabel.translatesAutoresizingMaskIntoConstraints = false
         numberOfSelectedImageLabel.snp.makeConstraints { (make) in
-            make.width.equalTo(50)
-            make.height.equalTo(24)
-            make.top.equalTo(cameraIcon.snp.bottom).offset(10)
-            make.centerX.equalTo(imagePickerView.snp.centerX)
+            make.centerY.equalTo(imagePickerView.snp.centerY)
+            make.leading.equalTo(cameraIcon.snp.trailing).offset(3.17)
         }
-        
         separatorView1.snp.makeConstraints { (make) in
             make.leading.trailing.equalToSuperview().inset(20)
             make.top.equalTo(imagePickerView.snp.bottom).offset(commonInset)
@@ -233,16 +350,19 @@ extension UploadViewController : UITextViewDelegate {
             make.leading.equalTo(titleTextField.snp.leading).offset(10)
             make.top.equalTo(separatorView2.snp.bottom).offset(commonInset)
         }
-        
-        /*
-         
-         카테코리 종류 넣는 곳
-         
-        */
-        
+        categoryLabel2.snp.makeConstraints { (make) in
+            make.leading.equalTo(categoryLabel.snp.trailing).offset(5)
+            make.bottom.equalTo(categoryLabel.snp.bottom).inset(1)
+        }
+        categoryScroll.snp.makeConstraints { (make) in
+            make.leading.equalTo(categoryLabel.snp.leading)
+            make.trailing.equalToSuperview()
+            make.top.equalTo(categoryLabel.snp.bottom).offset(5)
+            make.height.equalTo(50)
+        }
         separatorView3.snp.makeConstraints { (make) in
             make.leading.trailing.equalToSuperview().inset(20)
-            make.top.equalTo(categoryLabel.snp.bottom).offset(commonInset)
+            make.top.equalTo(categoryScroll.snp.bottom).inset(5)
             make.height.equalTo(0.5)
         }
         wonLabel.snp.makeConstraints { (make) in
@@ -269,22 +389,16 @@ extension UploadViewController : UITextViewDelegate {
             make.bottom.equalTo(view.safeAreaLayoutGuide).inset(commonInset)
             make.height.equalTo(0.5)
         }
-        
-        
-        
-//        numberOfSelectedImageLabel.widthAnchor.constraint(equalToConstant: 50.0).isActive = true
-//        numberOfSelectedImageLabel.heightAnchor.constraint(equalToConstant: 24.0).isActive = true
-//        numberOfSelectedImageLabel.bottomAnchor.constraint(equalTo: imagePickerView.bottomAnchor, constant: -8.0).isActive = true
-//        numberOfSelectedImageLabel.centerXAnchor.constraint(equalTo: imagePickerView.centerXAnchor, constant: 0).isActive = true
-        
+        descriptionTextCnt.snp.makeConstraints { (make) in
+            make.bottom.equalTo(separatorView5.snp.top).offset(-10)
+            make.trailing.equalTo(descriptionTextView.snp.trailing).inset(6)
+        }
         
         
     }
     
     func setupNavigationBar() {
         navigationItem.title = "마이리폼 등록"
-//        let leftBarButtonItem = UIBarButtonItem()
-//        leftBarButtonItem.action = #selector(didTapLeftBarButton)
         
         let rightBarButtonItem = UIBarButtonItem(
             title: "완료", style: .plain, target: self, action: #selector(didTapRightBarButton)
@@ -300,18 +414,71 @@ extension UploadViewController : UITextViewDelegate {
             textView.text = ""
             textView.textColor = .label
         }
+        descriptionTextCnt.text = "\(descriptionTextView.text.count)/1000"
+    }
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        let currentText = descriptionTextView.text ?? ""
+        guard let stringRange = Range(range, in: currentText) else {return false}
+        let changeText = currentText.replacingCharacters(in: stringRange, with: text)
+        descriptionTextCnt.text = "\(changeText.count)/1000"
+        
+        return true
     }
 }
 
-//extension UploadViewController : UITableViewDataSource {
-//    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        return options.count
-//    }
-//
-//    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//        let cell = tableView.dequeueReusableCell(withIdentifier: "OptionsTableViewCell", for: indexPath)
-//
-//    }
-//
-//
+extension UploadViewController {
+    // price(가격) 세단위 마다 쉼표 표시
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+            
+        guard var text = textField.text else {
+            return true
+        }
+        
+        text = text.replacingOccurrences(of: "원", with: "")
+        text = text.replacingOccurrences(of: ",", with: "")
+        
+        let numberFormatter = NumberFormatter()
+        numberFormatter.numberStyle = .decimal
+        
+        if (string.isEmpty) {
+            // delete
+            if text.count > 1 {
+                guard let price = Int.init("\(text.prefix(text.count - 1))") else {
+                    return true
+                }
+                guard let result = numberFormatter.string(from: NSNumber(value:price)) else {
+                    return true
+                }
+                
+                textField.text = "\(result)원"
+            }
+            else {
+                textField.text = ""
+            }
+        }
+        else {
+            guard let price = Int.init("\(text)\(string)") else {
+                return true
+            }
+            guard let result = numberFormatter.string(from: NSNumber(value:price)) else {
+                return true
+            }
+            textField.text = "\(result)"
+        }
+        
+        
+        // 콤마 제거 후
+        guard let number: NSNumber = numberFormatter.number(from: textField.text ?? "") else {return true}
+        // price_value에 값 저장
+        price_value = Int(number.stringValue) ?? 0
+        
+        return false
+    }
+    
+    
+}
+
+// 서버
+//extension UploadViewController {
+//    func requestIdentify(userName: String,)
 //}

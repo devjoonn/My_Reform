@@ -22,6 +22,7 @@ class SearchListViewController: UIViewController {
         layout.minimumInteritemSpacing = 0
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.register(SearchCollectionViewCell.self, forCellWithReuseIdentifier: SearchCollectionViewCell.identifier)
+        collectionView.backgroundColor = .systemBlue
         return collectionView
     }()
     
@@ -33,9 +34,7 @@ class SearchListViewController: UIViewController {
 
         
         
-        
-//        attribute()
-    }
+        }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
@@ -63,6 +62,31 @@ extension SearchListViewController: UICollectionViewDelegate, UICollectionViewDa
     
     
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 //extension SearchListViewController : UISearchBarDelegate {
 //    func attribute() {
