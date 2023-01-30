@@ -36,6 +36,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //            moveLoginViewController()
             moveSplashViewController()
             
+//            sleep(3)
+            
 //            moveHomeViewController()
         }
         

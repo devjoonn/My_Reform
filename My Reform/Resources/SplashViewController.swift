@@ -49,6 +49,7 @@ class SplashViewController: UIViewController {
             (make) in
             make.centerY.equalToSuperview()
             make.leading.equalTo(splashTitle3.snp.leading).inset(0)
+            
             make.width.equalTo(105.08)
             make.height.equalTo(113)
         }
@@ -66,7 +67,7 @@ class SplashViewController: UIViewController {
         self.splashTitle2.alpha=1
         self.splashTitle3.alpha=0
         
-        UIView.animate(withDuration: 1.0, delay: 1.5, options: .curveEaseIn, animations: {
+        UIView.animate(withDuration: 0.3, delay: 1.0, options: .curveEaseIn, animations: {
             //애니메이션처리
             var splashTitleTopFrame = self.splashTitle.frame
             
@@ -77,7 +78,7 @@ class SplashViewController: UIViewController {
             
         })
         
-        UIView.animate(withDuration: 1.0, delay: 2.5, options: .curveEaseIn, animations: {
+        UIView.animate(withDuration: 1.0, delay: 1.5, options: .curveEaseIn, animations: {
             self.splashTitle.alpha = 0
             self.splashTitle2.alpha = 0
             self.splashTitle3.alpha = 1

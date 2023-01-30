@@ -46,6 +46,9 @@
 		47FB54F0296867D300B3029C /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47FB54EF296867D300B3029C /* LoginViewController.swift */; };
 		47FB54F729686A2300B3029C /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47FB54F629686A2300B3029C /* UIColor.swift */; };
 		47FB550A296BE65E00B3029C /* TermsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47FB5509296BE65E00B3029C /* TermsViewController.swift */; };
+		D3884D412985264D00C32AB9 /* HomefeedHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3884D402985264D00C32AB9 /* HomefeedHeaderView.swift */; };
+		D3AF3D332987A76F00F7DF11 /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3AF3D322987A76F00F7DF11 /* SettingViewController.swift */; };
+		D3AF3D352987AB1D00F7DF11 /* ProfileEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3AF3D342987AB1D00F7DF11 /* ProfileEditViewController.swift */; };
 		D3C0DEF2298282E3003A62B0 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3C0DEF129828291003A62B0 /* SplashViewController.swift */; };
 		D3C0DEF429850D11003A62B0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D3C0DEF329850D11003A62B0 /* LaunchScreen.storyboard */; };
 		FEA582A3655E8CAFF57EA26C /* Pods_My_Reform.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 34B507B16C947CBB18B3A995 /* Pods_My_Reform.framework */; };
@@ -97,6 +100,9 @@
 		47FB54F629686A2300B3029C /* UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
 		47FB5509296BE65E00B3029C /* TermsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TermsViewController.swift; sourceTree = "<group>"; };
 		5F644897E4B6FAE3A5572350 /* Pods-My Reform.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-My Reform.debug.xcconfig"; path = "Target Support Files/Pods-My Reform/Pods-My Reform.debug.xcconfig"; sourceTree = "<group>"; };
+		D3884D402985264D00C32AB9 /* HomefeedHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomefeedHeaderView.swift; sourceTree = "<group>"; };
+		D3AF3D322987A76F00F7DF11 /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
+		D3AF3D342987AB1D00F7DF11 /* ProfileEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileEditViewController.swift; sourceTree = "<group>"; };
 		D3C0DEF129828291003A62B0 /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
 		D3C0DEF329850D11003A62B0 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -279,8 +285,10 @@
 				47C9C2E429781CA600DF89D8 /* LoginSignUp */,
 				47FB5502296BD2A000B3029C /* Main */,
 				370D8BB7296FCF7F00E4B65E /* CategoryViewController.swift */,
+				D3AF3D322987A76F00F7DF11 /* SettingViewController.swift */,
 				373C5622297E7DEC00F00F1F /* SearchListViewController.swift */,
 				4770C65A297ECB11009E3E58 /* DetailPostViewController.swift */,
+				D3AF3D342987AB1D00F7DF11 /* ProfileEditViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -337,6 +345,7 @@
 				47FB54E729685E9000B3029C /* SearchViewController.swift */,
 				47FB54E929685EA400B3029C /* MessageViewController.swift */,
 				47FB54ED29685EBF00B3029C /* ProfileViewController.swift */,
+				D3884D402985264D00C32AB9 /* HomefeedHeaderView.swift */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -493,6 +502,7 @@
 				4752664029730CD3008D5F1D /* UploadViewController.swift in Sources */,
 				37F6EB0929827EC20088EAD8 /* SearchCollectionViewCell.swift in Sources */,
 				4752664729750F30008D5F1D /* LoginDataManager.swift in Sources */,
+				D3AF3D352987AB1D00F7DF11 /* ProfileEditViewController.swift in Sources */,
 				47FB54F0296867D300B3029C /* LoginViewController.swift in Sources */,
 				370D8BB8296FCF7F00E4B65E /* CategoryViewController.swift in Sources */,
 				47FB54EE29685EBF00B3029C /* ProfileViewController.swift in Sources */,
@@ -507,7 +517,9 @@
 				D3C0DEF2298282E3003A62B0 /* SplashViewController.swift in Sources */,
 				4770C659297ECAB4009E3E58 /* HomeFeedViewModel.swift in Sources */,
 				379365462982D709009ABF2C /* UploadDataManager.swift in Sources */,
+				D3884D412985264D00C32AB9 /* HomefeedHeaderView.swift in Sources */,
 				47C9C2F929796F0B00DF89D8 /* AllPostModel.swift in Sources */,
+				D3AF3D332987A76F00F7DF11 /* SettingViewController.swift in Sources */,
 				37F6EB0D29827EFC0088EAD8 /* SearchFeedViewModel.swift in Sources */,
 				47526655297529AE008D5F1D /* SignUpViewController.swift in Sources */,
 			);
