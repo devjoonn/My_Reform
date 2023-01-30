@@ -7,9 +7,9 @@
 
 import UIKit
 
-let cellID = "Cell"
 
 class CategoryViewController: UIViewController {
+    
     let images = ["digital_icon.png", "life_goods_icon.png", "sports_icon.png", "furniture_icon.png", "w_clothes_icon.png", "w_goods_icon.png", "m_clothes_icon.png", "m_goods_icon.png", "draw_icon.png", "another_icon.png"]
     
     let collectionView: UICollectionView = {
@@ -34,39 +34,35 @@ class CategoryViewController: UIViewController {
 //        collectionView.backgroundColor = .yellow
     
         
-        collectionView.register(CategoryCell.self, forCellWithReuseIdentifier: cellID)
+        collectionView.register(CategoryCell.self, forCellWithReuseIdentifier: CategoryCell.identifier)
     }
     
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }
 
-extension CategoryViewController: UICollectionViewDataSource {
+extension CategoryViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 10
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellID, for: indexPath) as! CategoryCell
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CategoryCell.identifier, for: indexPath) as? CategoryCell else { return UICollectionViewCell() }
         cell.imageView.image = UIImage(named: images[indexPath.row])
-//        cell.backgroundColor = .red
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        collectionView.deselectItem(at: indexPath, animated: true)
+        
+        let vc = CategoryFeedViewController()
+        vc.getCategoryId = indexPath.row
+        print("categoryFeedViewController에 categoryId 저장됨")
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     
     
 }
 
-extension CategoryViewController: UICollectionViewDelegate {
-    
-}
 
 extension CategoryViewController: UICollectionViewDelegateFlowLayout {
     

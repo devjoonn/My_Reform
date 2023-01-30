@@ -12,17 +12,20 @@ import Alamofire
 
 // 0126 스크롤 이미지 뷰에 이미지 넣는 함수 - api 보고 다시 지정 [x]
 
+
+
 // 테이블 뷰에서 셀 클릭 시 넘어오는 뷰로 클릭했던 data의 indexPath 값을 이 뷰로 전송
 class DetailPostViewController: UIViewController, UIScrollViewDelegate {
     
-    // 0123 게시물의 상세정보 불러오는 모델로 변경해야함
     var detailPostModel: [AllPostData] = []
 
-    var imageUrls: [UIImage] = []
+    var categorysIndex: [String] = []
+    var categoryString: String = ""
+    
+    let sectionInsets = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
     
     //MARK: - 프로퍼티
-//    var imagesViews = [UIImageView]()
-    
+
     private let postScrollView = UIScrollView().then {
         $0.translatesAutoresizingMaskIntoConstraints = false
         $0.backgroundColor = .white
@@ -34,34 +37,21 @@ class DetailPostViewController: UIViewController, UIScrollViewDelegate {
         $0.backgroundColor = .white
     }
     
-    private let postView = UIView().then {
-        $0.backgroundColor = .white
-    }
+    let imageCollectionView: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .horizontal
+        layout.itemSize = CGSize(width: UIScreen.main.bounds.width, height: 350)
+        layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+
+        let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        cv.register(DetailPostImageCollectionViewCell.self, forCellWithReuseIdentifier: DetailPostImageCollectionViewCell.identifier)
+        // 스크롤되는 이미지를 정중앙으로 배치
+        cv.isPagingEnabled = false
+        cv.decelerationRate = .fast
+        return cv
+    }()
     
     
-    private let imageScrollView = UIScrollView().then {
-        $0.backgroundColor = .white
-        $0.indicatorStyle = .black
-        $0.translatesAutoresizingMaskIntoConstraints = false
-        $0.showsVerticalScrollIndicator = false
-        $0.isScrollEnabled = true
-        $0.isPagingEnabled = true
-    }
-    
-    
-    private let imageStackView = UIStackView().then {
-        $0.axis = .horizontal
-        $0.alignment = .center
-        $0.distribution = .equalSpacing
-//        stackView.layoutMargins = UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8)
-//        stackView.isLayoutMarginsRelativeArrangement = true
-//        stackView.spacing = 8
-    }
-    
-//    private let imageView = UIImageView().then {
-//        $0.translatesAutoresizingMaskIntoConstraints = false
-//        $0.contentMode = .scaleAspectFill
-//    }
     
     private let profileImageView = UIImageView().then {
         $0.image = UIImage(named: "no_profile")
@@ -132,67 +122,76 @@ class DetailPostViewController: UIViewController, UIScrollViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        imageScrollView.delegate = self
+        imageCollectionView.delegate = self
+        imageCollectionView.dataSource = self
+        
+        
         print("detailPost 출력 - \(detailPostModel)")
         setUIView()
         setUIConstraints()
-        addContentScrollView()
         setInfo()
+        print("카테고리 인덱스는 = \(categorysIndex)")
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        categorysIndex.removeAll()
+        categoryString.removeAll()
+        detailPostModel.removeAll()
     }
     
 // MARK: - 데이터 전달& 설정 함수들
     
     // 값들 지정 함수
     func setInfo() {
-        addContentScrollView()
+        
+        for i in 0 ..< detailPostModel[0].categoryId!.count {
+            
+            switch detailPostModel[0].categoryId![i] {
+            case 1:
+                categorysIndex.append("디지털기기")
+            case 2:
+                categorysIndex.append("생활/소품")
+            case 3:
+                categorysIndex.append("스포츠/레저")
+            case 4:
+                categorysIndex.append("가구/인테리어")
+            case 5:
+                categorysIndex.append("여성의류")
+            case 6:
+                categorysIndex.append("여성잡화")
+            case 7:
+                categorysIndex.append("남성의류")
+            case 8:
+                categorysIndex.append("남성잡화")
+            case 9:
+                categorysIndex.append("그림")
+            case 10:
+                categorysIndex.append("기타")
+            default:
+                return
+            }
+        }
+        
+        for j in 0 ..< categorysIndex.count {
+            categoryString += "\(categorysIndex[j])  "
+        }
+        
         userNicknameLabel.text = detailPostModel[0].nickname
         minuteLabel.text = detailPostModel[0].updateAt
         titleLabel.text = detailPostModel[0].title
-        categoryLabel.text = "\(detailPostModel[0].categoryId!)"
+        categoryLabel.text = "\(categoryString)"
         contentText.text = detailPostModel[0].contents
         guard let price = detailPostModel[0].price else { return }
         priceLabel.text = "\(price) 원"
 
     }
     
-    // 스크롤뷰에 이미지 설정
-    private func addContentScrollView() {
-        
-        for i in 0 ..< detailPostModel[0].imageUrl!.count {
-            // 이미지뷰를 생성해서 바로 이미지까지 지정
-            let imageView = UIImageView().then {
-                $0.contentMode = .scaleAspectFit
-                // 이미지뷰에 이미지 지정
-                guard let url = URL(string:"\(Constants.baseURL)\(detailPostModel[0].imageUrl![i])") else { return }
-                print("url 링크는 = \(url)")
-                $0.sd_setImage(with:url, completed: nil)
-            }
-            imageStackView.addArrangedSubview(imageView)
-
-            imageView.snp.makeConstraints { make in
-                make.top.leading.trailing.bottom.equalToSuperview()
-                make.centerX.equalToSuperview()
-            }
-            
-            // 스크롤뷰의 길이(xPos) = 스크롤뷰 가로길이 * 현재 인덱스
-//            let xPos = imageScrollView.frame.width * CGFloat(i)
-//            imageView.frame = CGRect(x: xPos, y: 0, width: imageScrollView.bounds.width, height: imageScrollView.bounds.height)
-//            print(imageScrollView.frame.width)
-//            print(imageView.frame.width)
-//
-////          스크롤뷰의 컨텐츠 사이즈 = imageView 가로길이
-//            imageScrollView.contentSize.width = imageView.frame.width * CGFloat(i + 1)
-        }
-    }
    
     private func setUIView() {
         view.addSubview(postScrollView)
         view.addSubview(bottomView)
-        
-        postScrollView.addSubview(postView)
-        postView.addSubview(imageScrollView)
-        imageScrollView.addSubview(imageStackView)
-//        imageScrollView.addSubview(imageView)
+    
+        postScrollView.addSubview(imageCollectionView)
         
         postScrollView.addSubview(profileImageView)
         postScrollView.addSubview(userNicknameLabel)
@@ -225,27 +224,19 @@ class DetailPostViewController: UIViewController, UIScrollViewDelegate {
             make.bottom.equalTo(bottomView.snp.top)
         }
         
-        postView.snp.makeConstraints { make in
-            make.height.equalTo(350)
-            make.top.leading.trailing.equalToSuperview()
-        }
-        
-        imageScrollView.snp.makeConstraints { make in
-            make.top.left.right.bottom.height.equalToSuperview()
-        }
-        
-        imageStackView.snp.makeConstraints { make in
-            make.top.left.right.bottom.height.equalToSuperview()
+        imageCollectionView.snp.makeConstraints { make in
+            make.top.height.equalTo(350)
+            make.top.leading.trailing.width.equalToSuperview()
         }
         
         profileImageView.snp.makeConstraints { make in
-            make.top.equalTo(postView.snp.bottom).inset(-30)
+            make.top.equalTo(imageCollectionView.snp.bottom).inset(-30)
             make.leading.equalToSuperview().inset(20)
             make.height.width.equalTo(60)
         }
         
         userNicknameLabel.snp.makeConstraints { make in
-            make.top.equalTo(postView.snp.bottom).inset(-30)
+            make.top.equalTo(imageCollectionView.snp.bottom).inset(-30)
             make.leading.equalTo(profileImageView.snp.trailing).inset(-20)
         }
         
@@ -311,33 +302,43 @@ class DetailPostViewController: UIViewController, UIScrollViewDelegate {
 }
         
         
+extension DetailPostViewController : UICollectionViewDelegate, UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        detailPostModel[0].imageUrl!.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: DetailPostImageCollectionViewCell.identifier, for: indexPath) as? DetailPostImageCollectionViewCell else { return UICollectionViewCell() }
+        
+        let imageUrl = detailPostModel[0].imageUrl![indexPath.row]
+        
+        cell.configure(with: imageUrl)
+        
+        return cell
+    }
+    
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: collectionView.frame.width, height: collectionView.frame.height)
+    }
+    
+    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+            guard let layout = self.imageCollectionView.collectionViewLayout as? UICollectionViewFlowLayout else { return }
+            
+            let cellWidthIncludingSpacing = layout.itemSize.width + layout.minimumLineSpacing
+            
+            let estimatedIndex = scrollView.contentOffset.x / cellWidthIncludingSpacing
+            let index: Int
+            if velocity.x > 0 {
+                index = Int(ceil(estimatedIndex))
+            } else if velocity.x < 0 {
+                index = Int(floor(estimatedIndex))
+            } else {
+                index = Int(round(estimatedIndex))
+            }
+            
+            targetContentOffset.pointee = CGPoint(x: CGFloat(index) * cellWidthIncludingSpacing, y: 0)
+        }
+}
     
 
-
-
-
-
-
-
-
-#if DEBUG
-import SwiftUI
-struct ViewControllerRepresentable: UIViewControllerRepresentable {
-  func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {
-  }
-  @available(iOS 13.0.0, *)
-  func makeUIViewController(context: Context) -> some UIViewController {
-      DetailPostViewController()
-  }
-}
-@available(iOS 13.0, *)
-struct ViewControllerRepresentable_PreviewProvider: PreviewProvider {
-  static var previews: some View {
-    Group {
-        SearchViewControllerRepresentable()
-        .ignoresSafeArea()
-        .previewDisplayName("Preview")
-        .previewDevice(PreviewDevice(rawValue: "iPhone 11"))
-    }
-  }
-} #endif
