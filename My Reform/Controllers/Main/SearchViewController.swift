@@ -1,4 +1,4 @@
-//
+///
 //  SearchViewController.swift
 //  My Reform
 //
@@ -48,13 +48,13 @@ class SearchViewController: UIViewController,  UISearchBarDelegate, UIGestureRec
 extension SearchViewController : UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let width = UIScreen.main.bounds.width / 3
-        return CGSize(width: width, height: width)
+        return CGSize(width: width-1, height: width-1)
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 0.0
+        return 1
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return 0.0
+        return 1
     }
 }
 
@@ -86,6 +86,7 @@ extension SearchViewController: UICollectionViewDataSource {
         let vc = DetailPostViewController()
         vc.detailPostModel = [model]
         print("detailPostModel에 data 저장됨")
+        self.navigationController?.pushViewController(vc, animated: true)
         
     }
 }
@@ -134,8 +135,11 @@ extension SearchViewController : UISearchResultsUpdating{
     }
     func layout() {
         view.addSubview(exploreCollectionView)
-        exploreCollectionView.snp.makeConstraints {
-            $0.edges.equalToSuperview()
+        exploreCollectionView.snp.makeConstraints { (make) in
+            make.edges.equalToSuperview()
+//            make.top.equalToSuperview()
+//            make.leading.equalToSuperview().inset(-1)
+//            make.trailing.equalToSuperview().inset(-1)
         }
     }
 }
@@ -162,14 +166,14 @@ extension SearchViewController : UISearchControllerDelegate  {
 //    }
 
     // when clicked searchButton in keyboard
-//    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-//        searchBar.resignFirstResponder()
-//        guard let text = searchController.searchBar.text else { return }
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.resignFirstResponder()
+        guard let text = searchController.searchBar.text else { return }
 //        searchBtnClicked()
-//
-//
-//        print("search result : ", text)
-//    }
+
+
+        print("search result : ", text)
+    }
     
 //    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
 //        // 검색값이 비어있을 때 자동적으로 포커싱 해제(키보드 내려감)
@@ -193,7 +197,7 @@ extension SearchViewController  {
     }
     
     func requestFunc() {
-        AF.request("\(Constants.baseURL)/boards?lastBoardId=100&size=30&keyword=",method: .get, parameters: nil ).validate().responseDecodable(of: AllPostModel.self) { response in
+        AF.request("\(Constants.baseURL)/boards?lastBoardId=100&size=100&keyword=",method: .get, parameters: nil ).validate().responseDecodable(of: AllPostModel.self) { response in
             debugPrint(response)
             switch(response.result) {
             case .success(let result) :

@@ -24,7 +24,6 @@ class SearchCollectionViewCell: UICollectionViewCell {
     var titleCellImageView = UIImageView().then {
         $0.contentMode = .scaleAspectFill
         $0.clipsToBounds = true
-        $0.layer.cornerRadius = 10
     }
     
     override init(frame: CGRect) {
