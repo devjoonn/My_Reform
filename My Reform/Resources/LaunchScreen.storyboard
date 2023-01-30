@@ -26,7 +26,7 @@
                         <viewLayoutGuide key="safeArea" id="vDu-zF-Fre"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="8FP-xC-hSR" firstAttribute="centerX" secondItem="5EZ-qb-Rvc" secondAttribute="centerX" constant="-23.960000000000001" id="EE8-dY-0jx"/>
+                            <constraint firstItem="8FP-xC-hSR" firstAttribute="centerX" secondItem="5EZ-qb-Rvc" secondAttribute="centerX" constant="-23.960000000000001" id="EE8-dY-0jx" userLabel="logo1.centerX = centerX - 23.955"/>
                             <constraint firstItem="8FP-xC-hSR" firstAttribute="centerY" secondItem="5EZ-qb-Rvc" secondAttribute="centerY" id="wu7-2T-Geh"/>
                         </constraints>
                     </view>
