@@ -19,7 +19,7 @@ struct CategoryPostData : Decodable {
     let categoryId : Int?
     let title : String?
     let contents : String?
-    let updateAt : Date?
+    let updateAt : String?
     let price : Int?
     let nickname : String?
     let imageUrl : [String]?

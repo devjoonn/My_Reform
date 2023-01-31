@@ -72,9 +72,9 @@ extension SearchListViewController: UITableViewDelegate, UITableViewDataSource, 
         
         let model = allPostModel[indexPath.row]
 //        guard let model = allPostModel[indexPath.row] else { return UITableViewCell() } //현재 model 은 옵셔널 스트링 값
-        guard let price = model.price else { return UITableViewCell() }
-        guard let updateAt = model.updateAt else { return UITableViewCell() }
-        cell.configure(with: HomeFeedViewModel(imageUrl: model.imageUrl?.first ?? "", title: model.title ?? "", minute: updateAt, price: price))
+//        guard let price = model.price else { return UITableViewCell()}
+//        cell.titleCellImageView =
+        cell.configure(with: HomeFeedViewModel(imageUrl: model.imageUrl?.first ?? "", title: model.title ?? "", minute: model.updateAt ?? "", price: model.price ?? 0))
         cell.backgroundColor = .systemBlue
         
         return cell

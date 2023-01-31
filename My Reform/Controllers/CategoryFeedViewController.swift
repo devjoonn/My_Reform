@@ -32,10 +32,9 @@ class CategoryFeedViewController: UIViewController {
         view.backgroundColor = .white
         checkCategory()
         title = categoryName
-        // 뒤로가기 버튼 < 만 출력
         let backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: self, action: nil) // title 부분 수정
-        backBarButtonItem.tintColor = .black
-        self.navigationItem.backBarButtonItem = backBarButtonItem
+            backBarButtonItem.tintColor = .black
+            self.navigationItem.backBarButtonItem = backBarButtonItem
         
         categoryFeedTable.delegate = self
         categoryFeedTable.dataSource = self
@@ -99,8 +98,8 @@ extension CategoryFeedViewController: UITableViewDelegate, UITableViewDataSource
         let model = categoryPostModel[indexPath.row]
 //        guard let model = allPostModel[indexPath.row] else { return UITableViewCell() } //현재 model 은 옵셔널 스트링 값
         guard let price = model.price else { return UITableViewCell()}
-        guard let updateAt = model.updateAt else { return UITableViewCell() }
-        cell.configure(with: HomeFeedViewModel(imageUrl: model.imageUrl?.first ?? "", title: model.title ?? "", minute: updateAt, price: price))
+//        cell.titleCellImageView =
+        cell.configure(with: HomeFeedViewModel(imageUrl: model.imageUrl?.first ?? "", title: model.title ?? "", minute: model.updateAt ?? "", price: price))
         
         
         return cell
