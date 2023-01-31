@@ -6,65 +6,109 @@
 //
 
 import UIKit
+import Alamofire
 
 class SearchListViewController: UIViewController {
     
-//    private let searchController = UISearchController(searchResultsController: searchList)
+    var allPostModel: [AllPostData] = [] {
+        didSet {
+            self.searchFeedTable.reloadData()
+        }
+    }
     
-
-//    public var titles: [Title] = [Title]()
-
-    public let searchResultsCollectionView: UICollectionView = {
+    public let searchFeedTable: UITableView = {
         
-        let layout = UICollectionViewFlowLayout()
-        // 스크린의 넓이 기준으로 3으로 나누고 -10을 함 || 다른 핸드폰 기종들 고려
-        layout.itemSize = CGSize(width: UIScreen.main.bounds.width / 3 - 10, height: 200)
-        layout.minimumInteritemSpacing = 0
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collectionView.register(SearchCollectionViewCell.self, forCellWithReuseIdentifier: SearchCollectionViewCell.identifier)
-        collectionView.backgroundColor = .systemBlue
-        return collectionView
+        let table = UITableView(frame: .zero, style: .grouped)
+        //Views 에있는 CollectionViewTabelCell 호출
+        table.register(SearchTableViewCell.self, forCellReuseIdentifier: SearchTableViewCell.identifier)
+        return table
     }()
-    
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .systemBackground
-        view.addSubview(searchResultsCollectionView)
-
+        attribute()
+        layout()
         
-        
-        }
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        searchResultsCollectionView.frame = view.bounds
     }
-
     
+    override func viewWillAppear(_ animated: Bool) {
+        guard let vc: String  = SearchViewController().searchController.searchBar.text else {return}
+        self.searchFeedTable.reloadData()
+    }
     
 
 }
 
-extension SearchListViewController: UICollectionViewDelegate, UICollectionViewDataSource {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 5
+extension SearchListViewController {
+    func attribute() {
+        view.backgroundColor = .systemBackground
+        view.addSubview(searchFeedTable)
+        
+        
+        searchFeedTable.delegate = self
+        searchFeedTable.dataSource = self
+    }
+    func layout() {
+        searchFeedTable.snp.makeConstraints { make in
+            make.top.equalTo(self.view.safeAreaLayoutGuide.snp.top)
+            make.leading.trailing.bottom.equalToSuperview()
+        }
+    }
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        searchFeedTable.frame = view.bounds
+    }
+}
+
+extension SearchListViewController: UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return allPostModel.count
     }
     
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SearchCollectionViewCell.identifier, for: indexPath) as? SearchCollectionViewCell else { return UICollectionViewCell() }
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: SearchTableViewCell.identifier, for: indexPath) as? MainTableViewCell else { return UITableViewCell() }
+
         
-//        let title = titles[indexPath.row]
-//        cell.configure(with: title.poster_path ?? "")
+        let model = allPostModel[indexPath.row]
+//        guard let model = allPostModel[indexPath.row] else { return UITableViewCell() } //현재 model 은 옵셔널 스트링 값
+//        guard let price = model.price else { return UITableViewCell()}
+//        cell.titleCellImageView =
+        cell.configure(with: HomeFeedViewModel(imageUrl: model.imageUrl?.first ?? "", title: model.title ?? "", minute: model.updateAt ?? "", price: model.price ?? 0))
+        cell.backgroundColor = .systemBlue
         
         return cell
     }
     
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 140
+    }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        // 셀 선택시 회색화면 지우기
+        print("cell indexPath = \(indexPath)")
+        tableView.deselectRow(at: indexPath, animated: true)
+        
+        let model = allPostModel[indexPath.row]
+        
+        
+        let vc = DetailPostViewController()
+        vc.detailPostModel = [model]
+        print("detailPostModel에 data 저장됨")
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
 }
 
-
-
+extension SearchListViewController {
+    
+    func successSearchViewPostModel(result: [AllPostData]) {
+        self.allPostModel.append(contentsOf: result)
+        print(allPostModel.count)
+        print("allPostModel----------------------------------------",allPostModel)
+    }
+    
+    
+}
 
 
 

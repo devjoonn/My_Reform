@@ -16,10 +16,10 @@ class SearchViewController: UIViewController,  UISearchBarDelegate, UIGestureRec
         }
     }
     
-    private let searchController : UISearchController = {
+    let searchController : UISearchController = {
       let controller = UISearchController(searchResultsController: SearchListViewController())
         controller.searchBar.placeholder = "검색"
-        controller.searchBar.searchBarStyle = .minimal
+//        controller.searchBar.searchBarStyle = .minimal
         return controller
     }()
     
@@ -98,15 +98,6 @@ extension SearchViewController {
         sender.endRefreshing()
         requestFunc()
     }
-    
-    // 키보드 search 버튼 클릭시 데이터 전달
-//    @objc func searchBtnClicked() {
-//        let vc = SearchListViewController()
-//        navigationController?.pushViewController(vc, animated: true)
-//
-//
-//        vc.vcTitle = searchController.searchBar.text ?? ""
-//    }
 }
 
 extension SearchViewController : UISearchResultsUpdating{
@@ -115,13 +106,15 @@ extension SearchViewController : UISearchResultsUpdating{
         
         navigationController?.hidesBarsOnSwipe = true
         
-        searchController.hidesNavigationBarDuringPresentation = false
-//        searchController.searchResultsUpdater = self
-        navigationItem.titleView?.isHidden = true
+//        searchController.hidesNavigationBarDuringPresentation = false
+        searchController.searchResultsUpdater = self
+//        navigationItem.titleView?.isHidden = true
         searchController.obscuresBackgroundDuringPresentation = false
         searchController.searchBar.delegate = self
+        
 //        navigationItem.titleView = searchController.searchBar
-        navigationItem.searchController = searchController
+        self.navigationItem.searchController = searchController
+        navigationController?.navigationBar.tintColor = .black
         searchController.searchResultsUpdater = self
 
         refreshControl.addTarget(self, action: #selector(beginRefresh(_:)), for: .valueChanged)
@@ -137,41 +130,63 @@ extension SearchViewController : UISearchResultsUpdating{
         view.addSubview(exploreCollectionView)
         exploreCollectionView.snp.makeConstraints { (make) in
             make.edges.equalToSuperview()
-//            make.top.equalToSuperview()
-//            make.leading.equalToSuperview().inset(-1)
-//            make.trailing.equalToSuperview().inset(-1)
         }
     }
 }
 
 extension SearchViewController : UISearchControllerDelegate  {
-
     func updateSearchResults(for searchController: UISearchController) {
-//        let vc = SearchListViewController()
-//        navigationController?.pushViewController(vc, animated: false)
         
         let searchBar = searchController.searchBar
         
         guard let text = searchBar.text, !text.trimmingCharacters(in: .whitespaces).isEmpty, let resultController = searchController.searchResultsController as? SearchListViewController  else{return}
-//        guard let text = searchBar.text, !text.trimmingCharacters(in: .whitespaces).isEmpty, text.trimmingCharacters(in: .whitespaces).count >= 3, let resultController = searchController.searchResultsController as? SearchListViewController  else{return}
         
         print(resultController)
+        
+                
+//        guard let text = searchBar.text,
+//              !text.trimmingCharacters(in: .whitespaces).isEmpty,
+//              text.trimmingCharacters(in: .whitespaces).count >= 3,
+//              // resultController는 입력한 결과값이 나오는 searchResultViewController
+//              let resultController = searchController.searchResultsController as? SearchListViewController else {return}
+        
+        
+        AF.request("\(Constants.baseURL)/boards?lastBoardId=100&size=100&keyword=\(text)",method: .get, parameters: nil ).validate().responseDecodable(of: AllPostModel.self) { response in
+            DispatchQueue.main.async {
+                
+                debugPrint(response)
+                switch(response.result) {
+                case .success(let result) :
+                    print("검색 UI 서버 통신 성공 - \(result)")
+                    switch(result.status) {
+                    case 200:
+                        guard let data = result.data else {return}
+                        SearchListViewController().successSearchViewPostModel(result: data)
+                        SearchListViewController().searchFeedTable.reloadData()
+                    case 404:
+                        print("데이터가 없는 경우입니다. - \(result.message)")
+                    default:
+                        print("데이터베이스 오류")
+                        return
+                    }
+                case .failure(let error):
+                    print(error)
+                }
+                
+            }
+            
+        }
+        
+        
     }
-//
-//    func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
-//        let vc = SearchListViewController()
-//        navigationController?.pushViewController(vc, animated: false)
-//
-//        return true
-//    }
+
 
     // when clicked searchButton in keyboard
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
         guard let text = searchController.searchBar.text else { return }
 //        searchBtnClicked()
-
-
+        SearchListViewController().viewWillAppear(true)
         print("search result : ", text)
     }
     
@@ -219,6 +234,8 @@ extension SearchViewController  {
             
         }
     }
+    
+    
 }
 
 

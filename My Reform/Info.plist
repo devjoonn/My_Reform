@@ -25,5 +25,18 @@
 		<key>NSAllowsArbitraryLoads</key>
 		<true/>
 	</dict>
+	<key>UIAppFonts</key>
+	<array>
+		<string>Pretendard-Bold.otf</string>
+		<string>Pretendard-ExtraLight</string>
+		<string>Pretendard-ExtraBold</string>
+		<string>Pretendard-Thin</string>
+		<string>PretendardVariable</string>
+		<string>Pretendard-Light</string>
+		<string>Pretendard-Black</string>
+		<string>Pretendard-SemiBold</string>
+		<string>Pretendard-Regular</string>
+		<string>Pretendard-Medium</string>
+	</array>
 </dict>
 </plist>
