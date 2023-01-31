@@ -20,7 +20,7 @@ class TermsViewController: UIViewController {
     
     private let serviceLabel = UILabel().then {
         $0.text = "서비스 이용동의"
-        $0.font = UIFont(name: "Avenir-Black", size: 30)
+        $0.font = UIFont(name: "Pretendard-Bold", size: 28)
     }
     
     private let checkBoxAll = UIButton().then{
@@ -30,7 +30,7 @@ class TermsViewController: UIViewController {
     
     private let TermAllLabel = UILabel().then {
         $0.text = "약관 전체동의"
-        $0.font = UIFont(name: "Avenir-Black", size: 20)
+        $0.font = UIFont(name: "Pretendard-Bold", size: 21)
     }
     
     private let checkBox1 = UIButton().then{
@@ -40,7 +40,7 @@ class TermsViewController: UIViewController {
     
     private let Label1 = UILabel().then {
         $0.text = "만 14세 이상입니다."
-        $0.font = UIFont(name: "Avenir-Black", size: 18)
+        $0.font = UIFont(name: "Pretendard-Regular", size: 16)
     }
     
     private let checkBox2 = UIButton().then{
@@ -50,11 +50,11 @@ class TermsViewController: UIViewController {
     
     private let Label2 = UILabel().then {
         $0.text = "(필수) 서비스 이용 약관"
-        $0.font = UIFont(name: "Avenir-Black", size: 18)
+        $0.font = UIFont(name: "Pretendard-Regular", size: 16)
     }
     
     private let termBtn1 = UIButton().then{
-        $0.tintColor = .systemGray
+        $0.tintColor = .black
         $0.setImage(UIImage(systemName: "chevron.forward"), for: .normal)
     }
     
@@ -65,11 +65,11 @@ class TermsViewController: UIViewController {
     
     private let Label3 = UILabel().then {
         $0.text = "(필수) 개인정보 처리방침"
-        $0.font = UIFont(name: "Avenir-Black", size: 18)
+        $0.font = UIFont(name: "Pretendard-Regular", size: 16)
     }
     
     private let termBtn2 = UIButton().then{
-        $0.tintColor = .systemGray
+        $0.tintColor = .black
         $0.setImage(UIImage(systemName: "chevron.forward"), for: .normal)
     }
     
@@ -80,11 +80,12 @@ class TermsViewController: UIViewController {
     
     private let Label4 = UILabel().then {
         $0.text = "(선택) 마케팅 정보 수신동의"
-        $0.font = UIFont(name: "Avenir-Black", size: 18)
+        $0.font = UIFont(name: "Pretendard-Regular", size: 16)
     }
     
     private let nextButton = UIButton().then{
         $0.backgroundColor = UIColor.mainColor.withAlphaComponent(0.4)
+        $0.titleLabel?.font = UIFont(name: "Pretendard-bold", size: 16)
         $0.layer.cornerRadius = 8
         $0.setTitle("다음", for: .normal)
         $0.isEnabled = false
@@ -100,6 +101,12 @@ class TermsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .white
+        
+        // 뒤로가기 버튼 < 만 출력
+        let backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: self, action: nil) // title 부분 수정
+            backBarButtonItem.tintColor = .black
+            self.navigationItem.backBarButtonItem = backBarButtonItem
+        
         
         setUIView()
         setUIConstraints()
@@ -129,49 +136,49 @@ class TermsViewController: UIViewController {
     func setUIConstraints() {
         serviceLabel.snp.makeConstraints { make in
             make.top.equalTo(self.view.safeAreaLayoutGuide.snp.top).inset(25)
-            make.leading.equalToSuperview().inset(30)
+            make.leading.equalToSuperview().inset(32)
         }
         
         checkBoxAll.snp.makeConstraints { make in
-            make.width.height.equalTo(35)
+            make.width.height.equalTo(32)
             make.top.equalTo(serviceLabel.snp.bottom).offset(30)
-            make.leading.equalToSuperview().inset(30)
+            make.leading.equalToSuperview().inset(35)
         }
         
         TermAllLabel.snp.makeConstraints { make in
-            make.leading.equalTo(checkBoxAll.snp.trailing).offset(20)
+            make.leading.equalTo(checkBoxAll.snp.trailing).offset(12)
             make.top.equalTo(serviceLabel.snp.bottom).offset(30)
             make.centerY.equalTo(checkBoxAll.snp.centerY)
         }
         
         sectionLine.snp.makeConstraints { make in
-            make.top.equalTo(TermAllLabel.snp.bottom).offset(30)
-            make.leading.equalToSuperview().offset(10)
-            make.trailing.equalToSuperview().offset(-10)
+            make.top.equalTo(TermAllLabel.snp.bottom).offset(24)
+            make.leading.equalToSuperview().offset(18)
+            make.trailing.equalToSuperview().offset(-18)
             make.height.equalTo(1)
             
         }
         
         checkBox1.snp.makeConstraints { make in
-            make.width.height.equalTo(35)
+            make.width.height.equalTo(32)
             make.top.equalTo(sectionLine.snp.bottom).offset(30)
-            make.leading.equalToSuperview().inset(30)
+            make.leading.equalToSuperview().inset(35)
         }
         
         Label1.snp.makeConstraints { make in
-            make.leading.equalTo(checkBox1.snp.trailing).offset(20)
+            make.leading.equalTo(checkBox1.snp.trailing).offset(12)
             make.top.equalTo(sectionLine.snp.bottom).offset(30)
             make.centerY.equalTo(checkBox1.snp.centerY)
         }
         
         checkBox2.snp.makeConstraints { make in
-            make.width.height.equalTo(35)
+            make.width.height.equalTo(30)
             make.top.equalTo(checkBox1.snp.bottom).offset(30)
-            make.leading.equalToSuperview().inset(30)
+            make.leading.equalToSuperview().inset(35)
         }
         
         Label2.snp.makeConstraints { make in
-            make.leading.equalTo(checkBox2.snp.trailing).offset(20)
+            make.leading.equalTo(checkBox2.snp.trailing).offset(12)
             make.top.equalTo(Label1.snp.bottom).offset(30)
             make.centerY.equalTo(checkBox2.snp.centerY)
         }
@@ -184,13 +191,13 @@ class TermsViewController: UIViewController {
         }
         
         checkBox3.snp.makeConstraints { make in
-            make.width.height.equalTo(35)
+            make.width.height.equalTo(32)
             make.top.equalTo(checkBox2.snp.bottom).offset(30)
-            make.leading.equalToSuperview().inset(30)
+            make.leading.equalToSuperview().inset(35)
         }
         
         Label3.snp.makeConstraints { make in
-            make.leading.equalTo(checkBox3.snp.trailing).offset(20)
+            make.leading.equalTo(checkBox3.snp.trailing).offset(12)
             make.top.equalTo(Label2.snp.bottom).offset(30)
             make.centerY.equalTo(checkBox3.snp.centerY)
         }
@@ -203,21 +210,21 @@ class TermsViewController: UIViewController {
         }
         
         checkBox4.snp.makeConstraints { make in
-            make.width.height.equalTo(35)
+            make.width.height.equalTo(32)
             make.top.equalTo(checkBox3.snp.bottom).offset(30)
-            make.leading.equalToSuperview().inset(30)
+            make.leading.equalToSuperview().inset(35)
         }
         
         Label4.snp.makeConstraints { make in
-            make.leading.equalTo(checkBox4.snp.trailing).offset(20)
+            make.leading.equalTo(checkBox4.snp.trailing).offset(12)
             make.top.equalTo(Label3.snp.bottom).offset(30)
             make.centerY.equalTo(checkBox4.snp.centerY)
         }
         
         
         nextButton.snp.makeConstraints { make in
-            make.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom).inset(20)
-            make.leading.trailing.equalToSuperview().inset(20)
+            make.bottom.equalToSuperview().inset(33)
+            make.leading.trailing.equalToSuperview().inset(26.5)
             make.centerX.equalToSuperview()
             make.height.equalTo(50)
         }

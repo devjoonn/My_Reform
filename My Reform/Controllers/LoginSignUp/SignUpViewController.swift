@@ -159,6 +159,7 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
             attributes: [NSAttributedString.Key.foregroundColor: UIColor.systemGray]
         )
         text.font = UIFont.systemFont(ofSize: 16)
+        text.isSecureTextEntry = true
         text.backgroundColor = UIColor.darkGray.withAlphaComponent(0.1)
         text.layer.cornerRadius = 10.0
         return text
@@ -185,6 +186,7 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
             string: "비밀번호를 다시 한 번 입력해주세요",
             attributes: [NSAttributedString.Key.foregroundColor: UIColor.systemGray]
         )
+        text.isSecureTextEntry = true
         text.font = UIFont.systemFont(ofSize: 16)
         text.backgroundColor = UIColor.darkGray.withAlphaComponent(0.1)
         text.layer.cornerRadius = 10.0
@@ -519,8 +521,8 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
         
         //-----
         next_btn.snp.makeConstraints { make in
-            make.bottom.equalTo(self.view.snp.bottom).inset(33.38)
-            make.leading.trailing.equalToSuperview().inset(20)
+            make.bottom.equalTo(self.view.snp.bottom).inset(33)
+            make.leading.trailing.equalToSuperview().inset(26.5)
             make.centerX.equalToSuperview()
             make.height.equalTo(50)
             

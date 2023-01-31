@@ -158,7 +158,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource, UIScro
 //        guard let model = allPostModel[indexPath.row] else { return UITableViewCell() } //현재 model 은 옵셔널 스트링 값
         guard let price = model.price else { return UITableViewCell()}
 //        cell.titleCellImageView =
-        cell.configure(with: HomeFeedViewModel(imageUrl: model.imageUrl?.first ?? "", title: model.title ?? "", minute: model.updateAt ?? "", price: price))
+        cell.configure(with: HomeFeedViewModel(imageUrl: model.imageUrl?.first ?? "", title: model.title ?? "", minute: model.time ?? "", price: price))
         
         
         return cell
@@ -179,6 +179,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource, UIScro
         let vc = DetailPostViewController()
         vc.detailPostModel = [model]
         print("detailPostModel에 data 저장됨")
+        vc.hidesBottomBarWhenPushed = true
         self.navigationController?.pushViewController(vc, animated: true)
     }
     

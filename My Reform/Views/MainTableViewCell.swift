@@ -26,24 +26,25 @@ class MainTableViewCell: UITableViewCell {
     
     var titleCellLabel = UILabel().then {
         $0.text = "이름"
-        $0.font = UIFont(name: "Avenir-Black", size: 18)
+        $0.font = UIFont(name: "Pretendard-Medium", size: 16)
     }
     
     
     var titleCellImageView = UIImageView().then {
         $0.contentMode = .scaleAspectFit
         $0.clipsToBounds = true
-        $0.layer.cornerRadius = 10
+        $0.layer.cornerRadius = 25
     }
     
     var minuteCellLabel = UILabel().then {
         $0.text = "10분 전"
-        $0.font = UIFont(name: "Avenir-Black", size: 10)
+        $0.textColor = .systemGray
+        $0.font = UIFont(name: "Pretendard-Regular", size: 11)
     }
     
     var priceCellLabel = UILabel().then {
         $0.text = "30,000 원"
-        $0.font = UIFont(name: "Avenir-Black", size: 18)
+        $0.font = UIFont(name: "Pretendard-Bold", size: 16)
     }
 
 
@@ -66,25 +67,25 @@ class MainTableViewCell: UITableViewCell {
     func setUIConstraints() {
 
         titleCellImageView.snp.makeConstraints { make in
-            make.top.equalTo(contentView.snp.top).inset(10)
-            make.leading.equalTo(contentView.snp.leading).inset(10)
-            make.bottom.equalTo(contentView.snp.bottom).inset(-10)
-            make.width.equalTo(100)
+            make.top.equalTo(contentView.snp.top).inset(15)
+            make.leading.equalTo(contentView.snp.leading).inset(15)
+            make.bottom.equalTo(contentView.snp.bottom).inset(-15)
+            make.width.equalTo(110)
         }
         
         titleCellLabel.snp.makeConstraints { make in
-            make.leading.equalTo(titleCellImageView.snp.trailing).inset(-20)
-            make.top.equalTo(contentView.snp.top).inset(10)
+            make.leading.equalTo(titleCellImageView.snp.trailing).inset(-15)
+            make.top.equalTo(contentView.snp.top).inset(27)
         }
         
         minuteCellLabel.snp.makeConstraints { make in
-            make.leading.equalTo(titleCellImageView.snp.trailing).inset(-20)
-            make.bottom.equalTo(priceCellLabel.snp.top).inset(-8)
+            make.leading.equalTo(titleCellImageView.snp.trailing).inset(-15)
+            make.bottom.equalTo(priceCellLabel.snp.top).inset(-5)
         }
         
         priceCellLabel.snp.makeConstraints { make in
-            make.leading.equalTo(titleCellImageView.snp.trailing).inset(-20)
-            make.bottom.equalTo(contentView.snp.bottom).inset(13)
+            make.leading.equalTo(titleCellImageView.snp.trailing).inset(-15)
+            make.bottom.equalTo(contentView.snp.bottom).inset(23)
         }
         
 //        heartButton.snp.makeConstraints { make in
