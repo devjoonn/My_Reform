@@ -58,11 +58,13 @@ class HomeViewController: UIViewController {
     
     @objc func categoryBtnClicked() {
         let vc = CategoryViewController()
+        vc.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(vc, animated: true)
     }
     
     @objc func uploadBtnClicked() {
         let vc = UploadViewController()
+        vc.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(vc, animated: true)
     }
     
