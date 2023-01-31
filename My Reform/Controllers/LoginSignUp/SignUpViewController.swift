@@ -30,33 +30,35 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
     lazy var name_label = { () -> UILabel in
         let label = UILabel()
         label.text = "닉네임"
-        label.font = UIFont.systemFont(ofSize: 15)
+        label.font = UIFont.systemFont(ofSize: 13, weight: .medium)
+        label.textColor = UIColor(hex: "212121")
         return label
     }()
     lazy var name_label_2 = { () -> UILabel in
         let label = UILabel()
         label.text = "10자 이내의 한글, 영문"
-        label.font = UIFont(name: "Pretendard-Regular", size: 14)
-//        label.attributedText = [NSAttributedString.Key.font: UIFont(name: "Pretendard-Regular", size: 12)!]
-//        [NSAttributedString.Key.font: UIFont(name: "Pretendard-Bold", size: 16)!]
-        
-        
+        label.font = UIFont(name: "Pretendard-Regular", size: 11)
         return label
     }()
     lazy var name_input = { () -> UITextField in
         let text = UITextField()
-        text.addLeftPadding()
-        text.placeholder = " 닉네임을 입력해주세요"
-        text.font = UIFont.systemFont(ofSize: 20)
-        text.backgroundColor = UIColor.gray.withAlphaComponent(0.1)
+        text.signUpViewAddLeftPadding()
+        // placeholder 색 바꾸기
+        text.attributedPlaceholder = NSAttributedString(
+            string: "닉네임을 입력해주세요",
+            attributes: [NSAttributedString.Key.foregroundColor: UIColor.systemGray]
+        )
+
+        text.font = UIFont.systemFont(ofSize: 16)
+        text.backgroundColor = UIColor.darkGray.withAlphaComponent(0.1)
         text.layer.cornerRadius = 10.0
         return text
     }()
     lazy var name_length = { () -> UILabel in
         let label = UILabel()
         label.text = "0/10"
-        label.font = UIFont.systemFont(ofSize: 15)
-        label.alpha = 0.3
+        label.font = UIFont.boldSystemFont(ofSize: 15)
+        label.alpha = 0.5
         return label
     }()
     lazy var usable_name_label = { () -> UILabel in
@@ -72,29 +74,33 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
     lazy var id_label = { () -> UILabel in
         let label = UILabel()
         label.text = "아이디"
-        label.font = UIFont.boldSystemFont(ofSize: 18)
+        label.font = UIFont.systemFont(ofSize: 13, weight: .medium)
+        label.textColor = UIColor(hex: "212121")
         return label
     }()
     lazy var id_label_2 = { () -> UILabel in
         let label = UILabel()
         label.text = "6~12자의 영문, 숫자"
-        label.font = UIFont.boldSystemFont(ofSize: 15)
+        label.font = UIFont(name: "Pretendard-Regular", size: 11)
         return label
     }()
     lazy var id_input = { () -> UITextField in
         let text = UITextField()
-        text.addLeftPadding()
-        text.placeholder = " 아이디를 입력해주세요"
-        text.font = UIFont.systemFont(ofSize: 20)
-        text.backgroundColor = UIColor.gray.withAlphaComponent(0.1)
+        text.signUpViewAddLeftPadding()
+        text.attributedPlaceholder = NSAttributedString(
+            string: "아이디를 입력해주세요",
+            attributes: [NSAttributedString.Key.foregroundColor: UIColor.systemGray]
+        )
+        text.font = UIFont.systemFont(ofSize: 16)
+        text.backgroundColor = UIColor.darkGray.withAlphaComponent(0.1)
         text.layer.cornerRadius = 10.0
         return text
     }()
     lazy var id_length = { () -> UILabel in
         let label = UILabel()
         label.text = "0/12"
-        label.font = UIFont.systemFont(ofSize: 15)
-        label.alpha = 0.3
+        label.font = UIFont.boldSystemFont(ofSize: 15)
+        label.alpha = 0.5
         return label
     }()
     lazy var usable_id_label = { () -> UILabel in
@@ -109,22 +115,25 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
     lazy var email_label = { () -> UILabel in
         let label = UILabel()
         label.text = "이메일"
-        label.font = UIFont.boldSystemFont(ofSize: 18)
+        label.font = UIFont.systemFont(ofSize: 13, weight: .medium)
+        label.textColor = UIColor(hex: "212121")
         return label
     }()
     lazy var email_label_2 = { () -> UILabel in
         let label = UILabel()
         label.text = "예시) identity@website.com"
-        label.font = UIFont.boldSystemFont(ofSize: 15)
+        label.font = UIFont(name: "Pretendard-Regular", size: 11)
         return label
     }()
     lazy var email_input = { () -> UITextField in
         let text = UITextField()
-        text.placeholder = " 이메일을 입력해주세요"
-        text.addLeftPadding()
-//        text.keyboardType(.emailAddress).autocapitalization(.none)
-        text.font = UIFont.systemFont(ofSize: 20)
-        text.backgroundColor = UIColor.gray.withAlphaComponent(0.1)
+        text.signUpViewAddLeftPadding()
+        text.attributedPlaceholder = NSAttributedString(
+            string: "이메일을 입력해주세요",
+            attributes: [NSAttributedString.Key.foregroundColor: UIColor.systemGray]
+        )
+        text.font = UIFont.systemFont(ofSize: 16)
+        text.backgroundColor = UIColor.darkGray.withAlphaComponent(0.1)
         text.layer.cornerRadius = 10.0
         return text
     }()
@@ -132,23 +141,26 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
     lazy var password_label = { () -> UILabel in
         let label = UILabel()
         label.text = "비밀번호"
-        label.font = UIFont.boldSystemFont(ofSize: 18)
+        label.font = UIFont.systemFont(ofSize: 13, weight: .medium)
+        label.textColor = UIColor(hex: "212121")
         return label
     }()
     lazy var password_label_2 = { () -> UILabel in
         let label = UILabel()
         label.text = "8자 이상 영문, 숫자, 기호"
-        label.font = UIFont.boldSystemFont(ofSize: 15)
+        label.font = UIFont(name: "Pretendard-Regular", size: 11)
         return label
     }()
     lazy var password_input = { () -> UITextField in
         let text = UITextField()
-        text.addLeftPadding()
-        text.placeholder = " 비밀번호를 입력해주세요"
-        text.font = UIFont.systemFont(ofSize: 20)
-        text.backgroundColor = UIColor.gray.withAlphaComponent(0.1)
+        text.signUpViewAddLeftPadding()
+        text.attributedPlaceholder = NSAttributedString(
+            string: "비밀번호를 입력해주세요",
+            attributes: [NSAttributedString.Key.foregroundColor: UIColor.systemGray]
+        )
+        text.font = UIFont.systemFont(ofSize: 16)
+        text.backgroundColor = UIColor.darkGray.withAlphaComponent(0.1)
         text.layer.cornerRadius = 10.0
-        text.isSecureTextEntry = true
         return text
     }()
     lazy var usable_password_label = { () -> UILabel in
@@ -162,17 +174,20 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
     lazy var password_check_label = { () -> UILabel in
         let label = UILabel()
         label.text = "비밀번호 확인"
-        label.font = UIFont.boldSystemFont(ofSize: 18)
+        label.font = UIFont(name: "Pretendard-Regular", size: 11)
+        label.textColor = UIColor(hex: "212121")
         return label
     }()
     lazy var password_check_input = { () -> UITextField in
         let text = UITextField()
-        text.addLeftPadding()
-        text.placeholder = " 비밀번호를 다시 한 번 입력해주세요"
-        text.font = UIFont.systemFont(ofSize: 20)
-        text.backgroundColor = UIColor.gray.withAlphaComponent(0.1)
+        text.signUpViewAddLeftPadding()
+        text.attributedPlaceholder = NSAttributedString(
+            string: "비밀번호를 다시 한 번 입력해주세요",
+            attributes: [NSAttributedString.Key.foregroundColor: UIColor.systemGray]
+        )
+        text.font = UIFont.systemFont(ofSize: 16)
+        text.backgroundColor = UIColor.darkGray.withAlphaComponent(0.1)
         text.layer.cornerRadius = 10.0
-        text.isSecureTextEntry = true
         return text
     }()
     lazy var usable_password_check_label = { () -> UILabel in
@@ -185,7 +200,7 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
     }()
     lazy var next_btn = { () -> UIButton in
         let btn = UIButton()
-        btn.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
+        btn.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: .medium)
         btn.setTitle("다음", for: .normal)
         btn.setTitleColor(.white, for: .normal)
         btn.layer.cornerRadius = 8
@@ -221,11 +236,12 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .systemBackground
-        
+        setupNavigationBar()
         initializeSet()
         setAddTarget()
         setUIView()
         setUIConstraints()
+        
         navigationItem.title = "회원가입"
         self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: UIFont(name: "Pretendard-Bold", size: 16)!]
 
@@ -245,6 +261,31 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
             next_btn.backgroundColor = UIColor.mainColor.withAlphaComponent(0.4)
             next_btn.isEnabled = false
         }
+    }
+    @objc func didTapLeftBarButton() {
+        let vc = TermsViewController()
+        navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    func setupNavigationBar() {
+        let backButton = UIBarButtonItem()
+        backButton.title = ""
+        backButton.tintColor = .black
+        self.navigationController?.navigationBar.topItem?.backBarButtonItem = backButton
+//        self.navigationItem.backBarButtonItem = backButton
+
+        navigationController?.navigationBar.barTintColor = .white
+        navigationController?.navigationBar.tintColor = .label
+//        let leftBarButtonItem = UIBarButtonItem(
+//            image: UIImage(named: "back_icon"),
+//            style: .plain,
+//            target: self,
+//            action: #selector(didTapLeftBarButton)
+//        )
+//
+//        leftBarButtonItem.tintColor = .label
+//        navigationItem.leftBarButtonItem = leftBarButtonItem
+
     }
     
     //MARK: - Init
@@ -379,45 +420,47 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
     }
     func setUIConstraints() {
         name_label.snp.makeConstraints { make in
-          make.top.equalTo(self.view.safeAreaLayoutGuide.snp.top).inset(25)
-          make.leading.equalToSuperview().inset(30)
+            make.top.equalTo(self.view.snp.top).inset(109.47)
+            make.leading.equalToSuperview().inset(25.57)
         }
         name_label_2.snp.makeConstraints { make in
-          make.bottom.equalTo(name_label)
-          make.leading.equalTo(name_label.snp.trailing).offset(10
+            make.top.equalTo(self.view.snp.top).inset(111.47)
+            make.leading.equalTo(name_label.snp.trailing).offset(6.7
           )
         }
         name_input.snp.makeConstraints { make in
-          make.top.equalTo(name_label.snp.bottom).offset(5)
-          make.leading.equalToSuperview().inset(20)
-          make.width.equalTo(350)
-          make.height.equalTo(50)
+            make.top.equalTo(name_label.snp.bottom).offset(3.91)
+            make.leading.equalToSuperview().inset(16)
+            make.trailing.equalToSuperview().inset(16)
+            make.height.equalTo(50)
         }
         name_length.snp.makeConstraints { make in
-          make.trailing.equalTo(name_input.snp.trailing).inset(5)
+            make.trailing.equalTo(name_input.snp.trailing).inset(16.64)
           make.centerY.equalTo(name_input)
         }
         usable_name_label.snp.makeConstraints { make in
-            make.top.equalTo(name_input.snp.bottom).offset(3)
+            make.top.equalTo(name_input.snp.bottom).offset(1.87)
             make.leading.equalTo(id_label.snp.leading)
         }
         //------------
         id_label.snp.makeConstraints { make in
-          make.top.equalTo(name_input.snp.bottom).offset(30)
-          make.centerX.equalTo(name_label)
+            make.top.equalTo(name_input.snp.bottom).offset(34.37)
+            make.centerX.equalTo(name_label)
         }
         id_label_2.snp.makeConstraints { make in
-          make.bottom.equalTo(id_label.snp.bottom)
-          make.leading.equalTo(id_label.snp.trailing).offset(10)
+//          make.bottom.equalTo(id_label.snp.bottom)
+            make.top.equalTo(name_input.snp.bottom).offset(35.87)
+            make.leading.equalTo(name_label.snp.trailing).offset(6.7)
         }
         id_input.snp.makeConstraints { make in
           make.top.equalTo(id_label.snp.bottom).offset(5)
           make.leading.equalToSuperview().inset(20)
-          make.width.equalTo(350)
+            make.leading.equalToSuperview().inset(16)
+            make.trailing.equalToSuperview().inset(16)
           make.height.equalTo(50)
         }
         id_length.snp.makeConstraints { make in
-          make.trailing.equalTo(id_input.snp.trailing).inset(5)
+            make.trailing.equalTo(id_input.snp.trailing).inset(16.64)
           make.centerY.equalTo(id_input)
         }
         usable_id_label.snp.makeConstraints { make in
@@ -426,8 +469,8 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
         }
         //-------
         email_label.snp.makeConstraints { make in
-          make.top.equalTo(id_input.snp.bottom).offset(30)
-          make.centerX.equalTo(id_label)
+            make.top.equalTo(id_input.snp.bottom).offset(34.37)
+            make.centerX.equalTo(name_label)
         }
         email_label_2.snp.makeConstraints { make in
           make.bottom.equalTo(email_label.snp.bottom)
@@ -435,14 +478,14 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
         }
         email_input.snp.makeConstraints { make in
           make.top.equalTo(email_label.snp.bottom).offset(5)
-          make.leading.equalToSuperview().inset(20)
-          make.width.equalTo(350)
+            make.leading.equalToSuperview().inset(16)
+            make.trailing.equalToSuperview().inset(16)
           make.height.equalTo(50)
         }
         //-----
         password_label.snp.makeConstraints { make in
-          make.top.equalTo(email_input.snp.bottom).offset(30)
-          make.leading.equalTo(email_label)
+            make.top.equalTo(email_input.snp.bottom).offset(34.37)
+            make.leading.equalTo(name_label.snp.leading)
         }
         password_label_2.snp.makeConstraints { make in
           make.bottom.equalTo(password_label.snp.bottom)
@@ -450,8 +493,8 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
         }
         password_input.snp.makeConstraints { make in
           make.top.equalTo(password_label.snp.bottom).offset(5)
-          make.leading.equalToSuperview().inset(20)
-          make.width.equalTo(350)
+            make.leading.equalToSuperview().inset(16)
+            make.trailing.equalToSuperview().inset(16)
           make.height.equalTo(50)
         }
         usable_password_label.snp.makeConstraints { make in
@@ -460,13 +503,13 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
         }
         //-----
         password_check_label.snp.makeConstraints { make in
-            make.top.equalTo(password_input.snp.bottom).offset(30)
-            make.leading.equalTo(password_label)
+            make.top.equalTo(password_input.snp.bottom).offset(34.37)
+            make.leading.equalTo(name_label.snp.leading)
         }
         password_check_input.snp.makeConstraints { make in
             make.top.equalTo(password_check_label.snp.bottom).offset(5)
-            make.leading.equalToSuperview().inset(20)
-            make.width.equalTo(350)
+            make.leading.equalToSuperview().inset(16)
+            make.trailing.equalToSuperview().inset(16)
             make.height.equalTo(50)
         }
         usable_password_check_label.snp.makeConstraints { make in
@@ -476,7 +519,7 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
         
         //-----
         next_btn.snp.makeConstraints { make in
-            make.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom).inset(30)
+            make.bottom.equalTo(self.view.snp.bottom).inset(33.38)
             make.leading.trailing.equalToSuperview().inset(20)
             make.centerX.equalToSuperview()
             make.height.equalTo(50)
