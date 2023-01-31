@@ -21,6 +21,7 @@ struct AllPostData : Decodable {
     let categoryId : [Int]?
     let title : String?
     let contents : String?
+    let time : String?
     let updateAt : String?
     let price : Int?
     let nickname : String?
