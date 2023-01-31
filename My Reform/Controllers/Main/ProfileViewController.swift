@@ -259,7 +259,7 @@ class ProfileViewController: UIViewController {
     @objc func profileClicked(){
         let vc = ProfileEditViewController()
         vc.modalTransitionStyle = .flipHorizontal
-        navigationController?.pushViewController(vc, animated: false)
+        navigationController?.pushViewController(vc, animated: true)
     }
     
     @objc func settingClicked(){
