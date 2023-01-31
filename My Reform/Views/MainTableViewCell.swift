@@ -103,7 +103,14 @@ class MainTableViewCell: UITableViewCell {
         print(url)
         titleCellImageView.sd_setImage(with:url, completed: nil)
         titleCellLabel.text = model.title
-        minuteCellLabel.text = model.minute
+        let formatter = RelativeDateTimeFormatter()
+        formatter.locale = Locale(identifier: "ko_KR")
+        formatter.dateTimeStyle = .named
+        
+        let postTime = model.minute
+        let now = Date()
+        let relativeDateString = formatter.localizedString(for: postTime, relativeTo: now)
+        minuteCellLabel.text = relativeDateString
         let commaPrice = numberFormatter(number: model.price)
         priceCellLabel.text = String("\(commaPrice) 원")
         

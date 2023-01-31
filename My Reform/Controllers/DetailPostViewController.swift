@@ -177,7 +177,15 @@ class DetailPostViewController: UIViewController, UIScrollViewDelegate {
         }
         
         userNicknameLabel.text = detailPostModel[0].nickname
-        minuteLabel.text = detailPostModel[0].updateAt
+        let formatter = RelativeDateTimeFormatter()
+        formatter.locale = Locale(identifier: "ko_KR")
+        formatter.dateTimeStyle = .named
+        
+        guard let postTime = detailPostModel[0].updateAt else { return }
+        let now = Date()
+        let relativeDateString = formatter.localizedString(for: postTime, relativeTo: now)
+        
+        minuteLabel.text = relativeDateString
         titleLabel.text = detailPostModel[0].title
         categoryLabel.text = "\(categoryString)"
         contentText.text = detailPostModel[0].contents
