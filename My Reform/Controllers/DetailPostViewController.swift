@@ -40,7 +40,7 @@ class DetailPostViewController: UIViewController, UIScrollViewDelegate {
     let imageCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
-        layout.itemSize = CGSize(width: UIScreen.main.bounds.width, height: 350)
+        layout.itemSize = CGSize(width: UIScreen.main.bounds.width, height: 400)
         layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
 
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
@@ -59,28 +59,29 @@ class DetailPostViewController: UIViewController, UIScrollViewDelegate {
     
     private let userNicknameLabel = UILabel().then {
         $0.text = "백살먹은 리포머"
-        $0.font = UIFont.boldSystemFont(ofSize: 19)
+        $0.font = UIFont(name: "Pretendard-Bold", size: 14)
     }
     
     private let minuteLabel = UILabel().then {
         $0.text = "3일 전"
-        $0.font = UIFont.systemFont(ofSize: 15)
+        $0.textColor = .systemGray
+        $0.font = UIFont(name: "Pretendard-Regular", size: 13)
     }
     
     private let titleLabel = UILabel().then {
         $0.text = "제목최대15자로 공백포함이다"
-        $0.font = UIFont.boldSystemFont(ofSize:26)
+        $0.font = UIFont(name: "Pretendard-Bold", size: 25)
     }
     
     private let categoryLabel = UILabel().then {
         $0.text = "생활/소품"
         $0.textColor = .systemGray
-        $0.font = UIFont.systemFont(ofSize: 15)
+        $0.font = UIFont(name: "Pretendard-Regular", size: 13)
     }
     
     private let contentText = UILabel().then {
         $0.text = "본문은 body r 행간 160% 최대 글자수 1000자 일단 이정도로 칸 만들어두고 길게 쓴 사람 있으면 스크롤 공간이 더 길어지게 하면 될듯 합니당 아래 스크롤 길이 자유! 본문은 body r 행간 160% 최대 글자수 1000자 일단 이정도로 칸 만들어두고 길게 쓴 사람 있으면 스크롤 공간이 더 길어지게 하면 될듯 합니당 아래 스크롤 길이 자유!본문은 body r 행간 160% 최대 글자수 1000자 일단 이정도로 칸 만들어두고 길게 쓴 사람 있으면 스크롤 공간이 더 길어지게 하면 될듯 합니당 아래 스크롤 길이 자유!본문은 body r 행간 160% 최대 글자수 1000자 일단 이정도로 칸 만들어두고 길게 쓴 사람 있으면 스크롤 공간이 더 길어지게 하면 될듯 합니당 아래 스크롤 길이 자유!본문은 body r 행간 160% 최대 글자수 1000자 일단 이정도로 칸 만들어두고 길게 쓴 사람 있으면 스크롤 공간이 더 길어지게 하면 될듯 합니당 아래 스크롤 길이 자유!"
-        $0.font = UIFont.systemFont(ofSize: 20)
+        $0.font = UIFont(name: "Pretendard-Medium", size: 16)
         $0.numberOfLines = 0
     }
     
@@ -96,7 +97,7 @@ class DetailPostViewController: UIViewController, UIScrollViewDelegate {
     
     private let heartLabel = UILabel().then {
         $0.text = "54"
-        $0.font = UIFont.systemFont(ofSize: 15)
+        $0.font = UIFont(name: "Pretendard-Regular", size: 13)
         $0.textColor = .systemGray
     }
     
@@ -106,13 +107,14 @@ class DetailPostViewController: UIViewController, UIScrollViewDelegate {
     
     private let priceLabel = UILabel().then {
         $0.text = "4,300,000 원"
-        $0.font = UIFont.boldSystemFont(ofSize: 22)
+        $0.font = UIFont(name: "Pretendard-bold", size: 25)
         $0.textColor = .black
     }
     
     private let moveChatBtn = UIButton().then {
-        $0.layer.cornerRadius = 20
+        $0.layer.cornerRadius = 25
         $0.setTitle("구매 채팅하기", for: .normal)
+        $0.titleLabel?.font = UIFont(name: "Pretendard-bold", size: 16)
         $0.setTitleColor(.white, for: .normal)
         $0.backgroundColor = UIColor.mainColor
     }
@@ -177,7 +179,7 @@ class DetailPostViewController: UIViewController, UIScrollViewDelegate {
         }
         
         userNicknameLabel.text = detailPostModel[0].nickname
-        minuteLabel.text = detailPostModel[0].updateAt
+        minuteLabel.text = detailPostModel[0].time
         titleLabel.text = detailPostModel[0].title
         categoryLabel.text = "\(categoryString)"
         contentText.text = detailPostModel[0].contents
@@ -221,7 +223,7 @@ class DetailPostViewController: UIViewController, UIScrollViewDelegate {
     private func setUIConstraints() {
         
         bottomView.snp.makeConstraints { make in
-            make.height.equalTo(90)
+            make.height.equalTo(123)
             make.leading.equalTo(self.view.safeAreaLayoutGuide.snp.leading)
             make.trailing.equalTo(self.view.safeAreaLayoutGuide.snp.trailing)
             make.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom)
@@ -235,38 +237,38 @@ class DetailPostViewController: UIViewController, UIScrollViewDelegate {
         }
         
         imageCollectionView.snp.makeConstraints { make in
-            make.top.height.equalTo(350)
+            make.top.height.equalTo(400)
             make.top.leading.trailing.width.equalToSuperview()
         }
         
         profileImageView.snp.makeConstraints { make in
-            make.top.equalTo(imageCollectionView.snp.bottom).inset(-30)
+            make.top.equalTo(imageCollectionView.snp.bottom).inset(-20)
             make.leading.equalToSuperview().inset(20)
-            make.height.width.equalTo(60)
+            make.height.width.equalTo(45)
         }
         
         userNicknameLabel.snp.makeConstraints { make in
-            make.top.equalTo(imageCollectionView.snp.bottom).inset(-30)
-            make.leading.equalTo(profileImageView.snp.trailing).inset(-20)
+            make.top.equalTo(imageCollectionView.snp.bottom).inset(-22)
+            make.leading.equalTo(profileImageView.snp.trailing).inset(-11)
         }
         
         minuteLabel.snp.makeConstraints { make in
             make.top.equalTo(userNicknameLabel.snp.bottom).inset(-5)
-            make.leading.equalTo(profileImageView.snp.trailing).inset(-20)
+            make.leading.equalTo(profileImageView.snp.trailing).inset(-11)
         }
         
         titleLabel.snp.makeConstraints { make in
-            make.top.equalTo(profileImageView.snp.bottom).inset(-27)
+            make.top.equalTo(profileImageView.snp.bottom).inset(-17)
             make.leading.equalToSuperview().inset(20)
         }
         
         categoryLabel.snp.makeConstraints { make in
-            make.top.equalTo(titleLabel.snp.bottom).inset(-27)
-            make.leading.equalToSuperview().inset(20)
+            make.top.equalTo(titleLabel.snp.bottom).inset(-13)
+            make.leading.equalToSuperview().inset(18)
         }
         
         sectionLine.snp.makeConstraints { make in
-            make.top.equalTo(categoryLabel.snp.bottom).inset(-20)
+            make.top.equalTo(categoryLabel.snp.bottom).inset(-13)
             make.width.equalToSuperview().multipliedBy(0.9)
             make.centerX.equalToSuperview()
             make.height.equalTo(1)
@@ -274,38 +276,38 @@ class DetailPostViewController: UIViewController, UIScrollViewDelegate {
         
         contentText.snp.makeConstraints { make in
             make.top.equalTo(sectionLine.snp.bottom).inset(-20)
-            make.width.equalToSuperview().multipliedBy(0.9)
+            make.width.equalToSuperview().multipliedBy(0.89)
             make.centerX.equalToSuperview()
             make.bottom.equalToSuperview()
         }
         
         heartBtn.snp.makeConstraints { make in
-            make.top.equalTo(bottomView.snp.top).inset(5)
-            make.leading.equalTo(bottomView.snp.leading).inset(17)
-            make.height.width.equalTo(60)
+            make.top.equalTo(bottomView.snp.top).inset(36)
+            make.leading.equalToSuperview().inset(18)
+            make.height.width.equalTo(30)
         }
         
         heartLabel.snp.makeConstraints { make in
-            make.top.equalTo(heartBtn.snp.bottom).inset(10)
+            make.top.equalTo(heartBtn.snp.bottom).inset(-5)
             make.centerX.equalTo(heartBtn.snp.centerX)
         }
         
         bottomSectionLine.snp.makeConstraints { make in
-            make.top.equalTo(bottomView.snp.top).inset(10)
-            make.bottom.equalTo(bottomView.snp.bottom).inset(10)
-            make.leading.equalTo(heartBtn.snp.trailing).inset(-15)
+            make.top.equalTo(bottomView.snp.top).inset(30)
+            make.bottom.equalTo(bottomView.snp.bottom).inset(30)
+            make.leading.equalTo(heartBtn.snp.trailing).inset(-10)
             make.width.equalTo(1)
         }
         
         priceLabel.snp.makeConstraints { make in
             make.centerY.equalTo(bottomView.snp.centerY)
-            make.leading.equalTo(bottomSectionLine.snp.trailing).inset(-15)
+            make.leading.equalTo(bottomSectionLine.snp.trailing).inset(-12)
         }
         
         moveChatBtn.snp.makeConstraints { make in
             make.centerY.equalTo(bottomView.snp.centerY)
-            make.trailing.equalTo(bottomView.snp.trailing).inset(18)
-            make.width.equalTo(115)
+            make.trailing.equalTo(bottomView.snp.trailing).inset(16)
+            make.width.equalTo(137)
             make.height.equalTo(50)
         }
     }
