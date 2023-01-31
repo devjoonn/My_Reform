@@ -322,10 +322,10 @@
 				47C9C2E429781CA600DF89D8 /* LoginSignUp */,
 				47FB5502296BD2A000B3029C /* Main */,
 				370D8BB7296FCF7F00E4B65E /* CategoryViewController.swift */,
+				47A35B0A298801D400B39D5C /* CategoryFeedViewController.swift */,
 				D3AF3D322987A76F00F7DF11 /* SettingViewController.swift */,
 				373C5622297E7DEC00F00F1F /* SearchListViewController.swift */,
 				4770C65A297ECB11009E3E58 /* DetailPostViewController.swift */,
-				47A35B0A298801D400B39D5C /* CategoryFeedViewController.swift */,
 				D3AF3D342987AB1D00F7DF11 /* ProfileEditViewController.swift */,
 			);
 			path = Controllers;

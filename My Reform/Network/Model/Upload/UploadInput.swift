@@ -18,23 +18,18 @@ struct UploadInput: Encodable{
 //    var images: UIImagePickerController?
     
 
-    init(id: String, categoryId: [Int], title: String, contents: String, price: Int/*, images: [Image]*/) {
-        self.user = .init(id: id)
+    init(nickname: String, categoryId: [Int], title: String, contents: String, price: Int) {
+        self.user = .init(nickname: nickname)
         self.board = .init(categoryId: categoryId, title: title, contents: contents, price: price)
         
     }
     
 }
 
-struct UploadImages: Encodable {
-    
-}
-
 public struct UploadUser: Encodable {
     public var nickname: String
-    init(id: String) {
-        self.nickname = id
-//        self.images = images
+    init(nickname: String) {
+        self.nickname = nickname
     }
 }
 
@@ -44,35 +39,10 @@ struct UploadBoard: Encodable {
     var contents: String
     var price: Int
     
-    init(categoryId: [Int], title: String, contents: String, price: Int/*, images: [Image]*/) {
+    init(categoryId: [Int], title: String, contents: String, price: Int) {
         self.categoryId = categoryId
         self.title = title
         self.contents = contents
         self.price = price
-//        self.images = images
     }
 }
-
-
-
-
-
-//struct UploadInput: Encodable{
-//
-//    var user: UploadUser
-//    var board: UploadBoard
-////    var images: UIImagePickerController?
-//
-//
-//    init(id: String, categoryId: [Int], title: String, contents: String, price: Int/*, images: [Image]*/) {
-//        self.nickname = id
-//        self.categoryId = categoryId
-//        self.title = title
-//        self.contents = contents
-//        self.price = price
-////        self.images = images
-//    }
-//
-//}
-
-

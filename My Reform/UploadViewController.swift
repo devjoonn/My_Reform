@@ -55,19 +55,19 @@ class UploadViewController: UIViewController, UITabBarControllerDelegate {
     
     // 컬렉션뷰 인스턴스
     lazy var categoryScroll: UICollectionView = {
-      let view = UICollectionView(frame: .zero, collectionViewLayout: self.flowLayout)
-      view.isScrollEnabled = true
-      view.showsHorizontalScrollIndicator = false
-      view.showsVerticalScrollIndicator = true
-      view.contentInset = .zero
-      view.backgroundColor = .clear
-      view.clipsToBounds = true
-      view.register(UploadViewCollectionViewCell.self, forCellWithReuseIdentifier: "MyCell")
-      view.translatesAutoresizingMaskIntoConstraints = false
-      return view
+        let view = UICollectionView(frame: .zero, collectionViewLayout: self.flowLayout)
+        view.isScrollEnabled = true
+        view.showsHorizontalScrollIndicator = false
+        view.showsVerticalScrollIndicator = true
+        view.contentInset = .zero
+        view.backgroundColor = .clear
+        view.clipsToBounds = true
+        view.register(UploadViewCollectionViewCell.self, forCellWithReuseIdentifier: "MyCell")
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
     }()
     
-
+    
     let wonLabel = UILabel()
     let priceTextField = UITextField()
     
@@ -151,8 +151,8 @@ extension UploadViewController {
     // 뒤로가기 버튼
     @objc func didTapLeftBarButton() {
         DispatchQueue.main.asyncAfter(deadline: .now()+0.01, execute:{ self.tabBarController?.tabBar.isHidden = false})
-
-            dismiss(animated: true)
+        
+        dismiss(animated: true)
     }
     
     // 완료버튼 누를 때
@@ -167,19 +167,20 @@ extension UploadViewController {
         print("selectedCategory :", selectedCategory)
         print("price_value :", price_value)
         // 아이디 카테고리 이미지 남음
-        let userData = UploadInput(id: "닉네임", categoryId: selectedCategory, title: titleTextField.text ?? "", contents: descriptionTextView.text, price: price_value/*, images: selectedImages*/)
-        UploadDataManager.posts(self, userData)
+        let userData = UploadInput(nickname: "닉네임", categoryId: selectedCategory, title: titleTextField.text ?? "", contents: descriptionTextView.text, price: price_value)
+        print(userData)
+        print(selectedImages)
+        UploadDataManager.posts(self, userData, images: selectedImages)
         
         
         
         
-        let vc = HomeViewController()
-        navigationController?.pushViewController(vc, animated: false)
+//        let vc = HomeViewController()
+//        navigationController?.pushViewController(vc, animated: false)
         print("didTapRightBarButton is Called")
-        
     }
     @objc func didTapImagePickerButton() {
-                
+        
         
         var config = PHPickerConfiguration()
         config.filter = .images
@@ -197,7 +198,7 @@ extension UploadViewController : PHPickerViewControllerDelegate {
         // 이미지 다시 선택 시 배열 초기화 작업
         selectedImages.removeSubrange(0..<selectedImages.count)
         
-            if !results.isEmpty {
+        if !results.isEmpty {
             
             results.forEach { result in
                 let itemProvider = result.itemProvider
@@ -207,7 +208,7 @@ extension UploadViewController : PHPickerViewControllerDelegate {
                         if let image = image as? UIImage {
                             self.selectedImages.append(image)
                             DispatchQueue.main.async {
-//                                self.imagePickerView.image = image
+                                //                                self.imagePickerView.image = image
                                 self.numberOfSelectedImageLabel.text = "사진 업로드 하기 \(self.selectedImages.count) / 5"
                                 print(self.selectedImages.count)
                                 print(self.selectedImages)
@@ -220,7 +221,7 @@ extension UploadViewController : PHPickerViewControllerDelegate {
                     }
                 }
             }
-                
+            
         }
         print("results:", results)
         dismiss(animated: true)
@@ -233,7 +234,7 @@ extension UploadViewController : UITextViewDelegate, UITextFieldDelegate {
         title = "마이리폼 등록"
         view.backgroundColor = .systemBackground
         
-//        imagePickerView.backgroundColor = .secondarySystemBackground
+        //        imagePickerView.backgroundColor = .secondarySystemBackground
         imagePickerView.layer.borderColor = UIColor.gray.cgColor
         imagePickerView.layer.borderWidth = 1.5
         imagePickerButton.addTarget(self, action: #selector(didTapImagePickerButton), for: .touchUpInside)
@@ -429,7 +430,7 @@ extension UploadViewController : UITextViewDelegate, UITextFieldDelegate {
 extension UploadViewController {
     // price(가격) 세단위 마다 쉼표 표시
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-            
+        
         guard var text = textField.text else {
             return true
         }
