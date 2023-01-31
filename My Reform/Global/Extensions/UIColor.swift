@@ -14,7 +14,6 @@ extension UIColor {
     alpha: 1
   )
     
-    
   static let mainBlack = UIColor(hex: "121212")
     
     
