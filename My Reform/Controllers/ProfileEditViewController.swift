@@ -7,7 +7,10 @@
 
 import UIKit
 
-class ProfileEditViewController: UIViewController {
+class ProfileEditViewController: UIViewController, UITextFieldDelegate {
+    
+    var nickname : String = ""
+    var intro : String = ""
     
     lazy var profileImage = { () -> UIImageView in
         let profileImage = UIImageView()
@@ -25,14 +28,14 @@ class ProfileEditViewController: UIViewController {
     lazy var name_label = { () -> UILabel in
         let label = UILabel()
         label.text = "닉네임"
-        label.font = UIFont.boldSystemFont(ofSize: 18)
+        label.font = UIFont.boldSystemFont(ofSize: 13)
         return label
     }()
     
     lazy var name_label_2 = { () -> UILabel in
         let label = UILabel()
         label.text = "10자 이내의 한글, 영문"
-        label.font = UIFont.boldSystemFont(ofSize: 15)
+        label.font = UIFont.boldSystemFont(ofSize: 11)
         return label
     }()
     
@@ -40,7 +43,7 @@ class ProfileEditViewController: UIViewController {
         let text = UITextField()
         text.addLeftPadding()
         text.placeholder = " 닉네임"
-        text.font = UIFont.systemFont(ofSize: 20)
+        text.font = UIFont.systemFont(ofSize: 16)
         text.backgroundColor = UIColor.gray.withAlphaComponent(0.1)
         text.layer.cornerRadius = 10.0
         return text
@@ -49,15 +52,24 @@ class ProfileEditViewController: UIViewController {
     lazy var name_length = { () -> UILabel in
         let label = UILabel()
         label.text = "0/10"
-        label.font = UIFont.systemFont(ofSize: 15)
+        label.font = UIFont.systemFont(ofSize: 13)
         label.alpha = 0.3
+        return label
+    }()
+    
+    lazy var usable_name_label = { () -> UILabel in
+        let label = UILabel()
+        label.isHidden = true
+        label.text = "닉네임의 형식에 안 맞아요."
+        label.font = UIFont.systemFont(ofSize: 10)
+        label.textColor = UIColor.mainColor
         return label
     }()
     
     lazy var intro_label = { () -> UILabel in
         let label = UILabel()
         label.text = "소개글"
-        label.font = UIFont.boldSystemFont(ofSize: 18)
+        label.font = UIFont.boldSystemFont(ofSize: 13)
         return label
     }()
     
@@ -65,7 +77,8 @@ class ProfileEditViewController: UIViewController {
         let text = UITextField()
         text.addLeftPadding()
         text.placeholder = " 소개글을 입력하세요."
-        text.font = UIFont.systemFont(ofSize: 20)
+        text.font = UIFont.systemFont(ofSize: 13)
+        
         text.backgroundColor = UIColor.gray.withAlphaComponent(0.1)
         text.layer.cornerRadius = 10.0
         return text
@@ -74,14 +87,34 @@ class ProfileEditViewController: UIViewController {
     lazy var intro_length = { () -> UILabel in
         let label = UILabel()
         label.text = "0/120"
-        label.font = UIFont.systemFont(ofSize: 15)
+        label.font = UIFont.systemFont(ofSize: 11)
         label.alpha = 0.3
         return label
     }()
+    
+    lazy var usable_intro_label = { () -> UILabel in
+        let label = UILabel()
+        label.isHidden = true
+        label.text = "소개글의 형식에 안 맞아요."
+        label.font = UIFont.systemFont(ofSize: 120)
+        label.textColor = UIColor.mainColor
+        return label
+    }()
+    
+    var isValidNickname = false{
+        didSet{ self.validateUserInput() }
+    }
+    
+    var isValidIntro = false{
+        didSet{ self.validateUserInput() }
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         configureNavbar()
+        
+        initializeSet()
+        setAddTarget()
 
         view.addSubview(profileImage)
         view.addSubview(editButton)
@@ -141,9 +174,108 @@ class ProfileEditViewController: UIViewController {
         }
         intro_length.snp.makeConstraints { make in
           make.trailing.equalTo(intro_input.snp.trailing).inset(5)
-          make.centerY.equalTo(intro_input)
+            make.top.equalTo(intro_input.snp.bottom).inset(-5)
         }
         // Do any additional setup after loading the view.
+    }
+    
+    func validateUserInput(){
+        if isValidNickname && isValidIntro {
+            print("가능한 닉네임과 소개글")
+        } else{
+            print("불가능한 닉네임 혹은 소개글")
+        }
+    }
+    
+    func addActionToTextFieldByCase() {
+        let tfEditedEndArray = [name_input, intro_input]
+        
+        tfEditedEndArray.forEach{ each in
+            each.addTarget(self, action: #selector(textFieldDidEditingEnd(_:)), for: .editingDidEnd)
+        }
+        
+        name_input.addTarget(self, action: #selector(initNicknameCanUseLabel), for: .editingDidBegin)
+    }
+    
+    func setTextFieldDelegate() {
+        let textFields = [name_input, intro_input]
+        
+        textFields.forEach{ each in
+            each.delegate = self
+        }
+    }
+    
+    @objc func initNicknameCanUseLabel() {
+        usable_name_label.isHidden = false
+        usable_name_label.text = "*10자 이하의 한글, 영어, 숫자로만 가능합니다."
+    }
+    
+    @objc func textFieldDidEditingEnd(_ sender : UITextField){
+        let text = sender.text ?? ""
+        
+        switch sender{
+            
+        case name_input:
+            isValidNickname = text.isValidNickname()
+            if(isValidNickname){
+                usable_name_label.isHidden = true
+                nickname = text
+                print(nickname)
+            } else{
+                usable_name_label.isHidden = false
+                print("isvalid nickname failed")
+            }
+            return
+            
+        case intro_input:
+            return
+            
+            
+        default:
+            fatalError("Missing Textfield")
+        }
+    }
+    
+    func setAddTarget(){
+        name_input.addTarget(self, action: #selector(nicknameTextFieldCount), for: .editingChanged)
+        intro_input.addTarget(self, action: #selector(introTextFieldCount), for: .editingChanged)
+    }
+    
+    @objc func nicknameTextFieldCount(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        if (name_input.text!.count > 10) {
+            return false
+        } else if (name_input.text!.count == 10) {
+            name_length.textColor = .red
+            name_length.font = UIFont.boldSystemFont(ofSize: 13)
+            name_length.alpha = 0.6
+        }else {
+            name_length.textColor = .black
+            name_length.font = UIFont.systemFont(ofSize: 13)
+            name_length.alpha = 0.3
+        }
+        name_length.text = "\(name_input.text!.count)/10"
+        return true
+    }
+    
+    @objc func introTextFieldCount(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        if (intro_input.text!.count > 120) {
+            return false
+        } else if (intro_input.text!.count == 120) {
+            intro_length.textColor = .red
+            intro_length.font = UIFont.boldSystemFont(ofSize: 11)
+            intro_length.alpha = 0.6
+        }else {
+            intro_length.textColor = .black
+            intro_length.font = UIFont.systemFont(ofSize: 11)
+            intro_length.alpha = 0.3
+        }
+        intro_length.text = "\(intro_input.text!.count)/120"
+        return true
+    }
+    
+    private func initializeSet() {
+        addActionToTextFieldByCase()
+        setTextFieldDelegate()
     }
     
     @objc func editBtnClicked(){
