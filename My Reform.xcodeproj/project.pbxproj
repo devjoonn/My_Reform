@@ -12,6 +12,17 @@
 		373C5623297E7DEC00F00F1F /* SearchListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 373C5622297E7DEC00F00F1F /* SearchListViewController.swift */; };
 		3781289B298804E2000E75B7 /* UploadModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3781289A298804E2000E75B7 /* UploadModel.swift */; };
 		3781289D29880566000E75B7 /* UploadViewCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3781289C29880566000E75B7 /* UploadViewCollectionViewCell.swift */; };
+		3781289F2988271E000E75B7 /* SearchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3781289E2988271E000E75B7 /* SearchTableViewCell.swift */; };
+		378128A82988CB14000E75B7 /* Pretendard-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 378128A02988CB14000E75B7 /* Pretendard-SemiBold.otf */; };
+		378128A92988CB14000E75B7 /* Pretendard-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 378128A12988CB14000E75B7 /* Pretendard-Bold.otf */; };
+		378128AA2988CB14000E75B7 /* Pretendard-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 378128A22988CB14000E75B7 /* Pretendard-Regular.otf */; };
+		378128AB2988CB14000E75B7 /* Pretendard-ExtraBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 378128A32988CB14000E75B7 /* Pretendard-ExtraBold.otf */; };
+		378128AC2988CB14000E75B7 /* Pretendard-ExtraLight.otf in Resources */ = {isa = PBXBuildFile; fileRef = 378128A42988CB14000E75B7 /* Pretendard-ExtraLight.otf */; };
+		378128AD2988CB14000E75B7 /* Pretendard-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 378128A52988CB14000E75B7 /* Pretendard-Light.otf */; };
+		378128AE2988CB14000E75B7 /* Pretendard-Thin.otf in Resources */ = {isa = PBXBuildFile; fileRef = 378128A62988CB14000E75B7 /* Pretendard-Thin.otf */; };
+		378128AF2988CB14000E75B7 /* Pretendard-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 378128A72988CB14000E75B7 /* Pretendard-Medium.otf */; };
+		378128B12988CB1C000E75B7 /* Pretendard-Black.otf in Resources */ = {isa = PBXBuildFile; fileRef = 378128B02988CB1C000E75B7 /* Pretendard-Black.otf */; };
+		378128B32988CB3C000E75B7 /* PretendardVariable.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 378128B22988CB3C000E75B7 /* PretendardVariable.ttf */; };
 		379365422982D254009ABF2C /* UploadInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 379365412982D254009ABF2C /* UploadInput.swift */; };
 		379365462982D709009ABF2C /* UploadDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 379365452982D709009ABF2C /* UploadDataManager.swift */; };
 		37F6EB0929827EC20088EAD8 /* SearchCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37F6EB0829827EC20088EAD8 /* SearchCollectionViewCell.swift */; };
@@ -68,6 +79,17 @@
 		373C5622297E7DEC00F00F1F /* SearchListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchListViewController.swift; sourceTree = "<group>"; };
 		3781289A298804E2000E75B7 /* UploadModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadModel.swift; sourceTree = "<group>"; };
 		3781289C29880566000E75B7 /* UploadViewCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadViewCollectionViewCell.swift; sourceTree = "<group>"; };
+		3781289E2988271E000E75B7 /* SearchTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTableViewCell.swift; sourceTree = "<group>"; };
+		378128A02988CB14000E75B7 /* Pretendard-SemiBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-SemiBold.otf"; sourceTree = "<group>"; };
+		378128A12988CB14000E75B7 /* Pretendard-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Bold.otf"; sourceTree = "<group>"; };
+		378128A22988CB14000E75B7 /* Pretendard-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Regular.otf"; sourceTree = "<group>"; };
+		378128A32988CB14000E75B7 /* Pretendard-ExtraBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-ExtraBold.otf"; sourceTree = "<group>"; };
+		378128A42988CB14000E75B7 /* Pretendard-ExtraLight.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-ExtraLight.otf"; sourceTree = "<group>"; };
+		378128A52988CB14000E75B7 /* Pretendard-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Light.otf"; sourceTree = "<group>"; };
+		378128A62988CB14000E75B7 /* Pretendard-Thin.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Thin.otf"; sourceTree = "<group>"; };
+		378128A72988CB14000E75B7 /* Pretendard-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Medium.otf"; sourceTree = "<group>"; };
+		378128B02988CB1C000E75B7 /* Pretendard-Black.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Black.otf"; sourceTree = "<group>"; };
+		378128B22988CB3C000E75B7 /* PretendardVariable.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = PretendardVariable.ttf; sourceTree = "<group>"; };
 		379365412982D254009ABF2C /* UploadInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadInput.swift; sourceTree = "<group>"; };
 		379365452982D709009ABF2C /* UploadDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadDataManager.swift; sourceTree = "<group>"; };
 		37F6EB0829827EC20088EAD8 /* SearchCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -332,6 +354,16 @@
 		47FB54F42968690000B3029C /* Font */ = {
 			isa = PBXGroup;
 			children = (
+				378128A12988CB14000E75B7 /* Pretendard-Bold.otf */,
+				378128A32988CB14000E75B7 /* Pretendard-ExtraBold.otf */,
+				378128A42988CB14000E75B7 /* Pretendard-ExtraLight.otf */,
+				378128A52988CB14000E75B7 /* Pretendard-Light.otf */,
+				378128A72988CB14000E75B7 /* Pretendard-Medium.otf */,
+				378128A22988CB14000E75B7 /* Pretendard-Regular.otf */,
+				378128A02988CB14000E75B7 /* Pretendard-SemiBold.otf */,
+				378128A62988CB14000E75B7 /* Pretendard-Thin.otf */,
+				378128B02988CB1C000E75B7 /* Pretendard-Black.otf */,
+				378128B22988CB3C000E75B7 /* PretendardVariable.ttf */,
 			);
 			path = Font;
 			sourceTree = "<group>";
@@ -352,6 +384,7 @@
 				37F6EB0829827EC20088EAD8 /* SearchCollectionViewCell.swift */,
 				47A35B0C2988021C00B39D5C /* DetailPostImageCollectionViewCell.swift */,
 				3781289C29880566000E75B7 /* UploadViewCollectionViewCell.swift */,
+				3781289E2988271E000E75B7 /* SearchTableViewCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -444,6 +477,16 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				378128AC2988CB14000E75B7 /* Pretendard-ExtraLight.otf in Resources */,
+				378128AF2988CB14000E75B7 /* Pretendard-Medium.otf in Resources */,
+				378128AD2988CB14000E75B7 /* Pretendard-Light.otf in Resources */,
+				378128A82988CB14000E75B7 /* Pretendard-SemiBold.otf in Resources */,
+				378128AE2988CB14000E75B7 /* Pretendard-Thin.otf in Resources */,
+				378128B32988CB3C000E75B7 /* PretendardVariable.ttf in Resources */,
+				378128A92988CB14000E75B7 /* Pretendard-Bold.otf in Resources */,
+				378128B12988CB1C000E75B7 /* Pretendard-Black.otf in Resources */,
+				378128AB2988CB14000E75B7 /* Pretendard-ExtraBold.otf in Resources */,
+				378128AA2988CB14000E75B7 /* Pretendard-Regular.otf in Resources */,
 				47FB54DA2968590200B3029C /* Assets.xcassets in Resources */,
 				D3C0DEF429850D11003A62B0 /* LaunchScreen.storyboard in Resources */,
 			);
@@ -546,6 +589,7 @@
 				47A35B0D2988021C00B39D5C /* DetailPostImageCollectionViewCell.swift in Sources */,
 				37F6EB0D29827EFC0088EAD8 /* SearchFeedViewModel.swift in Sources */,
 				47526655297529AE008D5F1D /* SignUpViewController.swift in Sources */,
+				3781289F2988271E000E75B7 /* SearchTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
