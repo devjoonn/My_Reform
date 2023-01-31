@@ -89,24 +89,33 @@ class MainTableViewCell: UITableViewCell {
         
 //        heartButton.snp.makeConstraints { make in
 //            make.trailing.equalTo(contentView.snp.trailing).inset(20)
-//            make.centerY.equalTo(priceCellLabel.snp.centerY)
-//            make.width.height.equalTo(40)
-//        }
+        //            make.centerY.equalTo(priceCellLabel.snp.centerY)
+        //            make.width.height.equalTo(40)
+        //        }
         
     }
-
     
     
-        //ViewModel 에서 포스터 URL값과 포스터 이름을 불러옴
-        public func configure(with model: HomeFeedViewModel) {
-            guard let url = URL(string:"\(Constants.baseURL)\(model.imageUrl)") else { return }
-            print(url)
-            titleCellImageView.sd_setImage(with:url, completed: nil)
-            titleCellLabel.text = model.title
-            minuteCellLabel.text = model.minute
-            priceCellLabel.text = String("\(model.price) 원")
-            
-        }
+    
+    //ViewModel 에서 포스터 URL값과 포스터 이름을 불러옴
+    public func configure(with model: HomeFeedViewModel) {
+        guard let url = URL(string:"\(Constants.baseURL)\(model.imageUrl)") else { return }
+        print(url)
+        titleCellImageView.sd_setImage(with:url, completed: nil)
+        titleCellLabel.text = model.title
+        minuteCellLabel.text = model.minute
+        let commaPrice = numberFormatter(number: model.price)
+        priceCellLabel.text = String("\(commaPrice) 원")
+        
+    }
+    
+    // 세자리수 컴마찍기
+    func numberFormatter(number: Int) -> String {
+        let numberFormatter = NumberFormatter()
+        numberFormatter.numberStyle = .decimal
+        
+        return numberFormatter.string(from: NSNumber(value: number))!
+    }
     
     
     

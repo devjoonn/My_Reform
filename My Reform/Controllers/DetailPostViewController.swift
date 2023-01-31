@@ -182,8 +182,18 @@ class DetailPostViewController: UIViewController, UIScrollViewDelegate {
         categoryLabel.text = "\(categoryString)"
         contentText.text = detailPostModel[0].contents
         guard let price = detailPostModel[0].price else { return }
-        priceLabel.text = "\(price) 원"
+        let commaPrice = numberFormatter(number: price)
+        
+        priceLabel.text = "\(commaPrice) 원"
 
+    }
+    
+    // 세자리수 컴마찍기
+    func numberFormatter(number: Int) -> String {
+        let numberFormatter = NumberFormatter()
+        numberFormatter.numberStyle = .decimal
+        
+        return numberFormatter.string(from: NSNumber(value: number))!
     }
     
    
@@ -341,4 +351,3 @@ extension DetailPostViewController : UICollectionViewDelegate, UICollectionViewD
         }
 }
     
-
