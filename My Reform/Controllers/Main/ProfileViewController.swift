@@ -269,6 +269,11 @@ class ProfileViewController: UIViewController {
     }
     
     func configureNavbar() {
+        // 뒤로가기 버튼 < 만 출력
+        let backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: self, action: nil) // title 부분 수정
+            backBarButtonItem.tintColor = .black
+            self.navigationItem.backBarButtonItem = backBarButtonItem
+        
         var image = UIImage(named: "profile_label")?.resize(newWidth: 43)
         image = image?.withRenderingMode(.alwaysOriginal)
         

@@ -21,6 +21,12 @@ class CategoryViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = .white
+        title = "카테고리"
+        // 뒤로가기 버튼 < 만 출력
+        let backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: self, action: nil) // title 부분 수정
+            backBarButtonItem.tintColor = .black
+            self.navigationItem.backBarButtonItem = backBarButtonItem
         
         collectionView.dataSource = self
         collectionView.delegate = self

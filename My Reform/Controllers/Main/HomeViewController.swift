@@ -45,8 +45,7 @@ class HomeViewController: UIViewController {
         
         
         homeFeedTable.snp.makeConstraints { make in
-            make.top.equalTo(self.view.safeAreaLayoutGuide.snp.top)
-            make.leading.trailing.bottom.equalToSuperview()
+            make.top.leading.trailing.bottom.equalToSuperview()
         }
         
     }
@@ -59,11 +58,13 @@ class HomeViewController: UIViewController {
     
     @objc func categoryBtnClicked() {
         let vc = CategoryViewController()
+        vc.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(vc, animated: true)
     }
     
     @objc func uploadBtnClicked() {
         let vc = UploadViewController()
+        vc.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(vc, animated: true)
     }
     
@@ -110,6 +111,11 @@ class HomeViewController: UIViewController {
     
     //상단 네비게이션바
     func configureNavbar() {
+        
+        // 뒤로가기 버튼 < 만 출력
+        let backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: self, action: nil) // title 부분 수정
+            backBarButtonItem.tintColor = .black
+            self.navigationItem.backBarButtonItem = backBarButtonItem
         
         var image = UIImage(named: "logotype")?.resize(newWidth: 150)
         image = image?.withRenderingMode(.alwaysOriginal) //색깔 원래대로
