@@ -10,6 +10,6 @@ import UIKit
 struct HomeFeedViewModel {
     var imageUrl: String
     var title: String
-    var minute: Date
+    var minute: String
     var price: Int
 }

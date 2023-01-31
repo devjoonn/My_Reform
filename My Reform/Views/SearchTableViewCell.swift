@@ -104,16 +104,7 @@ class SearchTableViewCell: UITableViewCell {
             print(url)
             titleCellImageView.sd_setImage(with:url, completed: nil)
             titleCellLabel.text = model.title
-            let formatter = RelativeDateTimeFormatter()
-            formatter.locale = Locale(identifier: "ko_KR")
-            formatter.dateTimeStyle = .named
-            
-            let postTime = model.minute
-            let now = Date()
-            let relativeDateString = formatter.localizedString(for: postTime, relativeTo: now)
-            minuteCellLabel.text = relativeDateString
-            
-            minuteCellLabel.text = relativeDateString
+            minuteCellLabel.text = model.minute
             priceCellLabel.text = String("\(model.price) 원")
             
         }
