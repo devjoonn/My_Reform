@@ -30,13 +30,17 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
     lazy var name_label = { () -> UILabel in
         let label = UILabel()
         label.text = "닉네임"
-        label.font = UIFont.boldSystemFont(ofSize: 18)
+        label.font = UIFont.systemFont(ofSize: 15)
         return label
     }()
     lazy var name_label_2 = { () -> UILabel in
         let label = UILabel()
         label.text = "10자 이내의 한글, 영문"
-        label.font = UIFont.boldSystemFont(ofSize: 15)
+        label.font = UIFont(name: "Pretendard-Regular", size: 14)
+//        label.attributedText = [NSAttributedString.Key.font: UIFont(name: "Pretendard-Regular", size: 12)!]
+//        [NSAttributedString.Key.font: UIFont(name: "Pretendard-Bold", size: 16)!]
+        
+        
         return label
     }()
     lazy var name_input = { () -> UITextField in
@@ -222,6 +226,8 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
         setAddTarget()
         setUIView()
         setUIConstraints()
+        navigationItem.title = "회원가입"
+        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: UIFont(name: "Pretendard-Bold", size: 16)!]
 
     }
     
