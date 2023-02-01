@@ -30,7 +30,7 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
     lazy var name_label = { () -> UILabel in
         let label = UILabel()
         label.text = "닉네임"
-        label.font = UIFont.systemFont(ofSize: 13, weight: .medium)
+        label.font = UIFont(name: "Pretendard-Medium", size: 13)
         label.textColor = UIColor(hex: "212121")
         return label
     }()
@@ -49,7 +49,7 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
             attributes: [NSAttributedString.Key.foregroundColor: UIColor.systemGray]
         )
 
-        text.font = UIFont.systemFont(ofSize: 16)
+        text.font = UIFont(name: "Pretendard-Regular", size: 16)
         text.backgroundColor = UIColor.darkGray.withAlphaComponent(0.1)
         text.layer.cornerRadius = 10.0
         return text
@@ -74,7 +74,7 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
     lazy var id_label = { () -> UILabel in
         let label = UILabel()
         label.text = "아이디"
-        label.font = UIFont.systemFont(ofSize: 13, weight: .medium)
+        label.font = UIFont(name: "Pretendard-Medium", size: 13)
         label.textColor = UIColor(hex: "212121")
         return label
     }()
@@ -91,7 +91,7 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
             string: "아이디를 입력해주세요",
             attributes: [NSAttributedString.Key.foregroundColor: UIColor.systemGray]
         )
-        text.font = UIFont.systemFont(ofSize: 16)
+        text.font = UIFont(name: "Pretendard-Regular", size: 16)
         text.backgroundColor = UIColor.darkGray.withAlphaComponent(0.1)
         text.layer.cornerRadius = 10.0
         return text
@@ -115,7 +115,7 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
     lazy var email_label = { () -> UILabel in
         let label = UILabel()
         label.text = "이메일"
-        label.font = UIFont.systemFont(ofSize: 13, weight: .medium)
+        label.font = UIFont(name: "Pretendard-Medium", size: 13)
         label.textColor = UIColor(hex: "212121")
         return label
     }()
@@ -132,7 +132,7 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
             string: "이메일을 입력해주세요",
             attributes: [NSAttributedString.Key.foregroundColor: UIColor.systemGray]
         )
-        text.font = UIFont.systemFont(ofSize: 16)
+        text.font = UIFont(name: "Pretendard-Regular", size: 16)
         text.backgroundColor = UIColor.darkGray.withAlphaComponent(0.1)
         text.layer.cornerRadius = 10.0
         return text
@@ -141,7 +141,7 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
     lazy var password_label = { () -> UILabel in
         let label = UILabel()
         label.text = "비밀번호"
-        label.font = UIFont.systemFont(ofSize: 13, weight: .medium)
+        label.font = UIFont(name: "Pretendard-Medium", size: 13)
         label.textColor = UIColor(hex: "212121")
         return label
     }()
@@ -158,7 +158,7 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
             string: "비밀번호를 입력해주세요",
             attributes: [NSAttributedString.Key.foregroundColor: UIColor.systemGray]
         )
-        text.font = UIFont.systemFont(ofSize: 16)
+        text.font = UIFont(name: "Pretendard-Regular", size: 16)
         text.isSecureTextEntry = true
         text.backgroundColor = UIColor.darkGray.withAlphaComponent(0.1)
         text.layer.cornerRadius = 10.0
@@ -187,7 +187,7 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
             attributes: [NSAttributedString.Key.foregroundColor: UIColor.systemGray]
         )
         text.isSecureTextEntry = true
-        text.font = UIFont.systemFont(ofSize: 16)
+        text.font = UIFont(name: "Pretendard-Regular", size: 16)
         text.backgroundColor = UIColor.darkGray.withAlphaComponent(0.1)
         text.layer.cornerRadius = 10.0
         return text
@@ -243,10 +243,6 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
         setAddTarget()
         setUIView()
         setUIConstraints()
-        
-        navigationItem.title = "회원가입"
-        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: UIFont(name: "Pretendard-Bold", size: 16)!]
-
     }
     
     //MARK: - 유효성 검사 후 맨위에 스트링으로 집어넣음
@@ -270,11 +266,14 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
     }
     
     func setupNavigationBar() {
+        navigationItem.title = "회원가입"
+        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: UIFont(name: "Pretendard-Bold", size: 16)!]
+        
+        
         let backButton = UIBarButtonItem()
         backButton.title = ""
         backButton.tintColor = .black
         self.navigationController?.navigationBar.topItem?.backBarButtonItem = backButton
-//        self.navigationItem.backBarButtonItem = backButton
 
         navigationController?.navigationBar.barTintColor = .white
         navigationController?.navigationBar.tintColor = .label
