@@ -33,8 +33,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //            }
             self.window?.backgroundColor = .white
         }else {
-            moveLoginViewController()
-//            moveSplashViewController()
+//            moveLoginViewController()
+            moveSplashViewController()
             
 //            sleep(3)
             
