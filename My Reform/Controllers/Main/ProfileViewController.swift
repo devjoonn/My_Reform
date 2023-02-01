@@ -298,9 +298,9 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: MainTableViewCell.identifier, for: indexPath) as? MainTableViewCell else { return UITableViewCell()  }
         
         let model = allPostModel[indexPath.row]
-        
+        guard let updateAt = model.updateAt else {return UITableViewCell()}
         guard let price = model.price else { return UITableViewCell()}
-        cell.configure(with: HomeFeedViewModel(imageUrl: model.imageUrl?.first ?? "", title: model.title ?? "", minute: model.updateAt ?? "", price: price))
+        cell.configure(with: HomeFeedViewModel(imageUrl: model.imageUrl?.first ?? "", title: model.title ?? "", minute: updateAt, price: price))
         
 //        cell.titleCellImageView = UIImageView(image: UIImage(systemName: "heart"))
 //        cell.titleCellLabel.text = "숫자 커스텀 알람시계"
