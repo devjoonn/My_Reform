@@ -88,3 +88,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 }
 
+
+// 키보드 내리기
+extension UIViewController {
+    func hideKeyboard() {
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self,
+            action: #selector(UIViewController.dismissKeyboard))
+        view.addGestureRecognizer(tap)
+    }
+    @objc func dismissKeyboard() {
+        view.endEditing(true)
+    }
+}
+
