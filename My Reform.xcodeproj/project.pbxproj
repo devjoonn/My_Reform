@@ -309,7 +309,6 @@
 				47526634297309AD008D5F1D /* Models */,
 				47FB54F929686FF700B3029C /* Views */,
 				47FB54E429685A8D00B3029C /* Controllers */,
-				4752663F29730CD3008D5F1D /* UploadViewController.swift */,
 				47FB54F3296868B600B3029C /* Resources */,
 				47FB54DE2968590200B3029C /* Info.plist */,
 			);
@@ -327,6 +326,7 @@
 				373C5622297E7DEC00F00F1F /* SearchListViewController.swift */,
 				4770C65A297ECB11009E3E58 /* DetailPostViewController.swift */,
 				D3AF3D342987AB1D00F7DF11 /* ProfileEditViewController.swift */,
+				4752663F29730CD3008D5F1D /* UploadViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";

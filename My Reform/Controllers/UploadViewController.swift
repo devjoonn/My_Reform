@@ -19,7 +19,10 @@ var selectedImages: [UIImage] = []
 var check = [0,0,0,0,0,0,0,0,0,0,0]
 
 
+//MARK: - 0201 카테고리 버튼 클릭이 안됨 - 뷰 클릭 시 키보드 내려가는 함수 적용 시
 class UploadViewController: UIViewController, UITabBarControllerDelegate {
+    
+    var keyBoardUp: Bool = false
     
     // 서버로 전달한 가격(콤마x)
     var price_value: Int = 0
@@ -87,6 +90,7 @@ class UploadViewController: UIViewController, UITabBarControllerDelegate {
         setupNavigationBar()
         attribute()
         layout()
+        setKeyboardObserver()
     }
     
 }
@@ -411,75 +415,129 @@ extension UploadViewController : UITextViewDelegate, UITextFieldDelegate {
     }
     
     func textViewDidBeginEditing(_ textView: UITextView) {
-        if textView.textColor == .secondaryLabel {
-            textView.text = ""
-            textView.textColor = .label
+            keyBoardUp = true
+            if textView.textColor == .secondaryLabel {
+                textView.text = ""
+                textView.textColor = .label
+            }
+            descriptionTextCnt.text = "\(descriptionTextView.text.count)/1000"
         }
-        descriptionTextCnt.text = "\(descriptionTextView.text.count)/1000"
-    }
-    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
-        let currentText = descriptionTextView.text ?? ""
-        guard let stringRange = Range(range, in: currentText) else {return false}
-        let changeText = currentText.replacingCharacters(in: stringRange, with: text)
-        descriptionTextCnt.text = "\(changeText.count)/1000"
         
-        return true
-    }
-}
-
-extension UploadViewController {
-    // price(가격) 세단위 마다 쉼표 표시
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         
-        guard var text = textField.text else {
+        func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+            let currentText = descriptionTextView.text ?? ""
+            guard let stringRange = Range(range, in: currentText) else {return false}
+            let changeText = currentText.replacingCharacters(in: stringRange, with: text)
+            descriptionTextCnt.text = "\(changeText.count)/1000"
+            
             return true
         }
         
-        text = text.replacingOccurrences(of: "원", with: "")
-        text = text.replacingOccurrences(of: ",", with: "")
         
-        let numberFormatter = NumberFormatter()
-        numberFormatter.numberStyle = .decimal
         
-        if (string.isEmpty) {
-            // delete
-            if text.count > 1 {
-                guard let price = Int.init("\(text.prefix(text.count - 1))") else {
+        // TextField Return 클릭 시
+        func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+            if textField == self.titleTextField {
+                self.priceTextField.becomeFirstResponder()
+            } else if textField == self.priceTextField {
+                self.descriptionTextView.becomeFirstResponder()
+            } else if textField == self.descriptionTextView {
+                self.descriptionTextView.resignFirstResponder()
+            }
+            return true
+        }
+    }
+
+    extension UploadViewController {
+        // price(가격) 세단위 마다 쉼표 표시
+        func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+            
+            guard var text = textField.text else {
+                return true
+            }
+            
+            text = text.replacingOccurrences(of: "원", with: "")
+            text = text.replacingOccurrences(of: ",", with: "")
+            
+            let numberFormatter = NumberFormatter()
+            numberFormatter.numberStyle = .decimal
+            
+            if (string.isEmpty) {
+                // delete
+                if text.count > 1 {
+                    guard let price = Int.init("\(text.prefix(text.count - 1))") else {
+                        return true
+                    }
+                    guard let result = numberFormatter.string(from: NSNumber(value:price)) else {
+                        return true
+                    }
+                    
+                    textField.text = "\(result)원"
+                }
+                else {
+                    textField.text = ""
+                }
+            }
+            else {
+                guard let price = Int.init("\(text)\(string)") else {
                     return true
                 }
                 guard let result = numberFormatter.string(from: NSNumber(value:price)) else {
                     return true
                 }
+                textField.text = "\(result)"
+            }
+            
+            
+            // 콤마 제거 후
+            guard let number: NSNumber = numberFormatter.number(from: textField.text ?? "") else {return true}
+            // price_value에 값 저장
+            price_value = Int(number.stringValue) ?? 0
+            
+            return false
+        }
+        
+        //MARK: - 키보드 처리
+           
+           // 노티피케이션을 추가하는 메서드
+           func setKeyboardObserver() {
+               // 키보드가 나타날 때 앱에게 알리는 메서드 추가
+               NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+               // 키보드가 사라질 때 앱에게 알리는 메서드 추가
+               NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object:nil)
+           }
+           
+        // 키보드가 나타났다는 알림을 받으면 실행할 메서드
+        @objc func keyboardWillShow(notification: NSNotification) {
+            if keyBoardUp == false {
+                return
+            }
+            // 키보드의 높이만큼 화면을 올려준다.
+            if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
+                let keyboardRectangle = keyboardFrame.cgRectValue
+                let keyboardHeight = keyboardRectangle.height
+                UIView.animate(withDuration: 1) {
+                    self.view.window?.frame.origin.y -= keyboardHeight
+                }
                 
-                textField.text = "\(result)원"
             }
-            else {
-                textField.text = ""
-            }
-        }
-        else {
-            guard let price = Int.init("\(text)\(string)") else {
-                return true
-            }
-            guard let result = numberFormatter.string(from: NSNumber(value:price)) else {
-                return true
-            }
-            textField.text = "\(result)"
-        }
-        
-        
-        // 콤마 제거 후
-        guard let number: NSNumber = numberFormatter.number(from: textField.text ?? "") else {return true}
-        // price_value에 값 저장
-        price_value = Int(number.stringValue) ?? 0
-        
-        return false
-    }
-    
-    
-}
+            keyBoardUp = false
 
-// 서버
-//extension UploadViewController {
-//    func requestIdentify(userName: String,)
-//}
+            
+        }
+           
+           // 키보드가 사라졌다는 알림을 받으면 실행할 메서드
+           @objc func keyboardWillHide(notification: NSNotification) {
+      
+                   // 키보드의 높이만큼 화면을 내려준다.
+                   if self.view.window?.frame.origin.y != 0 {
+                       if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
+                           let keyboardRectangle = keyboardFrame.cgRectValue
+                           let keyboardHeight = keyboardRectangle.height
+                           UIView.animate(withDuration: 1) {
+                               self.view.window?.frame.origin.y += keyboardHeight
+                           }
+                       }
+               }
+           }
+    }
