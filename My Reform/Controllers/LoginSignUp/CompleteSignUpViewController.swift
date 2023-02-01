@@ -14,37 +14,44 @@ class CompleteSignUpViewController: UIViewController {
     lazy var welcomeLabel = { () ->UILabel in
         let label = UILabel()
         label.text = "환영해요,"
-        label.font = UIFont.boldSystemFont(ofSize: 25)
+        label.font = UIFont(name: "Pretendard-Bold", size: 23)
+        label.textColor = UIColor(hex: "212121")
+        label.font = UIFont.boldSystemFont(ofSize: 23)
         return label
     }()
     
     lazy var nicknameLabel = { () ->UILabel in
         let label = UILabel()
         label.text = "닉네임 님"
-        label.font = UIFont.boldSystemFont(ofSize: 25)
+        label.font = UIFont(name: "Pretendard-Bold", size: 23)
+        label.textColor = UIColor.mainBlack
+        label.font = UIFont.boldSystemFont(ofSize: 23)
         return label
     }()
     
     lazy var explainLabel = { () -> UILabel in
         let label = UILabel()
         label.text = "마이리폼에 가입이 완료되었어요."
-        label.font = UIFont.systemFont(ofSize: 16)
+        label.font = UIFont(name: "Pretendard-Medium", size: 16)
+        label.textColor = UIColor.mainBlack
         return label
     }()
     
     lazy var explainLabel2 = { () -> UILabel in
         let label = UILabel()
         label.text = "다양한 리폼을 둘러보고 나만의 것도 소개해보세요!"
-        label.font = UIFont.systemFont(ofSize: 16)
+        label.font = UIFont(name: "Pretendard-Medium", size: 16)
+        label.textColor = UIColor.mainBlack
         return label
     }()
     
     lazy var goButton = { () -> UIButton in
         let goButton = UIButton()
         goButton.backgroundColor = UIColor.mainColor
-        goButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
+        goButton.titleLabel?.font = UIFont(name: "Pretendard-Medium", size: 16)
+        goButton.titleLabel?.textColor = UIColor(hex: "FFFFFF")
         goButton.setTitle("둘러보러 가기", for: .normal)
-        goButton.layer.cornerRadius = 8
+        goButton.layer.cornerRadius = 11
         return goButton
     }()
     
@@ -82,40 +89,40 @@ class CompleteSignUpViewController: UIViewController {
         
         welcomeLabel.snp.makeConstraints{
             (make) in
-            make.top.equalTo(self.view.safeAreaLayoutGuide.snp.top).inset(35)
-            make.leading.equalTo(30)
+            make.top.equalToSuperview().inset(122)
+            make.leading.equalTo(25.91)
         }
         
         nicknameLabel.snp.makeConstraints{
             (make) in
-            make.top.equalTo(welcomeLabel.snp.top)
+            make.top.equalTo(welcomeLabel.snp.top).inset(0)
             make.leading.equalTo(welcomeLabel.snp.trailing).inset(-5)
         }
         
         explainLabel.snp.makeConstraints{
             (make) in
-            make.top.equalTo(welcomeLabel.snp.bottom).inset(-20)
-            make.leading.equalTo(30)
+            make.top.equalTo(welcomeLabel.snp.bottom).inset(-4)
+            make.leading.equalTo(28.09)
         }
         
         explainLabel2.snp.makeConstraints{
             (make) in
-            make.top.equalTo(explainLabel.snp.bottom).inset(-15)
-            make.leading.equalTo(30)
+            make.top.equalTo(explainLabel.snp.bottom).inset(-3)
+            make.leading.equalTo(28.09)
         }
         
         helloImage.snp.makeConstraints{
             (make) in
-            make.width.equalTo(380)
-            make.height.equalTo(420)
-            make.top.equalTo(explainLabel2.snp.bottom).inset(-80)
+            make.width.equalTo(285.15)
+            make.height.equalTo(308.93)
+            make.bottom.equalTo(goButton.snp.top).inset(-82)
             make.centerX.equalToSuperview()
         }
         
         goButton.snp.makeConstraints{
             (make) in
-            make.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom).inset(20)
-            make.leading.trailing.equalToSuperview().inset(20)
+            make.bottom.equalToSuperview().inset(33.38)
+            make.leading.trailing.equalToSuperview().inset(26.5)
             make.centerX.equalToSuperview()
             make.height.equalTo(50)
         }
@@ -143,7 +150,7 @@ struct CompleteViewControllerRepresentable_PreviewProvider: PreviewProvider {
             CompleteViewControllerRepresentable()
                 .ignoresSafeArea()
                 .previewDisplayName(/*@START_MENU_TOKEN@*/"Preview"/*@END_MENU_TOKEN@*/)
-                .previewDevice(PreviewDevice(rawValue: "iPhone 11"))
+                .previewDevice(PreviewDevice(rawValue: "iPhone 14 Pro"))
         }
     }
 } #endif

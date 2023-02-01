@@ -9,6 +9,10 @@ import UIKit
 
 class ProfileEditViewController: UIViewController, UITextFieldDelegate {
     
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+            self.view.endEditing(true) /// 화면을 누르면 키보드 내려가게 하는 것
+    }
+    
     var nickname : String = ""
     var intro : String = ""
     
@@ -20,22 +24,38 @@ class ProfileEditViewController: UIViewController, UITextFieldDelegate {
     
     lazy var editButton = { () -> UIButton in
         let button = UIButton()
-        button.setBackgroundImage(UIImage(named: "editProfileImage"), for: .normal)
+//        button.setBackgroundImage(UIImage(named: "editProfileImage"), for: .normal)
+//        button.addTarget(self, action: #selector(editBtnClicked), for: .touchUpInside)
+        button.setTitle("프로필 사진 수정", for: .normal)
+        button.titleLabel?.font = UIFont(name: "Pretendard", size: 13)
+        button.titleLabel?.textColor = UIColor.mainColor
         button.addTarget(self, action: #selector(editBtnClicked), for: .touchUpInside)
         return button
     } ()
     
+//    lazy var editButton = { () -> UIButton in
+//        let button = UIButton()
+//        button.setTitle("프로필 편집", for: .normal)
+//        button.titleLabel?.font = UIFont(name: "Pretendard", size: 13)
+//        button.titleLabel?.textColor = UIColor.mainColor
+//        button.setUnderline()
+//        button.addTarget(self, action: #selector(profileClicked), for: .touchUpInside)
+//        return button
+//    } ()
+    
     lazy var name_label = { () -> UILabel in
         let label = UILabel()
         label.text = "닉네임"
-        label.font = UIFont.boldSystemFont(ofSize: 13)
+        label.font = UIFont(name: "Pretendard-Medium", size: 13)
+        label.textColor = UIColor(hex: "212121")
         return label
     }()
     
     lazy var name_label_2 = { () -> UILabel in
         let label = UILabel()
         label.text = "10자 이내의 한글, 영문"
-        label.font = UIFont.boldSystemFont(ofSize: 11)
+        label.font = UIFont(name: "Pretendard", size: 11)
+        label.textColor = UIColor.mainBlack
         return label
     }()
     
@@ -43,16 +63,18 @@ class ProfileEditViewController: UIViewController, UITextFieldDelegate {
         let text = UITextField()
         text.addLeftPadding()
         text.placeholder = " 닉네임"
-        text.font = UIFont.systemFont(ofSize: 16)
-        text.backgroundColor = UIColor.gray.withAlphaComponent(0.1)
-        text.layer.cornerRadius = 10.0
+        text.font = UIFont(name: "Pretendard-Medium", size: 16)
+        text.textColor = .systemGray
+        text.backgroundColor = UIColor.darkGray.withAlphaComponent(0.1)
+        text.layer.cornerRadius = 11
         return text
     }()
     
     lazy var name_length = { () -> UILabel in
         let label = UILabel()
         label.text = "0/10"
-        label.font = UIFont.systemFont(ofSize: 13)
+        label.font = UIFont(name: "Pretendard-Medium", size: 13)
+        label.textColor = UIColor(hex: "666666")
         label.alpha = 0.3
         return label
     }()
@@ -69,7 +91,8 @@ class ProfileEditViewController: UIViewController, UITextFieldDelegate {
     lazy var intro_label = { () -> UILabel in
         let label = UILabel()
         label.text = "소개글"
-        label.font = UIFont.boldSystemFont(ofSize: 13)
+        label.font = UIFont(name: "Pretendard-Medium", size: 13)
+        label.textColor = UIColor(hex: "212121")
         return label
     }()
     
@@ -77,17 +100,18 @@ class ProfileEditViewController: UIViewController, UITextFieldDelegate {
         let text = UITextField()
         text.addLeftPadding()
         text.placeholder = " 소개글을 입력하세요."
-        text.font = UIFont.systemFont(ofSize: 13)
-        
-        text.backgroundColor = UIColor.gray.withAlphaComponent(0.1)
-        text.layer.cornerRadius = 10.0
+        text.font = UIFont(name: "Pretendard-Medium", size: 13)
+        text.textColor = UIColor(hex: "909090")
+        text.backgroundColor = UIColor(hex: "EFEFEF")
+        text.layer.cornerRadius = 11
         return text
     }()
     
     lazy var intro_length = { () -> UILabel in
         let label = UILabel()
         label.text = "0/120"
-        label.font = UIFont.systemFont(ofSize: 11)
+        label.font = UIFont(name: "Pretendard-Medium", size: 11)
+        label.textColor = UIColor(hex: "909090")
         label.alpha = 0.3
         return label
     }()
@@ -139,7 +163,7 @@ class ProfileEditViewController: UIViewController, UITextFieldDelegate {
             make.top.equalTo(profileImage.snp.bottom).inset(-10)
             make.centerX.equalToSuperview()
             make.width.equalTo(85)
-            make.height.equalTo(13)
+            make.height.equalTo(20)
         }
         
         name_label.snp.makeConstraints { make in
@@ -238,7 +262,7 @@ class ProfileEditViewController: UIViewController, UITextFieldDelegate {
     
     func setAddTarget(){
         name_input.addTarget(self, action: #selector(nicknameTextFieldCount), for: .editingChanged)
-        intro_input.addTarget(self, action: #selector(introTextFieldCount), for: .editingChanged)
+//        intro_input.addTarget(self, action: #selector(introTextFieldCount), for: .editingChanged)
     }
     
     @objc func nicknameTextFieldCount(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
@@ -297,8 +321,14 @@ class ProfileEditViewController: UIViewController, UITextFieldDelegate {
         let completeBtn = UIBarButtonItem(image: image2, style: .done, target:self, action: #selector(completeBtnClicked))
         
         self.navigationItem.titleView = UIImageView(image: image)
-        self.navigationItem.rightBarButtonItem = completeBtn
+//        self.navigationItem.title = "프로필 편집"
+//
+//        self.navigationController?.navigationBar.titleTextAttributes = [
+//            .foregroundColor: UIColor.mainBlack,
+//            .font: UIFont(name: "Pretendard-Bold", size: 16)!
+//        ]
         
+        self.navigationItem.rightBarButtonItem = completeBtn
         
         navigationController?.navigationBar.barTintColor = .white
         navigationController?.navigationBar.tintColor = .label
@@ -314,3 +344,28 @@ class ProfileEditViewController: UIViewController, UITextFieldDelegate {
     */
 
 }
+
+//extension ProfileEditViewController: UITextViewDelegate {
+//    func textViewDidBeginEditing(_ textView: UITextView) {
+//            /// 플레이스 홀더
+//            if textView.text == placholder {
+//                textView.text = nil
+//                textView.textColor = .white
+//            } else if textView.text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+//                textView.text = placholder
+//                textView.textColor = .gray200
+//            }
+//        }
+//
+//        func textViewDidEndEditing(_ textView: UITextView) {
+//            if textView.text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+//                textView.text = placholder
+//                textView.textColor = .gray200
+//            }
+//        }
+//    func textViewDidChange(_ textView: UITextView) {
+//        if activityTextView.text.count > 150 {
+//           activityTextView.deleteBackward()
+//        }
+//    }
+//}

@@ -13,8 +13,8 @@ class HomefeedHeaderView: UITableViewHeaderFooterView {
 
     let titleView: UILabel = UILabel().then {
         $0.text = "  업로드한 리폼"
-        $0.font = UIFont.boldSystemFont(ofSize: 20)
-    
+        $0.font = UIFont(name: "Pretendard-Bold", size: 16)
+        $0.textColor = UIColor.mainBlack
     }
     
     override init(reuseIdentifier: String?) {

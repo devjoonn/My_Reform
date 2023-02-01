@@ -129,9 +129,12 @@ class SettingViewController: UIViewController {
     //----------------------------
 
     var tableView = UITableView(frame: .zero, style: .plain)
-//    
-//    let data = [[editEmailLabel,editPasswordLabel],[appVersionLabel,questionLabel,noticeLabel,termsLabel,privacyLabel,licenseLabel],[withdrawalLabel,logoutLabel]]
-//    let header = ["Section 1","Section 2","Section 3"]
+    
+    let data = [["이메일 변경","비밀번호 변경"],["앱 버전","문의하기","공지사항","서비스 이용약관","개인정보 처리방침","오픈소스 라이선스"],["회원 탈퇴","로그아웃"]]
+//    let data = [[editEmailLabel, editPasswordLabel],[appVersionLabel, questionLabel, noticeLabel, termsLabel, privacyLabel, licenseLabel],[withdrawalLabel, logoutLabel]]
+    let header = ["개인 설정","이용 안내","기타"]
+    
+    
     
     //--------------------------------------
     
@@ -144,155 +147,176 @@ class SettingViewController: UIViewController {
         super.viewDidLoad()
         configureNavbar()
         
+        
+        self.view.addSubview(tableView)
+        self.tableView.dataSource = self
+        
+        self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: "UITableViewCell")
+        self.tableView.translatesAutoresizingMaskIntoConstraints = false
+        self.tableView.separatorStyle = .none
+        
+        NSLayoutConstraint.activate([
+            self.tableView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
+            self.tableView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor),
+            self.tableView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor),
+            self.tableView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor)
+        ])
+        
+        
         //-----------------
         
         
         //-----------------------------------------------
 //        스크롤뷰
-        let scrollView : UIScrollView! = UIScrollView()
         
-        let contentView : UIView! = UIView()
+//        let scrollView : UIScrollView! = UIScrollView()
+//
+//        let contentView : UIView! = UIView()
+//
+//        scrollView.translatesAutoresizingMaskIntoConstraints = false
+//        contentView.translatesAutoresizingMaskIntoConstraints = false
+//
+//        view.addSubview(scrollView)
+//        scrollView.addSubview(contentView)
+//
+//        NSLayoutConstraint.activate([
+//            scrollView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+//            scrollView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+//            scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+//            scrollView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+//        ])
+//
+//        NSLayoutConstraint.activate([
+//            contentView.leadingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.leadingAnchor),
+//            contentView.trailingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.trailingAnchor),
+//            contentView.topAnchor.constraint(equalTo: scrollView.contentLayoutGuide.topAnchor),
+//            contentView.bottomAnchor.constraint(equalTo: scrollView.contentLayoutGuide.bottomAnchor)
+//        ])
+//
+//        contentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor).isActive = true
+//
+//        let contentViewHeight = contentView.heightAnchor.constraint(greaterThanOrEqualTo: view.heightAnchor)
+//        contentViewHeight.priority = .defaultLow
+//        contentViewHeight.isActive = true
         
-        scrollView.translatesAutoresizingMaskIntoConstraints = false
-        contentView.translatesAutoresizingMaskIntoConstraints = false
-
-        view.addSubview(scrollView)
-        scrollView.addSubview(contentView)
+        //------------------------------
         
-        NSLayoutConstraint.activate([
-            scrollView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-            scrollView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
-            scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            scrollView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
-        ])
-        
-        NSLayoutConstraint.activate([
-            contentView.leadingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.leadingAnchor),
-            contentView.trailingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.trailingAnchor),
-            contentView.topAnchor.constraint(equalTo: scrollView.contentLayoutGuide.topAnchor),
-            contentView.bottomAnchor.constraint(equalTo: scrollView.contentLayoutGuide.bottomAnchor)
-        ])
-        
-        contentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor).isActive = true
-
-        let contentViewHeight = contentView.heightAnchor.constraint(greaterThanOrEqualTo: view.heightAnchor)
-        contentViewHeight.priority = .defaultLow
-        contentViewHeight.isActive = true
         
         //-------------------------------------------------------------
 //        constraint
-        contentView.addSubview(individualLabel)
-        contentView.addSubview(editEmailLabel)
-        contentView.addSubview(editPasswordLabel)
-        contentView.addSubview(line)
-        contentView.addSubview(informationLabel)
-        contentView.addSubview(appVersionLabel)
-        contentView.addSubview(questionLabel)
-        contentView.addSubview(noticeLabel)
-        contentView.addSubview(termsLabel)
-        contentView.addSubview(privacyLabel)
-        contentView.addSubview(licenseLabel)
-        contentView.addSubview(line2)
-        contentView.addSubview(etcLabel)
-        contentView.addSubview(withdrawalLabel)
-        contentView.addSubview(logoutLabel)
-        contentView.addSubview(versionLabel)
         
-        individualLabel.snp.makeConstraints{
-            (make) in
-            make.top.equalTo(contentView.snp.top).inset(44.87)
-            make.leading.equalToSuperview().inset(37.54)
-        }
-        
-        editEmailLabel.snp.makeConstraints{
-            (make) in
-            make.top.equalTo(individualLabel.snp.bottom).inset(-16.23)
-            make.leading.equalToSuperview().inset(37.54)
-        }
-        
-        editPasswordLabel.snp.makeConstraints{
-            (make) in
-            make.top.equalTo(editEmailLabel.snp.bottom).inset(-12)
-            make.leading.equalToSuperview().inset(37.54)
-        }
-        
-        line.snp.makeConstraints{
-            (make) in
-            make.top.equalTo(editPasswordLabel.snp.bottom).inset(-26.88)
-            make.leading.trailing.equalToSuperview().inset(17)
-        }
-        
-        informationLabel.snp.makeConstraints{
-            (make) in
-            make.top.equalTo(line.snp.bottom).inset(-26.32)
-            make.leading.equalToSuperview().inset(37.54)
-        }
-        
-        appVersionLabel.snp.makeConstraints{
-            (make) in
-            make.top.equalTo(informationLabel.snp.bottom).inset(-18.23)
-            make.leading.equalToSuperview().inset(37.54)
-        }
-        
-        versionLabel.snp.makeConstraints{
-            (make) in
-            make.top.equalTo(informationLabel.snp.bottom).inset(-18.23)
-            make.trailing.equalToSuperview().inset(43.08)
-        }
-        
-        questionLabel.snp.makeConstraints{
-            (make) in
-            make.top.equalTo(appVersionLabel.snp.bottom).inset(-10)
-            make.leading.equalToSuperview().inset(37.54)
-        }
-        
-        noticeLabel.snp.makeConstraints{
-            (make) in
-            make.top.equalTo(questionLabel.snp.bottom).inset(-12)
-            make.leading.equalToSuperview().inset(37.54)
-        }
-        
-        termsLabel.snp.makeConstraints{
-            (make) in
-            make.top.equalTo(noticeLabel.snp.bottom).inset(-12)
-            make.leading.equalToSuperview().inset(37.54)
-        }
-        
-        privacyLabel.snp.makeConstraints{
-            (make) in
-            make.top.equalTo(termsLabel.snp.bottom).inset(-12)
-            make.leading.equalToSuperview().inset(37.54)
-        }
-        
-        licenseLabel.snp.makeConstraints{
-            (make) in
-            make.top.equalTo(privacyLabel.snp.bottom).inset(-12)
-            make.leading.equalToSuperview().inset(37.54)
-        }
-        
-        line2.snp.makeConstraints{
-            (make) in
-            make.top.equalTo(licenseLabel.snp.bottom).inset(-34.88)
-            make.leading.trailing.equalToSuperview().inset(17)
-        }
-        
-        etcLabel.snp.makeConstraints{
-            (make) in
-            make.top.equalTo(line2.snp.bottom).inset(-24.88)
-            make.leading.equalToSuperview().inset(37.54)
-        }
-        
-        withdrawalLabel.snp.makeConstraints{
-            (make) in
-            make.top.equalTo(etcLabel.snp.bottom).inset(-16.23)
-            make.leading.equalToSuperview().inset(37.54)
-        }
-        
-        logoutLabel.snp.makeConstraints{
-            (make) in
-            make.top.equalTo(withdrawalLabel.snp.bottom).inset(-12)
-            make.leading.equalToSuperview().inset(37.54)
-        }
+//        contentView.addSubview(individualLabel)
+//        contentView.addSubview(editEmailLabel)
+//        contentView.addSubview(editPasswordLabel)
+//        contentView.addSubview(line)
+//        contentView.addSubview(informationLabel)
+//        contentView.addSubview(appVersionLabel)
+//        contentView.addSubview(questionLabel)
+//        contentView.addSubview(noticeLabel)
+//        contentView.addSubview(termsLabel)
+//        contentView.addSubview(privacyLabel)
+//        contentView.addSubview(licenseLabel)
+//        contentView.addSubview(line2)
+//        contentView.addSubview(etcLabel)
+//        contentView.addSubview(withdrawalLabel)
+//        contentView.addSubview(logoutLabel)
+//        contentView.addSubview(versionLabel)
+//
+//        individualLabel.snp.makeConstraints{
+//            (make) in
+//            make.top.equalTo(contentView.snp.top).inset(44.87)
+//            make.leading.equalToSuperview().inset(37.54)
+//        }
+//
+//        editEmailLabel.snp.makeConstraints{
+//            (make) in
+//            make.top.equalTo(individualLabel.snp.bottom).inset(-16.23)
+//            make.leading.equalToSuperview().inset(37.54)
+//        }
+//
+//        editPasswordLabel.snp.makeConstraints{
+//            (make) in
+//            make.top.equalTo(editEmailLabel.snp.bottom).inset(-12)
+//            make.leading.equalToSuperview().inset(37.54)
+//        }
+//
+//        line.snp.makeConstraints{
+//            (make) in
+//            make.top.equalTo(editPasswordLabel.snp.bottom).inset(-26.88)
+//            make.leading.trailing.equalToSuperview().inset(17)
+//        }
+//
+//        informationLabel.snp.makeConstraints{
+//            (make) in
+//            make.top.equalTo(line.snp.bottom).inset(-26.32)
+//            make.leading.equalToSuperview().inset(37.54)
+//        }
+//
+//        appVersionLabel.snp.makeConstraints{
+//            (make) in
+//            make.top.equalTo(informationLabel.snp.bottom).inset(-18.23)
+//            make.leading.equalToSuperview().inset(37.54)
+//        }
+//
+//        versionLabel.snp.makeConstraints{
+//            (make) in
+//            make.top.equalTo(informationLabel.snp.bottom).inset(-18.23)
+//            make.trailing.equalToSuperview().inset(43.08)
+//        }
+//
+//        questionLabel.snp.makeConstraints{
+//            (make) in
+//            make.top.equalTo(appVersionLabel.snp.bottom).inset(-10)
+//            make.leading.equalToSuperview().inset(37.54)
+//        }
+//
+//        noticeLabel.snp.makeConstraints{
+//            (make) in
+//            make.top.equalTo(questionLabel.snp.bottom).inset(-12)
+//            make.leading.equalToSuperview().inset(37.54)
+//        }
+//
+//        termsLabel.snp.makeConstraints{
+//            (make) in
+//            make.top.equalTo(noticeLabel.snp.bottom).inset(-12)
+//            make.leading.equalToSuperview().inset(37.54)
+//        }
+//
+//        privacyLabel.snp.makeConstraints{
+//            (make) in
+//            make.top.equalTo(termsLabel.snp.bottom).inset(-12)
+//            make.leading.equalToSuperview().inset(37.54)
+//        }
+//
+//        licenseLabel.snp.makeConstraints{
+//            (make) in
+//            make.top.equalTo(privacyLabel.snp.bottom).inset(-12)
+//            make.leading.equalToSuperview().inset(37.54)
+//        }
+//
+//        line2.snp.makeConstraints{
+//            (make) in
+//            make.top.equalTo(licenseLabel.snp.bottom).inset(-34.88)
+//            make.leading.trailing.equalToSuperview().inset(17)
+//        }
+//
+//        etcLabel.snp.makeConstraints{
+//            (make) in
+//            make.top.equalTo(line2.snp.bottom).inset(-24.88)
+//            make.leading.equalToSuperview().inset(37.54)
+//        }
+//
+//        withdrawalLabel.snp.makeConstraints{
+//            (make) in
+//            make.top.equalTo(etcLabel.snp.bottom).inset(-16.23)
+//            make.leading.equalToSuperview().inset(37.54)
+//        }
+//
+//        logoutLabel.snp.makeConstraints{
+//            (make) in
+//            make.top.equalTo(withdrawalLabel.snp.bottom).inset(-12)
+//            make.leading.equalToSuperview().inset(37.54)
+//        }
         
         //---------------------------
         
@@ -319,6 +343,39 @@ class SettingViewController: UIViewController {
 
 }
 
+extension SettingViewController: UITableViewDataSource, UITableViewDelegate {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return data[section].count
+    }
+
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cellWithIndexPath = tableView.dequeueReusableCell(withIdentifier: "UITableViewCell", for: indexPath)
+        cellWithIndexPath.textLabel?.text = data[indexPath.section][indexPath.row]
+        return cellWithIndexPath
+    }
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return header.count
+    }
+    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return header[section]
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.cellForRow(at: indexPath)?.backgroundColor = .red
+    }
+
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 100
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+        let header = view as! UITableViewHeaderFooterView
+        header.textLabel?.font = UIFont(name: "Pretendard", size: 50)
+        header.textLabel?.textColor = .systemRed
+    }
+}
 
 #if DEBUG
 import SwiftUI
