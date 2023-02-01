@@ -14,7 +14,7 @@ import SDWebImage
 class ProfileViewController: UIViewController {
 
     static let identifier = "ProfileViewController"
-    
+
     var lastBoardId : Int = 100
     var allPostDataManagerUrl: String = "\(Constants.baseURL)/boards?size=20&lastBoardId="
     
@@ -37,7 +37,7 @@ class ProfileViewController: UIViewController {
     } ()
     
     lazy var homeFeedTable = { () -> UITableView in
-        let table = UITableView(frame: .zero, style: .plain)
+        let table = UITableView(frame: .zero, style: .grouped)
         table.register(MainTableViewCell.self, forCellReuseIdentifier: MainTableViewCell.identifier)
         table.backgroundColor = .white
         return table
@@ -66,7 +66,7 @@ class ProfileViewController: UIViewController {
     lazy var introLabel = { () -> UILabel in
         let introLabel = UILabel()
         introLabel.text = "혼자 만드는 거 좋아하는 리포머입니다. @reformer_hundred"
-        introLabel.font = UIFont(name: "Pretendard", size: 13)
+        introLabel.font = UIFont(name: "Pretendard-Medium", size: 13)
         introLabel.textColor = UIColor(hex: "000000")
         introLabel.numberOfLines = 2
         introLabel.textAlignment = .center
@@ -121,15 +121,14 @@ class ProfileViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureNavbar()
         
         self.view.backgroundColor = .white
         self.view.addSubview(homeFeedTable)
         
         homeFeedTable.delegate = self
         homeFeedTable.dataSource = self
-        homeFeedTable.register(HomefeedHeaderView.self, forHeaderFooterViewReuseIdentifier: "HomefeedHeaderView")
-        homeFeedTable.sectionHeaderHeight = 50
+//        homeFeedTable.register(HomefeedHeaderView.self, forHeaderFooterViewReuseIdentifier: "HomefeedHeaderView")
+//        homeFeedTable.sectionHeaderHeight = 50
         
         self.view.insertSubview(backgroundImage, belowSubview: self.view)
         self.view.addSubview(editButton)
@@ -179,7 +178,7 @@ class ProfileViewController: UIViewController {
         uploadLabel.snp.makeConstraints{
             (make) in
             make.top.equalTo(editButton.snp.bottom).inset(-21.23)
-            make.leading.equalToSuperview().inset(15.58)
+            make.leading.equalToSuperview().inset(18)
         }
         
     }
@@ -203,8 +202,11 @@ class ProfileViewController: UIViewController {
         
     }
     
+    
     override func viewWillAppear(_ animated: Bool) {
-//        AllPostDataManager().allPostGet(self)
+        let homevc = HomeViewController()
+        AllPostDataManager().allPostGet(homevc)
+        configureNavbar()
     }
     
     
@@ -241,15 +243,19 @@ class ProfileViewController: UIViewController {
         }
     }
     
+    //-------------------------
+    
     @objc func profileClicked(){
         let vc = ProfileEditViewController()
         vc.modalTransitionStyle = .flipHorizontal
+        vc.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(vc, animated: true)
     }
     
     @objc func settingClicked(){
         //설정 페이지 넘어가게
         let vc = SettingViewController()
+        vc.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(vc, animated: true)
     }
     
@@ -270,7 +276,7 @@ class ProfileViewController: UIViewController {
         self.navigationItem.title = "프로필"
         
         self.navigationController?.navigationBar.titleTextAttributes = [
-            .foregroundColor: UIColor.white,
+            .foregroundColor: UIColor(red: 1, green: 1, blue: 1, alpha: 1),
             .font: UIFont(name: "Pretendard-Bold", size: 16)!
         ]
         self.navigationItem.rightBarButtonItem = settingBtn
@@ -323,6 +329,7 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
         let vc = DetailPostViewController()
         vc.detailPostModel = [model]
         print("detailPostModel에 data 저장됨")
+        vc.hidesBottomBarWhenPushed = true
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
@@ -345,7 +352,7 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
         return footerView
     }
     
-    func scrollViewDIdScroll(_ scrollView: UIScrollView){
+    func scrollViewDidScroll(_ scrollView: UIScrollView){
         let position = scrollView.contentOffset.y
         if position > (homeFeedTable.contentSize.height-100-scrollView.frame.size.height) {
             print("데이터 불러오는 중")

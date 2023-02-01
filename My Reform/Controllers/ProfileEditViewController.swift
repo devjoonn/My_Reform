@@ -27,8 +27,8 @@ class ProfileEditViewController: UIViewController, UITextFieldDelegate {
 //        button.setBackgroundImage(UIImage(named: "editProfileImage"), for: .normal)
 //        button.addTarget(self, action: #selector(editBtnClicked), for: .touchUpInside)
         button.setTitle("프로필 사진 수정", for: .normal)
-        button.titleLabel?.font = UIFont(name: "Pretendard", size: 13)
-        button.titleLabel?.textColor = UIColor.mainColor
+        button.titleLabel?.font = UIFont(name: "Pretendard-Medium", size: 13)
+        button.setTitleColor(UIColor.mainColor, for: .normal)
         button.addTarget(self, action: #selector(editBtnClicked), for: .touchUpInside)
         return button
     } ()
@@ -101,11 +101,14 @@ class ProfileEditViewController: UIViewController, UITextFieldDelegate {
         text.addLeftPadding()
         text.placeholder = " 소개글을 입력하세요."
         text.font = UIFont(name: "Pretendard-Medium", size: 13)
-        text.textColor = UIColor(hex: "909090")
-        text.backgroundColor = UIColor(hex: "EFEFEF")
+        text.textColor = .systemGray
+        text.backgroundColor = UIColor.darkGray.withAlphaComponent(0.1)
         text.layer.cornerRadius = 11
         return text
     }()
+    
+    let descriptTextView = UITextView()
+    
     
     lazy var intro_length = { () -> UILabel in
         let label = UILabel()
@@ -115,6 +118,8 @@ class ProfileEditViewController: UIViewController, UITextFieldDelegate {
         label.alpha = 0.3
         return label
     }()
+    
+    let descriptionTextCnt = UILabel()
     
     lazy var usable_intro_label = { () -> UILabel in
         let label = UILabel()
@@ -135,8 +140,10 @@ class ProfileEditViewController: UIViewController, UITextFieldDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = .white
         configureNavbar()
         
+        attribute()
         initializeSet()
         setAddTarget()
 
@@ -147,8 +154,8 @@ class ProfileEditViewController: UIViewController, UITextFieldDelegate {
         view.addSubview(name_input)
         view.addSubview(name_length)
         view.addSubview(intro_label)
-        view.addSubview(intro_input)
-        view.addSubview(intro_length)
+        view.addSubview(descriptTextView)
+        view.addSubview(descriptionTextCnt)
         
         profileImage.snp.makeConstraints{
             (make) in
@@ -163,7 +170,7 @@ class ProfileEditViewController: UIViewController, UITextFieldDelegate {
             make.top.equalTo(profileImage.snp.bottom).inset(-10)
             make.centerX.equalToSuperview()
             make.width.equalTo(85)
-            make.height.equalTo(20)
+            make.height.equalTo(13)
         }
         
         name_label.snp.makeConstraints { make in
@@ -190,15 +197,15 @@ class ProfileEditViewController: UIViewController, UITextFieldDelegate {
           make.top.equalTo(name_input.snp.bottom).inset(-25)
           make.leading.equalToSuperview().inset(30)
         }
-        intro_input.snp.makeConstraints { make in
+        descriptTextView.snp.makeConstraints { make in
           make.top.equalTo(intro_label.snp.bottom).offset(5)
           make.leading.trailing.equalToSuperview().inset(16)
           make.width.equalTo(342)
           make.height.equalTo(106)
         }
-        intro_length.snp.makeConstraints { make in
-          make.trailing.equalTo(intro_input.snp.trailing).inset(5)
-            make.top.equalTo(intro_input.snp.bottom).inset(-5)
+        descriptionTextCnt.snp.makeConstraints { make in
+          make.trailing.equalTo(descriptTextView.snp.trailing).inset(5)
+            make.top.equalTo(descriptTextView.snp.bottom).inset(-5)
         }
         // Do any additional setup after loading the view.
     }
@@ -307,28 +314,27 @@ class ProfileEditViewController: UIViewController, UITextFieldDelegate {
     }
     
     @objc func completeBtnClicked(){
-        
+        navigationController?.popViewController(animated: true)
     }
     
 
     func configureNavbar() {
-        var image = UIImage(named: "profileEditLabel")?.resize(newWidth: 76)
-        image = image?.withRenderingMode(.alwaysOriginal)
         
-        var image2 = UIImage(named: "complete_label")?.resize(newWidth: 28)
-        image2 = image2?.withRenderingMode(.alwaysOriginal)
+        self.navigationItem.title = "프로필 편집"
         
-        let completeBtn = UIBarButtonItem(image: image2, style: .done, target:self, action: #selector(completeBtnClicked))
+        self.navigationController?.navigationBar.titleTextAttributes = [
+            .foregroundColor: UIColor.black,
+            .font: UIFont(name: "Pretendard-Bold", size: 16)!
+        ]
         
-        self.navigationItem.titleView = UIImageView(image: image)
-//        self.navigationItem.title = "프로필 편집"
-//
-//        self.navigationController?.navigationBar.titleTextAttributes = [
-//            .foregroundColor: UIColor.mainBlack,
-//            .font: UIFont(name: "Pretendard-Bold", size: 16)!
-//        ]
+        let completeBtn = UIBarButtonItem(title: "완료", style: .plain, target: self, action: #selector(completeBtnClicked))
+        completeBtn.setTitleTextAttributes([
+            NSAttributedString.Key.font : UIFont(name: "Pretendard-Bold", size: 16),
+            NSAttributedString.Key.foregroundColor : UIColor(red: 1, green: 0.459, blue: 0.251, alpha: 1)],
+                                         for: .normal)
         
         self.navigationItem.rightBarButtonItem = completeBtn
+//        navigationItem.rightBarButtonItem?.tintColor = UIColor(red: 1, green: 0.459, blue: 0.251, alpha: 1)
         
         navigationController?.navigationBar.barTintColor = .white
         navigationController?.navigationBar.tintColor = .label
@@ -343,6 +349,39 @@ class ProfileEditViewController: UIViewController, UITextFieldDelegate {
     }
     */
 
+}
+
+extension ProfileEditViewController : UITextViewDelegate {
+    func attribute() {
+        descriptTextView.text = "소개글을 입력하세요."
+        descriptTextView.font = .systemFont(ofSize: 13, weight: .regular)
+        descriptTextView.textColor = .secondaryLabel
+        descriptTextView.backgroundColor = UIColor.darkGray.withAlphaComponent(0.1)
+        descriptTextView.delegate = self
+        descriptTextView.text = "소개글을 입력하세요."
+        descriptTextView.delegate = self
+        descriptTextView.textColor = .secondaryLabel
+        descriptTextView.layer.cornerRadius = 11
+        descriptionTextCnt.font = .systemFont(ofSize: 11)
+        descriptionTextCnt.textColor = .secondaryLabel
+        descriptionTextCnt.text = "\(descriptTextView.text.count)/120"
+    }
+    
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        if textView.textColor == .secondaryLabel {
+            textView.text = ""
+            textView.textColor = .label
+        }
+        descriptionTextCnt.text = "\(descriptTextView.text.count)/120"
+    }
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        let currentText = descriptTextView.text ?? ""
+        guard let stringRange = Range(range, in: currentText) else {return false}
+        let changeText = currentText.replacingCharacters(in: stringRange, with: text)
+        descriptionTextCnt.text = "\(changeText.count)/120"
+        
+        return true
+    }
 }
 
 //extension ProfileEditViewController: UITextViewDelegate {
@@ -369,3 +408,29 @@ class ProfileEditViewController: UIViewController, UITextFieldDelegate {
 //        }
 //    }
 //}
+
+
+#if DEBUG
+import SwiftUI
+struct ProfileEditViewControllerRepresentable: UIViewControllerRepresentable {
+    
+func updateUIViewController(_ uiView: UIViewController,context: Context) {
+        // leave this empty
+}
+@available(iOS 13.0.0, *)
+func makeUIViewController(context: Context) -> UIViewController{
+    ProfileEditViewController()
+    }
+}
+@available(iOS 13.0, *)
+struct ProfileEditViewControllerRepresentable_PreviewProvider: PreviewProvider {
+    static var previews: some View {
+        Group {
+            ProfileEditViewControllerRepresentable()
+                .ignoresSafeArea()
+                .previewDisplayName(/*@START_MENU_TOKEN@*/"Preview"/*@END_MENU_TOKEN@*/)
+                .previewDevice(PreviewDevice(rawValue: "iPhone 11"))
+        }
+        
+    }
+} #endif
