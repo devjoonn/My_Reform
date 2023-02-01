@@ -23,11 +23,21 @@ class CategoryViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .white
         title = "카테고리"
+        
+//        self.navigationItem.title = "카테고리"
+//
+//        self.navigationController?.navigationBar.titleTextAttributes = [
+//            .foregroundColor: UIColor.mainBlack,
+//            .font: UIFont(name: "Pretendard-Bold", size: 16)!
+//        ]
+        
+        
         // 뒤로가기 버튼 < 만 출력
         let backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: self, action: nil) // title 부분 수정
             backBarButtonItem.tintColor = .black
             self.navigationItem.backBarButtonItem = backBarButtonItem
         
+       
         collectionView.dataSource = self
         collectionView.delegate = self
         
