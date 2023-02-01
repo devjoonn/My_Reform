@@ -139,18 +139,14 @@ extension SearchViewController : UISearchControllerDelegate  {
         
         let searchBar = searchController.searchBar
         
-        guard let text = searchBar.text, !text.trimmingCharacters(in: .whitespaces).isEmpty, let resultController = searchController.searchResultsController as? SearchListViewController  else{return}
+        guard let text = searchBar.text,
+              !text.trimmingCharacters(in: .whitespaces).isEmpty,
+              text.trimmingCharacters(in: .whitespaces).count >= 3,
+              // resultController는 입력한 결과값이 나오는 searchResultViewController
+              let resultController = searchController.searchResultsController as? SearchListViewController else {return}
         
         print(resultController)
-        
                 
-//        guard let text = searchBar.text,
-//              !text.trimmingCharacters(in: .whitespaces).isEmpty,
-//              text.trimmingCharacters(in: .whitespaces).count >= 3,
-//              // resultController는 입력한 결과값이 나오는 searchResultViewController
-//              let resultController = searchController.searchResultsController as? SearchListViewController else {return}
-        
-        
         AF.request("\(Constants.baseURL)/boards?lastBoardId=100&size=100&keyword=\(text)",method: .get, parameters: nil ).validate().responseDecodable(of: AllPostModel.self) { response in
             DispatchQueue.main.async {
                 

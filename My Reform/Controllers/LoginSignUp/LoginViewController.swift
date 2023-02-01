@@ -14,11 +14,13 @@ import Then
 
 class LoginViewController: UIViewController {
     
+    var keyBoardUp: Bool = false
+    
     /* // 카카오 네이티브 키 값 가져오는 코드
      let KAKAO_APP_KEY: String = Bundle.main.infoDictionary?["KAKAO_APP_KEY"] as? String ?? "KAKAO_APP_KEY is nil"
      KakaoSDKCommon.initSDK(appKey: KAKAO_APP_KEY, loggingEnable:true)
      */
-   
+    
     
     private let logoImage = UIImageView().then {
         let logo = UIImage(named: "myReform_logo")
@@ -64,6 +66,7 @@ class LoginViewController: UIViewController {
     
     private let noAccountAskLabel = UILabel().then {
         $0.text = "계정이 없으신가요?"
+        $0.textColor = UIColor.mainBlack
         $0.font = UIFont.boldSystemFont(ofSize: 15)
     }
     
@@ -74,22 +77,28 @@ class LoginViewController: UIViewController {
     }
     
     
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
         // 뒤로가기 버튼 < 만 출력
         let backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: self, action: nil) // title 부분 수정
-            backBarButtonItem.tintColor = .black
-            self.navigationItem.backBarButtonItem = backBarButtonItem
+        backBarButtonItem.tintColor = UIColor.mainBlack
+        self.navigationItem.backBarButtonItem = backBarButtonItem
         
         navigationController?.navigationBar.tintColor = .black
-        
         setUIView()
         setUIConstraints()
+        setKeyboardObserver()
+        hideKeyboard()
         
+        idTextfield.delegate = self
+        passwordTextfield.delegate = self
         
         moveSignUpBtn.addTarget(self, action: #selector(moveSignup), for: .touchUpInside)
         loginBtn.addTarget(self, action: #selector(loginBtnDidTap), for: .touchUpInside)
+        view.endEditing(true)
         
         //로그인VC 접근시 기존 스택VC들 제거
         let endIndex = (self.navigationController?.viewControllers.endIndex)!
@@ -170,9 +179,64 @@ class LoginViewController: UIViewController {
         let userData = LoginInput(id: idTextfield.text ?? "", pw: passwordTextfield.text ?? "")
         LoginDataManager.posts(self, userData)
     }
-
+    
+    
 }
 
+//MARK: - 키보드 처리
+extension LoginViewController : UITextFieldDelegate {
+    // 노티피케이션을 추가하는 메서드
+    func setKeyboardObserver() {
+        // 키보드가 나타날 때 앱에게 알리는 메서드 추가
+        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        // 키보드가 사라질 때 앱에게 알리는 메서드 추가
+        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object:nil)
+    }
+    
+    // 키보드가 나타났다는 알림을 받으면 실행할 메서드
+    @objc func keyboardWillShow(notification: NSNotification) {
+        if keyBoardUp == false {
+            keyBoardUp = true
+            // 키보드의 높이만큼 화면을 올려준다.
+            if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
+                let keyboardRectangle = keyboardFrame.cgRectValue
+                let keyboardHeight = keyboardRectangle.height
+                UIView.animate(withDuration: 1) {
+                    self.view.window?.frame.origin.y -= keyboardHeight
+                }
+            }
+        }
+        
+    }
+    
+    // 키보드가 사라졌다는 알림을 받으면 실행할 메서드
+    @objc func keyboardWillHide(notification: NSNotification) {
+        if keyBoardUp == true {
+            // 키보드의 높이만큼 화면을 내려준다.
+            if self.view.window?.frame.origin.y != 0 {
+                keyBoardUp = false
+                if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
+                    let keyboardRectangle = keyboardFrame.cgRectValue
+                    let keyboardHeight = keyboardRectangle.height
+                    UIView.animate(withDuration: 1) {
+                        self.view.window?.frame.origin.y += keyboardHeight
+                    }
+                }
+            }
+        }
+        
+    }
+    
+    // TextField Return 클릭 시
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        if textField == self.idTextfield {
+            self.passwordTextfield.becomeFirstResponder()
+        } else if textField == self.passwordTextfield {
+            self.passwordTextfield.resignFirstResponder()
+        }
+        return true
+    }
+}
 
 
 // MARK: - 카카오 API
@@ -270,5 +334,4 @@ class LoginViewController: UIViewController {
 //        }
 //    }
 //}
-
 
