@@ -16,6 +16,7 @@ import Alamofire
 
 // 테이블 뷰에서 셀 클릭 시 넘어오는 뷰로 클릭했던 data의 indexPath 값을 이 뷰로 전송
 class DetailPostViewController: UIViewController, UIScrollViewDelegate {
+    static let identifier = "DetailPostViewController"
     
     var detailPostModel: [AllPostData] = []
 
