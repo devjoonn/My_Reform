@@ -90,7 +90,7 @@ class UploadViewController: UIViewController, UITabBarControllerDelegate {
         setupNavigationBar()
         attribute()
         layout()
-        setKeyboardObserver()
+//        setKeyboardObserver()
     }
     
 }
@@ -171,9 +171,8 @@ extension UploadViewController {
         print("selectedCategory :", selectedCategory)
         print("price_value :", price_value)
         // 아이디 카테고리 이미지 남음
+        
         let userData = UploadInput(nickname: "닉네임", categoryId: selectedCategory, title: titleTextField.text ?? "", contents: descriptionTextView.text, price: price_value)
-        print(userData)
-        print(selectedImages)
         UploadDataManager.posts(self, userData, images: selectedImages)
         
         

@@ -173,6 +173,7 @@ class LoginViewController: UIViewController {
     @objc func moveSignup() {
         let vc = TermsViewController()
         navigationController?.pushViewController(vc, animated: true)
+        ToastService.shared.showToast("로그인이 되었습니다.")
     }
     
     @objc func loginBtnDidTap() {

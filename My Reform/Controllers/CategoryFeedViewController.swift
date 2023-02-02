@@ -13,7 +13,7 @@ class CategoryFeedViewController: UIViewController {
     var getCategoryId: Int!
     var categoryName: String = ""
     
-    var categoryPostModel: [CategoryPostData] = []{
+    var categoryPostModel: [AllPostData] = []{
         didSet {
             self.categoryFeedTable.reloadData()
         }
@@ -48,7 +48,7 @@ class CategoryFeedViewController: UIViewController {
         CategoryPostDataManager().categoryPostGet(self, categoryId: getCategoryId)
     }
     
-    func successCategoryPostModel(result: [CategoryPostData]) {
+    func successCategoryPostModel(result: [AllPostData]) {
         self.categoryPostModel.append(contentsOf: result)
         print(categoryPostModel.count)
     }
@@ -99,7 +99,7 @@ extension CategoryFeedViewController: UITableViewDelegate, UITableViewDataSource
 //        guard let model = allPostModel[indexPath.row] else { return UITableViewCell() } //현재 model 은 옵셔널 스트링 값
         guard let price = model.price else { return UITableViewCell()}
 //        cell.titleCellImageView =
-        cell.configure(with: HomeFeedViewModel(imageUrl: model.imageUrl?.first ?? "", title: model.title ?? "", minute: model.updateAt ?? "", price: price))
+        cell.configure(with: HomeFeedViewModel(imageUrl: model.imageUrl?.first ?? "", title: model.title ?? "", minute: model.time ?? "", price: price))
         
         
         return cell
@@ -117,10 +117,8 @@ extension CategoryFeedViewController: UITableViewDelegate, UITableViewDataSource
         let model = categoryPostModel[indexPath.row]
         
         //MARK: - 0130 데이터를 detailPostController로 넘기는 dataManager를 생성해야함 [x]
-        // 프론트가 받는 파라미터들은 AllPostModel과 같아야하지만, 요청하는 dataManager는 해당 셀의 indexPath의 boardId를 기준으로 값을 넘겨주어야함
-        
         let vc = DetailPostViewController()
-//        vc.detailPostModel = [model]
+        vc.detailPostModel = [model]
         print("detailPostModel에 data 저장됨")
         self.navigationController?.pushViewController(vc, animated: true)
     }
