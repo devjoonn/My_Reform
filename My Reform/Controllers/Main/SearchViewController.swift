@@ -85,6 +85,7 @@ extension SearchViewController: UICollectionViewDataSource {
         
         let vc = DetailPostViewController()
         vc.detailPostModel = [model]
+        vc.hidesBottomBarWhenPushed = true
         print("detailPostModel에 data 저장됨")
         self.navigationController?.pushViewController(vc, animated: true)
         
@@ -141,36 +142,43 @@ extension SearchViewController : UISearchControllerDelegate  {
         
         guard let text = searchBar.text,
               !text.trimmingCharacters(in: .whitespaces).isEmpty,
-              text.trimmingCharacters(in: .whitespaces).count >= 3,
+              text.trimmingCharacters(in: .whitespaces).count >= 0,
               // resultController는 입력한 결과값이 나오는 searchResultViewController
               let resultController = searchController.searchResultsController as? SearchListViewController else {return}
         
         print(resultController)
                 
-        AF.request("\(Constants.baseURL)/boards?lastBoardId=100&size=100&keyword=\(text)",method: .get, parameters: nil ).validate().responseDecodable(of: AllPostModel.self) { response in
+        AF.request("\(Constants.baseURL)/boards?lastBoardId=100&size=100&keyword=\(text)".addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? "" ,method: .get, parameters: nil ).validate().responseDecodable(of: AllPostModel.self) { response in
             DispatchQueue.main.async {
-                
+                print(text)
                 debugPrint(response)
                 switch(response.result) {
                 case .success(let result) :
                     print("검색 UI 서버 통신 성공 - \(result)")
+                    print(text)
                     switch(result.status) {
                     case 200:
                         guard let data = result.data else {return}
-                        SearchListViewController().successSearchViewPostModel(result: data)
-                        SearchListViewController().searchFeedTable.reloadData()
+                        resultController.successSearchViewPostModel(result: data)
+                        resultController.searchFeedTable.reloadData()
                     case 404:
                         print("데이터가 없는 경우입니다. - \(result.message)")
+                        
+                        // 검색 결과가 없을 때
+                        resultController.successSearchViewPostModel(result: [])
+                        resultController.searchFeedTable.reloadData()
                     default:
                         print("데이터베이스 오류")
                         return
                     }
                 case .failure(let error):
+                    // 검색이 실패했을 때도 검색 AlPostData에 nill을 넣어줌
+                    resultController.successSearchViewPostModel(result: [])
+                    resultController.searchFeedTable.reloadData()
                     print(error)
                 }
                 
             }
-            
         }
         
         
