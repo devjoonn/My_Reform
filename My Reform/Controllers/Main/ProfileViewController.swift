@@ -16,10 +16,17 @@ class ProfileViewController: UIViewController {
     static let identifier = "ProfileViewController"
 
     var lastBoardId : Int = 100
-    var allPostDataManagerUrl: String = "\(Constants.baseURL)/boards?size=20&lastBoardId="
+    
+    var profileDataManagerUrl: String = "\(Constants.baseURL)/users/{userId}/profiles"
     
 //     데이터 모델이 추가될 때 마다 테이블 뷰 갱신
     var allPostModel: [AllPostData] = []{
+        didSet {
+            self.homeFeedTable.reloadData()
+        }
+    }
+    
+    var profileModel: [ProfileData] = [] {
         didSet {
             self.homeFeedTable.reloadData()
         }
@@ -204,15 +211,13 @@ class ProfileViewController: UIViewController {
     
     
     override func viewWillAppear(_ animated: Bool) {
-        let homevc = HomeViewController()
-        AllPostDataManager().allPostGet(homevc)
         configureNavbar()
     }
     
     
     private func fetchingAll(_ lastBoardId: Int) {
         print("fetchingAll - lastBoardId = \(lastBoardId)")
-        AF.request("\(allPostDataManagerUrl)\(lastBoardId)", method: .get, parameters: nil).validate().responseDecodable(of: AllPostModel.self) { response in
+        AF.request("\(profileDataManagerUrl)\(lastBoardId)", method: .get, parameters: nil).validate().responseDecodable(of: ProfileModel.self) { response in
             DispatchQueue.main.async {
                 self.homeFeedTable.tableFooterView = nil
             }
@@ -227,7 +232,7 @@ class ProfileViewController: UIViewController {
                     guard let data = result.data else{
                         return
                     }
-                    self.successAllPostModel(result: data)
+                    self.successProfileModel(result: data)
                     DispatchQueue.main.async {
                         self.homeFeedTable.reloadData()
                     }
@@ -287,9 +292,9 @@ class ProfileViewController: UIViewController {
 
     //----------------------------------------------------
     
-    func successAllPostModel(result: [AllPostData]){
-        self.allPostModel.append(contentsOf: result)
-        print(allPostModel.count)
+    func successProfileModel(result: [ProfileData]){
+        self.profileModel.append(contentsOf: result)
+        print(profileModel.count)
     }
 
 }
@@ -298,14 +303,22 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return allPostModel.count
+//        return profileModel.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: MainTableViewCell.identifier, for: indexPath) as? MainTableViewCell else { return UITableViewCell()  }
         
         let model = allPostModel[indexPath.row]
+//        let model = profileModel[indexPath.row]
+        
+        
         guard let updateAt = model.updateAt else {return UITableViewCell()}
         guard let price = model.price else { return UITableViewCell()}
+        
+//        guard let imageUrl = model.imageUrl else { return }
+//        guard let
+
         cell.configure(with: HomeFeedViewModel(imageUrl: model.imageUrl?.first ?? "", title: model.title ?? "", minute: updateAt, price: price))
         
 //        cell.titleCellImageView = UIImageView(image: UIImage(systemName: "heart"))
