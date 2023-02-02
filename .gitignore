@@ -1,5 +1,6 @@
 .DS_Store
 .DS_Store
+
 # Created by https://www.gitignore.io/api/xcode,swift,cocoapods
 # Edit at https://www.gitignore.io/?templates=xcode,swift,cocoapods
 
@@ -106,7 +107,8 @@ iOSInjectionProject/
 !*.xcodeproj/xcshareddata/
 !*.xcworkspace/contents.xcworkspacedata
 /*.gcno
-*.xcconfig
+*.xcconfigj
+.xcodeproj/project.pbxproj
 
 ### Xcode Patch ###
 **/xcshareddata/WorkspaceSettings.xcsettings
