@@ -18,7 +18,7 @@ class SearchListViewController: UIViewController {
     
     public let searchFeedTable: UITableView = {
         
-        let table = UITableView(frame: .zero, style: .grouped)
+        let table = UITableView()
         //Views 에있는 CollectionViewTabelCell 호출
         table.register(SearchTableViewCell.self, forCellReuseIdentifier: SearchTableViewCell.identifier)
         return table
@@ -32,10 +32,10 @@ class SearchListViewController: UIViewController {
         
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        guard let vc: String  = SearchViewController().searchController.searchBar.text else {return}
-        self.searchFeedTable.reloadData()
-    }
+//    override func viewWillAppear(_ animated: Bool) {
+//        guard let vc: String  = SearchViewController().searchController.searchBar.text else {return}
+//        self.searchFeedTable.reloadData()
+//    }
     
 
 }
@@ -48,6 +48,8 @@ extension SearchListViewController {
         
         searchFeedTable.delegate = self
         searchFeedTable.dataSource = self
+        
+        
     }
     func layout() {
         searchFeedTable.snp.makeConstraints { make in
@@ -72,10 +74,9 @@ extension SearchListViewController: UITableViewDelegate, UITableViewDataSource, 
         
         let model = allPostModel[indexPath.row]
 //        guard let model = allPostModel[indexPath.row] else { return UITableViewCell() } //현재 model 은 옵셔널 스트링 값
-//        guard let price = model.price else { return UITableViewCell()}
+        guard let price = model.price else { return UITableViewCell()}
 //        cell.titleCellImageView =
-        cell.configure(with: HomeFeedViewModel(imageUrl: model.imageUrl?.first ?? "", title: model.title ?? "", minute: model.updateAt ?? "", price: model.price ?? 0))
-        cell.backgroundColor = .systemBlue
+        cell.configure(with: HomeFeedViewModel(imageUrl: model.imageUrl?.first ?? "", title: model.title ?? "", minute: model.time ?? "", price: price))
         
         return cell
     }
@@ -92,17 +93,25 @@ extension SearchListViewController: UITableViewDelegate, UITableViewDataSource, 
         let model = allPostModel[indexPath.row]
         
         
-        let vc = DetailPostViewController()
-        vc.detailPostModel = [model]
-        print("detailPostModel에 data 저장됨")
-        self.navigationController?.pushViewController(vc, animated: true)
+        let next = DetailPostViewController()
+        next.detailPostModel = [model]
+        print("detailPostModel에 data 저장됨----------")
+//        self.performSegue(withIdentifier: "DetailPostViewController", sender: nil)
+        next.hidesBottomBarWhenPushed = true
+        
+//        self.present(next, animated: true)
+        self.navigationController?.pushViewController(next, animated: true)
     }
 }
 
 extension SearchListViewController {
     
     func successSearchViewPostModel(result: [AllPostData]) {
-        self.allPostModel.append(contentsOf: result)
+        print("AllPostData : ", result.count)
+        self.allPostModel = result
+        
+        // 뒤에 추가하는 것들(reload 에서 다시 사용하자)
+//        self.allPostModel.append(contentsOf: result)
         print(allPostModel.count)
         print("allPostModel----------------------------------------",allPostModel)
     }
