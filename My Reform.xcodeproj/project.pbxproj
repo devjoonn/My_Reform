@@ -42,8 +42,8 @@
 		4770C65B297ECB11009E3E58 /* DetailPostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4770C65A297ECB11009E3E58 /* DetailPostViewController.swift */; };
 		47A35B0B298801D400B39D5C /* CategoryFeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47A35B0A298801D400B39D5C /* CategoryFeedViewController.swift */; };
 		47A35B0D2988021C00B39D5C /* DetailPostImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47A35B0C2988021C00B39D5C /* DetailPostImageCollectionViewCell.swift */; };
-		47A35B0F2988025B00B39D5C /* CategoryPostModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47A35B0E2988025B00B39D5C /* CategoryPostModel.swift */; };
 		47A35B112988027D00B39D5C /* CategoryPostDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47A35B102988027D00B39D5C /* CategoryPostDataManager.swift */; };
+		47A35B13298BA1C100B39D5C /* ToastService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47A35B12298BA1C100B39D5C /* ToastService.swift */; };
 		47C9C2E329769DE500DF89D8 /* UITextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C9C2E229769DE500DF89D8 /* UITextField.swift */; };
 		47C9C2E629781D1A00DF89D8 /* UserServiceAllowViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C9C2E529781D1A00DF89D8 /* UserServiceAllowViewController.swift */; };
 		47C9C2E829781D3000DF89D8 /* UserPrivacyAllowViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C9C2E729781D3000DF89D8 /* UserPrivacyAllowViewController.swift */; };
@@ -110,8 +110,8 @@
 		4770C65A297ECB11009E3E58 /* DetailPostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailPostViewController.swift; sourceTree = "<group>"; };
 		47A35B0A298801D400B39D5C /* CategoryFeedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryFeedViewController.swift; sourceTree = "<group>"; };
 		47A35B0C2988021C00B39D5C /* DetailPostImageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailPostImageCollectionViewCell.swift; sourceTree = "<group>"; };
-		47A35B0E2988025B00B39D5C /* CategoryPostModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryPostModel.swift; sourceTree = "<group>"; };
 		47A35B102988027D00B39D5C /* CategoryPostDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryPostDataManager.swift; sourceTree = "<group>"; };
+		47A35B12298BA1C100B39D5C /* ToastService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastService.swift; sourceTree = "<group>"; };
 		47C9C2E229769DE500DF89D8 /* UITextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextField.swift; sourceTree = "<group>"; };
 		47C9C2E529781D1A00DF89D8 /* UserServiceAllowViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserServiceAllowViewController.swift; sourceTree = "<group>"; };
 		47C9C2E729781D3000DF89D8 /* UserPrivacyAllowViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPrivacyAllowViewController.swift; sourceTree = "<group>"; };
@@ -175,6 +175,7 @@
 			isa = PBXGroup;
 			children = (
 				4752663B29730A55008D5F1D /* Constants.swift */,
+				47A35B12298BA1C100B39D5C /* ToastService.swift */,
 				4752664129750EAC008D5F1D /* Users */,
 				47C9C2EE2979640800DF89D8 /* Posts */,
 			);
@@ -276,7 +277,6 @@
 			isa = PBXGroup;
 			children = (
 				47C9C2F829796F0B00DF89D8 /* AllPostModel.swift */,
-				47A35B0E2988025B00B39D5C /* CategoryPostModel.swift */,
 			);
 			path = PresentPosts;
 			sourceTree = "<group>";
@@ -545,9 +545,9 @@
 				47C9C2F529796CA500DF89D8 /* AddPostInput.swift in Sources */,
 				47FB54E829685E9000B3029C /* SearchViewController.swift in Sources */,
 				4752664E2975179A008D5F1D /* SignUpModel.swift in Sources */,
-				47A35B0F2988025B00B39D5C /* CategoryPostModel.swift in Sources */,
 				4770C649297AD686009E3E58 /* String.swift in Sources */,
 				4770C65B297ECB11009E3E58 /* DetailPostViewController.swift in Sources */,
+				47A35B13298BA1C100B39D5C /* ToastService.swift in Sources */,
 				47C9C2F02979644600DF89D8 /* AllPostDataManager.swift in Sources */,
 				47FB54D52968590000B3029C /* MainTabBarViewController.swift in Sources */,
 				370D8BC0296FE0A000E4B65E /* CategoryCell.swift in Sources */,

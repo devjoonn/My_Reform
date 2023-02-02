@@ -15,7 +15,7 @@ class CategoryPostDataManager {
         
         let url = "\(Constants.baseURL)/boards?&size=20&categoryId=\(categoryId)"
         
-        AF.request(url ,method: .get, parameters: nil).validate().responseDecodable(of: CategoryPostModel.self) { response in
+        AF.request(url ,method: .get, parameters: nil).validate().responseDecodable(of: AllPostModel.self) { response in
                 switch(response.result) {
                 case .success(let result) :
                     print("카테고리 게시물 서버통신 성공 - \(result)")
