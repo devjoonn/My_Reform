@@ -12,8 +12,6 @@ class UploadDataManager{
     
     static var Headers : HTTPHeaders = ["Content-Type" : "multipart/form-data"]
     
-    
-    
     // 서버에 게시물 전송
     static func posts(_ viewController: UploadViewController, _ parameter: UploadInput, images: [UIImage]) {
         
@@ -27,21 +25,30 @@ class UploadDataManager{
                 "price" : parameter.price
             ]
             
+            //image
             for i in 0 ..< images.count {
                 if let image = images[i].pngData() {
-                    multipartFormData.append(image, withName: "post-img", fileName: "\(image).jpg", mimeType: "image/jpg")
+                    multipartFormData.append(image, withName: "file", fileName: "\(image).jpg", mimeType: "image/jpg")
                 }
             }
             
+            // json
             var valueJson = ""
+            do {
+                let jsonCreate = try JSONSerialization.data(withJSONObject: saveObj, options: .prettyPrinted)
+                
+                // json 데이터를 변수에 삽입 실시
+                valueJson = String(data: jsonCreate, encoding: .utf8) ?? ""
+            } catch {
+                print(error.localizedDescription)
+            }
+            print("[create json data]")
+            print("jsonObj : " , valueJson)
             
-            valueJson += " { "
-            saveObj.forEach({ param in
-                valueJson += "\"\(param.key)\" : \"\(param.value)" + "\",\n"
-            })
-            valueJson += "}"
             
-            multipartFormData.append("\(valueJson)".data(using: .utf8)!, withName: "saveObj")
+            print(valueJson)
+            multipartFormData.append("\(valueJson)".data(using: .utf8)!, withName: "saveObj", mimeType: "application/json")
+            
             
         }, to: "\(Constants.baseURL)/boards/create", usingThreshold: UInt64.init(), method: .post, headers: Headers).validate(statusCode: 200 ..< 500).responseDecodable(of: UploadModel.self)
         { response in
@@ -62,3 +69,10 @@ class UploadDataManager{
     }
    
 }
+
+
+//valueJson += " { "
+//saveObj.forEach({ param in
+//    valueJson += "\"\(param.key)\" : \"\(param.value)" + "\",\n"
+//})
+//valueJson += "}"
