@@ -37,12 +37,12 @@ class HomeViewController: UIViewController {
         super.viewDidLoad()
         configureNavbar()
         
+        
         view.backgroundColor = .white
         view.addSubview(homeFeedTable)
         
         homeFeedTable.delegate = self
         homeFeedTable.dataSource = self
-        
         
         homeFeedTable.snp.makeConstraints { make in
             make.top.leading.trailing.bottom.equalToSuperview()

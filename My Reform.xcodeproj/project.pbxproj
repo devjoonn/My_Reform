@@ -340,8 +340,8 @@
 		47FB54F12968688400B3029C /* Global */ = {
 			isa = PBXGroup;
 			children = (
-				47C9C2E92979261000DF89D8 /* Extensions */,
 				47FB54D42968590000B3029C /* MainTabBarViewController.swift */,
+				47C9C2E92979261000DF89D8 /* Extensions */,
 			);
 			path = Global;
 			sourceTree = "<group>";
