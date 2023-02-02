@@ -52,7 +52,6 @@ class UploadDataManager{
             
         }, to: "\(Constants.baseURL)/boards/create", usingThreshold: UInt64.init(), method: .post, headers: Headers).validate(statusCode: 200 ..< 500).responseDecodable(of: UploadModel.self)
         { response in
-            print("response ----------------- \(response)")
             switch response.result {
             case .success(let result) :
                 switch result.status {
@@ -62,7 +61,7 @@ class UploadDataManager{
                     print("데이터 베이스 오류: " + result.message)
                 }
             case .failure(let error) :
-                print(error)
+                print("0203 게시물 등록 실패라 뜨지만 성공임 ㅋㅋ - 확인[x]")
                 print("게시물 이미지 등록 실패: " + error.localizedDescription)
             }
         }
