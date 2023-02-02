@@ -9,9 +9,11 @@ import SnapKit
 import Then
 import Alamofire
 
-var keybaordDiscern: Bool = false
+
 
 class SignUpViewController: UIViewController, UITextFieldDelegate {
+    
+    var keybaordDiscern: Bool = false
         
     var nickname : String = ""
     var id : String = ""
@@ -394,6 +396,7 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
         id_input.addTarget(self, action: #selector(textField), for: .editingChanged)
         next_btn.addTarget(self, action: #selector(nextFunc), for: .touchUpInside)
         password_check_input.addTarget(self, action: #selector(password_keyboard), for: .editingDidBegin)
+        password_check_input.addTarget(self, action: #selector(password_keyboard), for: .editingChanged)
         
 //        NotificationCenter.default.addObserver(self, selector: #selector(textDidChange(_:)),name: UITextField.textDidChangeNotification, object: name_input)
     }
