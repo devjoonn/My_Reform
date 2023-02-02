@@ -71,7 +71,7 @@ extension CategoryViewController: UICollectionViewDelegate, UICollectionViewData
         collectionView.deselectItem(at: indexPath, animated: true)
         
         let vc = CategoryFeedViewController()
-        vc.getCategoryId = indexPath.row
+        vc.getCategoryId = indexPath.row + 1
         print("categoryFeedViewController에 categoryId 저장됨")
         self.navigationController?.pushViewController(vc, animated: true)
     }

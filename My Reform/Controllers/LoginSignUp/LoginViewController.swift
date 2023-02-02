@@ -29,51 +29,54 @@ class LoginViewController: UIViewController {
     
     private let idLabel = UILabel().then {
         $0.text = "아이디"
-        $0.textColor = UIColor.systemGray
-        $0.font = UIFont.boldSystemFont(ofSize: 15)
+        $0.textColor = UIColor(hex: "909090")
+        $0.font = UIFont(name: "Pretendard-Bold", size: 11)
     }
     
     private let idTextfield = UITextField().then {
         $0.addLeftPadding()
         $0.placeholder = "아이디를 입력해주세요."
-        $0.font = UIFont.systemFont(ofSize: 20)
-        $0.backgroundColor = UIColor.gray.withAlphaComponent(0.1)
-        $0.layer.cornerRadius = 7
+        $0.font = UIFont(name: "Pretendard-Regular", size: 16)
+        $0.textColor = UIColor(hex: "909090")
+        $0.backgroundColor = UIColor(hex: "EFEFEF")
+        $0.layer.cornerRadius = 11
     }
     
     private let passwordLabel = UILabel().then {
         $0.text = "비밀번호"
-        $0.textColor = UIColor.systemGray
-        $0.font = UIFont.boldSystemFont(ofSize: 15)
+        $0.textColor = UIColor(hex: "909090")
+        $0.font = UIFont(name: "Pretendard-Bold", size: 11)
     }
     
     private let passwordTextfield = UITextField().then {
         $0.addLeftPadding()
         $0.placeholder = "비밀번호를 입력해주세요."
-        $0.font = UIFont.systemFont(ofSize: 20)
+        $0.font = UIFont(name: "Pretendard-Regular", size: 16)
         $0.backgroundColor = UIColor.gray.withAlphaComponent(0.1)
-        $0.layer.cornerRadius = 7
+        $0.textColor = UIColor(hex: "EFEFEF")
+        $0.layer.cornerRadius = 11
         $0.isSecureTextEntry = true
     }
     
     private let loginBtn = UIButton().then {
         $0.backgroundColor = UIColor.mainColor
-        $0.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
+        $0.titleLabel?.font = UIFont(name: "Pretendard-Bold", size: 18)
         $0.setTitle("로그인", for: .normal)
         $0.setTitleColor(.white, for: .normal)
-        $0.layer.cornerRadius = 10
+        $0.layer.cornerRadius = 13
     }
     
     private let noAccountAskLabel = UILabel().then {
         $0.text = "계정이 없으신가요?"
         $0.textColor = UIColor.mainBlack
-        $0.font = UIFont.boldSystemFont(ofSize: 15)
+        $0.font = UIFont(name: "Pretendard-Regular", size: 13)
     }
     
     private let moveSignUpBtn = UIButton().then {
         $0.setTitle("회원가입 하기", for: .normal)
-        $0.titleLabel?.font = UIFont.boldSystemFont(ofSize: 15)
-        $0.setTitleColor(.orange, for: .normal)
+        $0.titleLabel?.font = UIFont(name: "Pretendard", size: 13)
+        $0.setTitleColor(UIColor(red: 1, green: 0.459, blue: 0.251, alpha: 1), for: .normal)
+        $0.setUnderline()
     }
     
     
@@ -121,50 +124,60 @@ class LoginViewController: UIViewController {
     private func setUIConstraints() {
         
         logoImage.snp.makeConstraints{ (make) in
-            make.top.equalTo(self.view.safeAreaLayoutGuide.snp.top).offset(170)
+            make.top.equalToSuperview().inset(265.12)
             make.centerX.equalToSuperview()
+            make.width.equalTo(251.14)
+            make.height.equalTo(47.24)
         }
         
         idLabel.snp.makeConstraints { make in
-            make.top.equalTo(logoImage.snp.bottom).inset(-130)
-            make.leading.equalToSuperview().inset(30)
+            make.top.equalTo(logoImage.snp.bottom).inset(-113.82)
+            make.leading.equalToSuperview().inset(38.5)
+            make.width.equalTo(29)
+            make.height.equalTo(17)
         }
         
         idTextfield.snp.makeConstraints { make in
-            make.top.equalTo(idLabel.snp.bottom).inset(-5)
-            make.leading.equalToSuperview().inset(20)
+            make.top.equalTo(idLabel.snp.bottom).inset(0)
+            make.leading.equalToSuperview().inset(26.5)
             make.centerX.equalToSuperview()
             make.height.equalTo(50)
         }
         
         passwordLabel.snp.makeConstraints { make in
-            make.top.equalTo(idTextfield.snp.bottom).inset(-15)
-            make.leading.equalToSuperview().inset(30)
+            make.top.equalTo(idTextfield.snp.bottom).inset(-6)
+            make.leading.equalToSuperview().inset(38.5)
+            make.width.equalTo(39)
+            make.height.equalTo(17)
         }
         
         passwordTextfield.snp.makeConstraints { make in
             make.top.equalTo(passwordLabel.snp.bottom).inset(-5)
-            make.leading.equalToSuperview().inset(20)
+            make.leading.equalToSuperview().inset(26.5)
             make.centerX.equalToSuperview()
             make.height.equalTo(50)
         }
         
         loginBtn.snp.makeConstraints { make in
-            make.top.equalTo(passwordTextfield.snp.bottom).inset(-25)
+            make.top.equalTo(passwordTextfield.snp.bottom).inset(-24)
             make.centerX.equalToSuperview()
-            make.leading.equalToSuperview().inset(20)
-            make.height.equalTo(50)
+            make.leading.equalToSuperview().inset(26.5)
+            make.height.equalTo(58)
         }
         
         noAccountAskLabel.snp.makeConstraints { make in
             make.top.equalTo(loginBtn.snp.bottom).inset(-10)
-            make.leading.equalToSuperview().inset(80)
+            make.leading.equalToSuperview().inset(97.5)
+            make.width.equalTo(100)
+            make.height.equalTo(16)
         }
         
         moveSignUpBtn.snp.makeConstraints { make in
-            make.top.equalTo(loginBtn.snp.bottom).inset(-20)
-            make.leading.equalTo(noAccountAskLabel.snp.trailing).inset(-20)
+            make.top.equalTo(loginBtn.snp.bottom).inset(-10)
+            make.leading.equalTo(noAccountAskLabel.snp.trailing).inset(-5)
             make.centerY.equalTo(noAccountAskLabel.snp.centerY)
+            make.width.equalTo(71)
+            make.height.equalTo(16)
             
         }
         
@@ -173,7 +186,6 @@ class LoginViewController: UIViewController {
     @objc func moveSignup() {
         let vc = TermsViewController()
         navigationController?.pushViewController(vc, animated: true)
-        ToastService.shared.showToast("로그인이 되었습니다.")
     }
     
     @objc func loginBtnDidTap() {
@@ -336,3 +348,27 @@ extension LoginViewController : UITextFieldDelegate {
 //    }
 //}
 
+#if DEBUG
+import SwiftUI
+struct LoginViewControllerRepresentable: UIViewControllerRepresentable {
+    
+func updateUIViewController(_ uiView: UIViewController,context: Context) {
+        // leave this empty
+}
+@available(iOS 13.0.0, *)
+func makeUIViewController(context: Context) -> UIViewController{
+    LoginViewController()
+    }
+}
+@available(iOS 13.0, *)
+struct LoginViewControllerRepresentable_PreviewProvider: PreviewProvider {
+    static var previews: some View {
+        Group {
+            LoginViewControllerRepresentable()
+                .ignoresSafeArea()
+                .previewDisplayName(/*@START_MENU_TOKEN@*/"Preview"/*@END_MENU_TOKEN@*/)
+                .previewDevice(PreviewDevice(rawValue: "iPhone 11"))
+        }
+        
+    }
+} #endif
