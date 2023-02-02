@@ -115,8 +115,7 @@ extension SearchListViewController {
         print(allPostModel.count)
         print("allPostModel----------------------------------------",allPostModel)
     }
-    
-    
+
 }
 
 
