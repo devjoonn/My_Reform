@@ -24,7 +24,7 @@ class HomeViewController: UIViewController {
         }
     }
 
-
+    private let refreshControl = UIRefreshControl()
     private let homeFeedTable: UITableView = {
         
         let table = UITableView(frame: .zero, style: .grouped)
@@ -37,7 +37,6 @@ class HomeViewController: UIViewController {
         super.viewDidLoad()
         configureNavbar()
         
-        
         view.backgroundColor = .white
         view.addSubview(homeFeedTable)
         
@@ -48,13 +47,20 @@ class HomeViewController: UIViewController {
             make.top.leading.trailing.bottom.equalToSuperview()
         }
         
+        refreshControl.addTarget(self, action: #selector(beginRefresh), for: .valueChanged)
+        homeFeedTable.refreshControl = refreshControl
     }
     
     override func viewWillAppear(_ animated: Bool) {
         AllPostDataManager().allPostGet(self)
     }
         
-    
+    // 새로고침
+    @objc func beginRefresh(_ sender: UIRefreshControl) {
+        print("beginRefresh!")
+        sender.endRefreshing()
+        fetchingAll(lastBoardId)
+    }
     
     @objc func categoryBtnClicked() {
         let vc = CategoryViewController()
@@ -69,7 +75,7 @@ class HomeViewController: UIViewController {
     }
     
     @objc func logoClicked() {
-        
+        self.homeFeedTable.reloadData()
     }
     
     

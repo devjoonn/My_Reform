@@ -23,8 +23,6 @@ class DetailPostViewController: UIViewController, UIScrollViewDelegate {
     var categorysIndex: [String] = []
     var categoryString: String = ""
     
-    let sectionInsets = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
-    
     //MARK: - 프로퍼티
 
     private let postScrollView = UIScrollView().then {
@@ -93,7 +91,6 @@ class DetailPostViewController: UIViewController, UIScrollViewDelegate {
     private let heartBtn = UIButton().then {
         $0.setImage(UIImage(named: "heart_off"), for: .normal)
         $0.setImage(UIImage(named: "heart_on"), for: .selected)
-        $0.tintColor = .systemGray
     }
     
     private let heartLabel = UILabel().then {
@@ -125,10 +122,17 @@ class DetailPostViewController: UIViewController, UIScrollViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
+        
+        // navigation right item 처리
+        let setBtn = UIBarButtonItem(image: UIImage(named: "menu")?.resize(newWidth: 25), style: .done, target: self, action: #selector(setBtnClicked))
+            
+        self.navigationItem.rightBarButtonItem = setBtn
+        
+        navigationController?.navigationBar.barTintColor = .white
+        navigationController?.navigationBar.tintColor = .label
+        
         imageCollectionView.delegate = self
         imageCollectionView.dataSource = self
-        
-        
         print("detailPost 출력 - \(detailPostModel)")
         setUIView()
         setUIConstraints()
@@ -144,7 +148,7 @@ class DetailPostViewController: UIViewController, UIScrollViewDelegate {
     
 // MARK: - 데이터 전달& 설정 함수들
     
-    // 값들 지정 함수
+    // 카테고리 Id 값 지정 함수
     func setInfo() {
         
         for i in 0 ..< detailPostModel[0].categoryId!.count {
@@ -312,9 +316,15 @@ class DetailPostViewController: UIViewController, UIScrollViewDelegate {
             make.height.equalTo(50)
         }
     }
+    
+    @objc func setBtnClicked() {
+        
+    }
 }
         
-        
+
+//MARK: - 스크롤 이미지 컬렉션 뷰
+
 extension DetailPostViewController : UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         detailPostModel[0].imageUrl!.count
