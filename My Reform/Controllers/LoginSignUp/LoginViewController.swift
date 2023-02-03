@@ -215,7 +215,7 @@ extension LoginViewController : UITextFieldDelegate {
                 let keyboardRectangle = keyboardFrame.cgRectValue
                 let keyboardHeight = keyboardRectangle.height
                 UIView.animate(withDuration: 1) {
-                    self.view.window?.frame.origin.y -= keyboardHeight
+                    self.view.window?.frame.origin.y -= self.passwordTextfield.frame.height+self.loginBtn.frame.height+self.moveSignUpBtn.frame.height
                 }
             }
         }
@@ -229,10 +229,9 @@ extension LoginViewController : UITextFieldDelegate {
             if self.view.window?.frame.origin.y != 0 {
                 keyBoardUp = false
                 if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
-                    let keyboardRectangle = keyboardFrame.cgRectValue
-                    let keyboardHeight = keyboardRectangle.height
+    
                     UIView.animate(withDuration: 1) {
-                        self.view.window?.frame.origin.y += keyboardHeight
+                        self.view.window?.frame.origin.y = 0
                     }
                 }
             }
@@ -248,6 +247,11 @@ extension LoginViewController : UITextFieldDelegate {
             self.passwordTextfield.resignFirstResponder()
         }
         return true
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.idTextfield.resignFirstResponder()
+        self.passwordTextfield.resignFirstResponder()
     }
 }
 

@@ -396,7 +396,7 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
         id_input.addTarget(self, action: #selector(textField), for: .editingChanged)
         next_btn.addTarget(self, action: #selector(nextFunc), for: .touchUpInside)
         password_check_input.addTarget(self, action: #selector(password_keyboard), for: .editingDidBegin)
-        password_check_input.addTarget(self, action: #selector(password_keyboard), for: .editingChanged)
+        password_input.addTarget(self, action: #selector(password_keyboard), for: .editingDidBegin)
         
 //        NotificationCenter.default.addObserver(self, selector: #selector(textDidChange(_:)),name: UITextField.textDidChangeNotification, object: name_input)
     }
@@ -640,6 +640,17 @@ extension SignUpViewController {
         print("viewWillDisappear() called")
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        
+        self.id_input.resignFirstResponder()
+        self.password_check_input.resignFirstResponder()
+        self.email_input.resignFirstResponder()
+        self.password_input.resignFirstResponder()
+        self.name_input.resignFirstResponder()
+        
+     
     }
 }
 

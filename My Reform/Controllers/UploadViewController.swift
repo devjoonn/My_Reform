@@ -90,7 +90,7 @@ class UploadViewController: UIViewController, UITabBarControllerDelegate {
         setupNavigationBar()
         attribute()
         layout()
-//        setKeyboardObserver()
+        setKeyboardObserver()
     }
     
 }
@@ -524,19 +524,26 @@ extension UploadViewController : UITextViewDelegate, UITextFieldDelegate {
 
             
         }
-           
-           // 키보드가 사라졌다는 알림을 받으면 실행할 메서드
-           @objc func keyboardWillHide(notification: NSNotification) {
-      
-                   // 키보드의 높이만큼 화면을 내려준다.
-                   if self.view.window?.frame.origin.y != 0 {
-                       if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
-                           let keyboardRectangle = keyboardFrame.cgRectValue
-                           let keyboardHeight = keyboardRectangle.height
-                           UIView.animate(withDuration: 1) {
-                               self.view.window?.frame.origin.y += keyboardHeight
-                           }
-                       }
-               }
-           }
+        
+        // 화면 터치시 키보드 내리기
+        override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+            self.descriptionTextView.resignFirstResponder()
+            self.titleTextField.resignFirstResponder()
+            self.priceTextField.resignFirstResponder()
+        }
+        
+        
+        // 키보드가 사라졌다는 알림을 받으면 실행할 메서드
+        @objc func keyboardWillHide(notification: NSNotification) {
+            
+            // 키보드의 높이만큼 화면을 내려준다.
+            if self.view.window?.frame.origin.y != 0 {
+                if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
+                    
+                    UIView.animate(withDuration: 1) {
+                        self.view.window?.frame.origin.y = 0
+                    }
+                }
+            }
+        }
     }
