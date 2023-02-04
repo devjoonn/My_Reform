@@ -9,8 +9,12 @@ import SnapKit
 import Then
 import Alamofire
 
+
+
 class SignUpViewController: UIViewController, UITextFieldDelegate {
     
+    var keybaordDiscern: Bool = false
+        
     var nickname : String = ""
     var id : String = ""
     var email: String = ""
@@ -391,8 +395,14 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
         name_input.addTarget(self, action: #selector(nicknameTextFieldCount), for: .editingChanged)
         id_input.addTarget(self, action: #selector(textField), for: .editingChanged)
         next_btn.addTarget(self, action: #selector(nextFunc), for: .touchUpInside)
+        password_check_input.addTarget(self, action: #selector(password_keyboard), for: .editingDidBegin)
+        password_input.addTarget(self, action: #selector(password_keyboard), for: .editingDidBegin)
         
 //        NotificationCenter.default.addObserver(self, selector: #selector(textDidChange(_:)),name: UITextField.textDidChangeNotification, object: name_input)
+    }
+    
+    @objc func password_keyboard() {
+        keybaordDiscern = true
     }
     
     func setUIView() {
@@ -578,6 +588,7 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
     }
     
   @objc private func textDidChange(_ notification: Notification) {
+      
       if let textField = notification.object as? UITextField {
         if let text = textField.text {
           if text.count > 10 {
@@ -592,6 +603,54 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
           }
         }
       }
+    }
+}
+
+//MARK: - 키보드처리
+extension SignUpViewController {
+    @objc func keyboardWillShowHandle(notification: NSNotification) {
+        print("keyboardWillShowHandle() called")
+        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+
+            // 키보드가 버튼을 덮을 때 -> 덮은 만큼의 값을 구함
+            if(keybaordDiscern == true && keyboardSize.height < password_check_input.frame.origin.y) {
+                self.view.frame.origin.y =  -password_check_input.frame.height
+            }
+            keybaordDiscern = false
+
+            print("keyboardSize.height: \(keyboardSize.origin.y )")
+            print("password_check_input.frame.origin.y: \(password_check_input.frame.origin.y)")
+        }
+    }
+    @objc func keyboardWillHideHandle(notification: NSNotification) {
+        print("keyboardWillHide() called")
+        self.view.frame.origin.y = 0
+    }
+    // 키보드 노티 등록
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        print("viewWillAppear() called")
+        // 키보드 올라가는 이벤트를 받는 처리
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShowHandle), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHideHandle), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    // 키보드 노티 등록 해제
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        print("viewWillDisappear() called")
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        
+        self.id_input.resignFirstResponder()
+        self.password_check_input.resignFirstResponder()
+        self.email_input.resignFirstResponder()
+        self.password_input.resignFirstResponder()
+        self.name_input.resignFirstResponder()
+        
+     
     }
 }
 

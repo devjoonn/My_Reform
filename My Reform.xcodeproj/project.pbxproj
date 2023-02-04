@@ -10,6 +10,8 @@
 		370D8BB8296FCF7F00E4B65E /* CategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 370D8BB7296FCF7F00E4B65E /* CategoryViewController.swift */; };
 		370D8BC0296FE0A000E4B65E /* CategoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 370D8BBF296FE0A000E4B65E /* CategoryCell.swift */; };
 		373C5623297E7DEC00F00F1F /* SearchListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 373C5622297E7DEC00F00F1F /* SearchListViewController.swift */; };
+		3747F6D8298C096000DC860F /* MessageViewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3747F6D7298C096000DC860F /* MessageViewTableViewCell.swift */; };
+		3747F6DA298C0DC500DC860F /* MessagePostModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3747F6D9298C0DC500DC860F /* MessagePostModel.swift */; };
 		3781289B298804E2000E75B7 /* UploadModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3781289A298804E2000E75B7 /* UploadModel.swift */; };
 		3781289D29880566000E75B7 /* UploadViewCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3781289C29880566000E75B7 /* UploadViewCollectionViewCell.swift */; };
 		3781289F2988271E000E75B7 /* SearchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3781289E2988271E000E75B7 /* SearchTableViewCell.swift */; };
@@ -81,6 +83,8 @@
 		370D8BB7296FCF7F00E4B65E /* CategoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryViewController.swift; sourceTree = "<group>"; };
 		370D8BBF296FE0A000E4B65E /* CategoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCell.swift; sourceTree = "<group>"; };
 		373C5622297E7DEC00F00F1F /* SearchListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchListViewController.swift; sourceTree = "<group>"; };
+		3747F6D7298C096000DC860F /* MessageViewTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageViewTableViewCell.swift; sourceTree = "<group>"; };
+		3747F6D9298C0DC500DC860F /* MessagePostModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagePostModel.swift; sourceTree = "<group>"; };
 		3781289A298804E2000E75B7 /* UploadModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadModel.swift; sourceTree = "<group>"; };
 		3781289C29880566000E75B7 /* UploadViewCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadViewCollectionViewCell.swift; sourceTree = "<group>"; };
 		3781289E2988271E000E75B7 /* SearchTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTableViewCell.swift; sourceTree = "<group>"; };
@@ -288,6 +292,7 @@
 			isa = PBXGroup;
 			children = (
 				47C9C2F829796F0B00DF89D8 /* AllPostModel.swift */,
+				3747F6D9298C0DC500DC860F /* MessagePostModel.swift */,
 			);
 			path = PresentPosts;
 			sourceTree = "<group>";
@@ -345,8 +350,8 @@
 		47FB54F12968688400B3029C /* Global */ = {
 			isa = PBXGroup;
 			children = (
-				47C9C2E92979261000DF89D8 /* Extensions */,
 				47FB54D42968590000B3029C /* MainTabBarViewController.swift */,
+				47C9C2E92979261000DF89D8 /* Extensions */,
 			);
 			path = Global;
 			sourceTree = "<group>";
@@ -396,6 +401,7 @@
 				47A35B0C2988021C00B39D5C /* DetailPostImageCollectionViewCell.swift */,
 				3781289C29880566000E75B7 /* UploadViewCollectionViewCell.swift */,
 				3781289E2988271E000E75B7 /* SearchTableViewCell.swift */,
+				3747F6D7298C096000DC860F /* MessageViewTableViewCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -569,6 +575,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3747F6D8298C096000DC860F /* MessageViewTableViewCell.swift in Sources */,
 				47FB550A296BE65E00B3029C /* TermsViewController.swift in Sources */,
 				47C9C2F529796CA500DF89D8 /* AddPostInput.swift in Sources */,
 				47FB54E829685E9000B3029C /* SearchViewController.swift in Sources */,
@@ -598,6 +605,7 @@
 				4752664729750F30008D5F1D /* LoginDataManager.swift in Sources */,
 				D3AF3D352987AB1D00F7DF11 /* ProfileEditViewController.swift in Sources */,
 				47FB54F0296867D300B3029C /* LoginViewController.swift in Sources */,
+				3747F6DA298C0DC500DC860F /* MessagePostModel.swift in Sources */,
 				370D8BB8296FCF7F00E4B65E /* CategoryViewController.swift in Sources */,
 				47FB54EE29685EBF00B3029C /* ProfileViewController.swift in Sources */,
 				4752663C29730A55008D5F1D /* Constants.swift in Sources */,
