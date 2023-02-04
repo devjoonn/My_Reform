@@ -22,14 +22,15 @@ class CategoryViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        title = "카테고리"
+//        title = "카테고리"
         
-//        self.navigationItem.title = "카테고리"
-//
-//        self.navigationController?.navigationBar.titleTextAttributes = [
-//            .foregroundColor: UIColor.mainBlack,
-//            .font: UIFont(name: "Pretendard-Bold", size: 16)!
-//        ]
+        
+        self.navigationItem.title = "카테고리"
+
+        self.navigationController?.navigationBar.titleTextAttributes = [
+            .foregroundColor: UIColor.black,
+            .font: UIFont(name: "Pretendard-Bold", size: 16)!
+        ]
         
         
         // 뒤로가기 버튼 < 만 출력

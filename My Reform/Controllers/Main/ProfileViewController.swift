@@ -19,19 +19,31 @@ class ProfileViewController: UIViewController {
     
     var profileDataManagerUrl: String = "\(Constants.baseURL)/users/{userId}/profiles"
     
+    var myPostDataManagerUrl: String = "\(Constants.baseURL)/boards?lastBoardId=&size=&id="
+    
 //     데이터 모델이 추가될 때 마다 테이블 뷰 갱신
     var allPostModel: [AllPostData] = []{
         didSet {
-            self.homeFeedTable.reloadData()
+            self.myFeedTable.reloadData()
         }
     }
     
-    var profileModel: [ProfileData] = [] {
-        didSet {
-            self.homeFeedTable.reloadData()
-        }
-    }
+    var profileModel: [ProfileData] = []
+    
+    private let refreshControl = UIRefreshControl()
+    lazy var myFeedTable = { () -> UITableView in
+        let table = UITableView(frame: .zero, style: .grouped)
+        table.register(MainTableViewCell.self, forCellReuseIdentifier: MainTableViewCell.identifier)
+        table.backgroundColor = .white
+        return table
+    } ()
 
+    lazy var profileImage = { () -> UIImageView in
+        let profileImage = UIImageView()
+        profileImage.image = UIImage(named: "profile_icon")
+        return profileImage
+    } ()
+    
     lazy var editButton = { () -> UIButton in
         let button = UIButton()
 //        button.setBackgroundImage(UIImage(named: "edit_icon"), for: .normal)
@@ -43,23 +55,10 @@ class ProfileViewController: UIViewController {
         return button
     } ()
     
-    lazy var homeFeedTable = { () -> UITableView in
-        let table = UITableView(frame: .zero, style: .grouped)
-        table.register(MainTableViewCell.self, forCellReuseIdentifier: MainTableViewCell.identifier)
-        table.backgroundColor = .white
-        return table
-    } ()
-    
     lazy var backgroundImage = { () -> UIImageView in
         let backgroundImage = UIImageView()
         backgroundImage.image = UIImage(named: "backgroundImage")
         return backgroundImage
-    } ()
-    
-    lazy var profileImage = { () -> UIImageView in
-        let profileImage = UIImageView()
-        profileImage.image = UIImage(named: "profile_icon")
-        return profileImage
     } ()
     
     lazy var nameLabel = { () -> UILabel in
@@ -89,55 +88,19 @@ class ProfileViewController: UIViewController {
         return label
     } ()
     
-//    lazy var heartButton = { () -> UIButton in
-//        let heartButton = UIButton()
-//        heartButton.setImage(UIImage(systemName: "heart", withConfiguration: UIImage.SymbolConfiguration(pointSize: 25)), for: .normal)
-//        heartButton.tintColor = .systemGray
-//        return heartButton
-//    }()
-//
-//
-//    lazy var titleCellLabel = { () -> UILabel in
-//        let titleCellLabel = UILabel()
-//        titleCellLabel.text = "이름"
-//        titleCellLabel.font = UIFont(name: "Avenir-Black", size: 18)
-//        return titleCellLabel
-//    } ()
-//
-//    lazy var titleCellImageView = { () -> UIImageView in
-//        let titleCellImageView = UIImageView()
-//        titleCellImageView.contentMode = .scaleAspectFill
-//        titleCellImageView.clipsToBounds = true
-//        titleCellImageView.layer.cornerRadius = 10
-//        return titleCellImageView
-//    } ()
-//
-//    lazy var minuteCellLabel = { () -> UILabel in
-//        let minuteCellLabel = UILabel()
-//        minuteCellLabel.text = "10분 전"
-//        minuteCellLabel.font = UIFont(name: "Avenir-Black", size:10)
-//        return minuteCellLabel
-//    } ()
-//
-//    lazy var priceCellLabel = { () -> UILabel in
-//        let priceCellLabel = UILabel()
-//        priceCellLabel.text = "30,000 원"
-//        priceCellLabel.font = UIFont(name: "Avenir-Black", size: 18)
-//        return priceCellLabel
-//    } ()
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        
         self.view.backgroundColor = .white
-        self.view.addSubview(homeFeedTable)
+//        self.view.addSubview(myFeedTable)
+        self.view.insertSubview(myFeedTable, belowSubview: backgroundImage)
+    
         
-        homeFeedTable.delegate = self
-        homeFeedTable.dataSource = self
-//        homeFeedTable.register(HomefeedHeaderView.self, forHeaderFooterViewReuseIdentifier: "HomefeedHeaderView")
-//        homeFeedTable.sectionHeaderHeight = 50
+        myFeedTable.delegate = self
+        myFeedTable.dataSource = self
         
-        self.view.insertSubview(backgroundImage, belowSubview: self.view)
+        self.view.insertSubview(backgroundImage, belowSubview: profileImage)
         self.view.addSubview(editButton)
         self.view.addSubview(profileImage)
         self.view.addSubview(nameLabel)
@@ -192,49 +155,43 @@ class ProfileViewController: UIViewController {
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        homeFeedTable.snp.makeConstraints {
-            $0.top.equalTo(introLabel.snp.bottom).inset(-30)
+        myFeedTable.snp.makeConstraints {
+            $0.top.equalTo(uploadLabel.snp.bottom).inset(-9.6)
             $0.leading.trailing.bottom.equalToSuperview()
         }
-        
-//        homeFeedTable.frame = view.bounds
-//        homeFeedTable.frame.origin.x = 0
-//        homeFeedTable.frame.origin.y = 400
-//        homeFeedTable.contentOffset = CGPoint(x: 0, y: 0 - homeFeedTable.contentInset.top)
-//        homeFeedTable.snp.makeConstraints{
-//            (make) in
-//            make.bottom.equalToSuperview().inset(0)
-//        }
-        
-        
     }
     
     
     override func viewWillAppear(_ animated: Bool) {
+        
         configureNavbar()
+//        self.navigationController?.navigationBar.titleTextAttributes = [
+//            .foregroundColor: UIColor.white,
+//            .font: UIFont(name: "Pretendard-Bold", size: 16)!
+//        ]
+        fetchingAll(100)
     }
-    
     
     private func fetchingAll(_ lastBoardId: Int) {
         print("fetchingAll - lastBoardId = \(lastBoardId)")
-        AF.request("\(profileDataManagerUrl)\(lastBoardId)", method: .get, parameters: nil).validate().responseDecodable(of: ProfileModel.self) { response in
+        AF.request("\(Constants.baseURL)/boards?lastBoardId=&size=10", method: .get, parameters: nil).validate().responseDecodable(of: AllPostModel.self) { response in
             DispatchQueue.main.async {
-                self.homeFeedTable.tableFooterView = nil
+                self.myFeedTable.tableFooterView = nil
             }
             switch(response.result) {
             case .success(let result) :
-                print("전체 게시물 추가조회 성공 - \(result)")
+                print("게시물 추가조회 성공 - \(result)")
                 switch(result.status) {
                 case 200 :
                     DispatchQueue.main.async {
-                        self.homeFeedTable.tableFooterView = nil
+                        self.myFeedTable.tableFooterView = nil
                     }
                     guard let data = result.data else{
                         return
                     }
-                    self.successProfileModel(result: data)
+                    self.successAllPostModel(result: data)
                     DispatchQueue.main.async {
-                        self.homeFeedTable.reloadData()
+                        self.myFeedTable.reloadData()
                     }
                 case 404 :
                     print("게시물이 없는 경우입니다 - \(result.message)")
@@ -268,33 +225,73 @@ class ProfileViewController: UIViewController {
     //네비게이션 바
     
     func configureNavbar() {
+        print("configureNavbar 실행")
         // 뒤로가기 버튼 < 만 출력
         let backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: self, action: nil) // title 부분 수정
             backBarButtonItem.tintColor = .black
             self.navigationItem.backBarButtonItem = backBarButtonItem
-        
+
         var image2 = UIImage(named: "setting_icon")?.resize(newWidth: 24.95)
         image2 = image2?.withRenderingMode(.alwaysOriginal)
-        
+
         let settingBtn = UIBarButtonItem(image: image2, style: .done, target:self, action: #selector(settingClicked))
-        
+
         self.navigationItem.title = "프로필"
-        
+
         self.navigationController?.navigationBar.titleTextAttributes = [
-            .foregroundColor: UIColor(red: 1, green: 1, blue: 1, alpha: 1),
+            .foregroundColor: UIColor.white,
             .font: UIFont(name: "Pretendard-Bold", size: 16)!
         ]
-        self.navigationItem.rightBarButtonItem = settingBtn
+        self.navigationController?.navigationBar.backgroundColor = .clear
+        self.navigationController?.navigationBar.barTintColor = .clear
+        self.navigationController?.navigationBar.tintColor = .label
+        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+        self.navigationController?.navigationBar.shadowImage = UIImage()
         
-        navigationController?.navigationBar.barTintColor = .white
-        navigationController?.navigationBar.tintColor = .label
-    }
+        self.navigationItem.rightBarButtonItem = settingBtn
 
+        if (ProfileViewController.isEqual(self.view)){
+            let appearance = UINavigationBarAppearance()
+            appearance.configureWithOpaqueBackground()
+            appearance.titleTextAttributes =  [
+                .foregroundColor: UIColor.white,
+                .font: UIFont(name: "Pretendard-Bold", size: 16)!
+            ]
+
+            // 네비게이션바 배경색
+            appearance.backgroundColor = UIColor.mainColor
+
+            // 아래 회색 라인 없애기
+            appearance.shadowColor = .clear
+
+            UINavigationBar.appearance().standardAppearance = appearance
+            UINavigationBar.appearance().scrollEdgeAppearance = appearance
+
+
+
+//            navigationController?.navigationBar.setBackgroundImage(UIImage(named: "please"), for: UIBarMetrics.default)
+            navigationController?.navigationBar.isTranslucent = false
+//            navigationController?.navigationBar.barTintColor =
+            navigationController?.navigationBar.backgroundColor = .clear
+            navigationController?.navigationBar.tintColor = .clear
+        } else {
+
+        }
+
+    }
+    
+        
     //----------------------------------------------------
     
     func successProfileModel(result: [ProfileData]){
         self.profileModel.append(contentsOf: result)
         print(profileModel.count)
+    }
+    
+    func successAllPostModel(result: [AllPostData]) {
+        self.allPostModel.append(contentsOf: result)
+        print(allPostModel.count)
+        
     }
 
 }
@@ -310,21 +307,16 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: MainTableViewCell.identifier, for: indexPath) as? MainTableViewCell else { return UITableViewCell()  }
         
         let model = allPostModel[indexPath.row]
-//        let model = profileModel[indexPath.row]
         
         
         guard let updateAt = model.updateAt else {return UITableViewCell()}
         guard let price = model.price else { return UITableViewCell()}
         
-//        guard let imageUrl = model.imageUrl else { return }
-//        guard let
+        
+        
 
         cell.configure(with: HomeFeedViewModel(imageUrl: model.imageUrl?.first ?? "", title: model.title ?? "", minute: updateAt, price: price))
         
-//        cell.titleCellImageView = UIImageView(image: UIImage(systemName: "heart"))
-//        cell.titleCellLabel.text = "숫자 커스텀 알람시계"
-//        cell.minuteCellLabel.text = "5분 전"
-//        cell.priceCellLabel.text = "30,000 원"
         
         return cell
     }
@@ -367,7 +359,7 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
     
     func scrollViewDidScroll(_ scrollView: UIScrollView){
         let position = scrollView.contentOffset.y
-        if position > (homeFeedTable.contentSize.height-100-scrollView.frame.size.height) {
+        if position > (myFeedTable.contentSize.height-100-scrollView.frame.size.height) {
             print("데이터 불러오는 중")
             dataFetch()
         }
@@ -375,7 +367,7 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
     
     func dataFetch() {
         print("dataFetch() called - ")
-        self.homeFeedTable.tableFooterView = createSpinnerFooter()
+        self.myFeedTable.tableFooterView = createSpinnerFooter()
         
         if allPostModel.count == 0{
             return
@@ -396,6 +388,38 @@ extension UIButton {
                                       range: NSRange(location: 0, length: title.count)
         )
         setAttributedTitle(attributedString, for: .normal)
+    }
+}
+
+extension UIImage {
+    // allows creating image from CALayer.
+    class func image(from layer: CALayer) -> UIImage? {
+        UIGraphicsBeginImageContextWithOptions(layer.bounds.size,
+                                               layer.isOpaque, UIScreen.main.scale)
+        defer { UIGraphicsEndImageContext() }
+        // Don't proceed unless we have context
+        guard let context = UIGraphicsGetCurrentContext() else {
+            return nil
+        }
+        layer.render(in: context)
+        return UIGraphicsGetImageFromCurrentImageContext()
+    }
+}
+
+extension UIColor {
+    convenience init(red: Int, green: Int, blue: Int) {
+        assert(red >= 0 && red <= 255, "Invalid red component")
+        assert(green >= 0 && green <= 255, "Invalid green component")
+        assert(blue >= 0 && blue <= 255, "Invalid blue component")
+        self.init(red: CGFloat(red) / 255.0, green: CGFloat(green) / 255.0, blue: CGFloat(blue) / 255.0, alpha: 1.0)
+    }
+    
+    convenience init(rgb: Int) {
+        self.init(
+            red: (rgb >> 16) & 0xFF,
+            green: (rgb >> 8) & 0xFF,
+            blue: rgb & 0xFF
+        )
     }
 }
 

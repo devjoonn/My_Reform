@@ -66,6 +66,8 @@
 		D3884D412985264D00C32AB9 /* HomefeedHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3884D402985264D00C32AB9 /* HomefeedHeaderView.swift */; };
 		D39CAF7D298BBB2500D9C79E /* ProfileModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D39CAF7C298BBB2500D9C79E /* ProfileModel.swift */; };
 		D39CAF7F298BBB5200D9C79E /* ProfileDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D39CAF7E298BBB5200D9C79E /* ProfileDataManager.swift */; };
+		D39CAF81298C044000D9C79E /* ProfileInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = D39CAF80298C044000D9C79E /* ProfileInput.swift */; };
+		D39CAF84298C080A00D9C79E /* ProfileLookupModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D39CAF83298C080A00D9C79E /* ProfileLookupModel.swift */; };
 		D3AF3D332987A76F00F7DF11 /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3AF3D322987A76F00F7DF11 /* SettingViewController.swift */; };
 		D3AF3D352987AB1D00F7DF11 /* ProfileEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3AF3D342987AB1D00F7DF11 /* ProfileEditViewController.swift */; };
 		D3C0DEF2298282E3003A62B0 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3C0DEF129828291003A62B0 /* SplashViewController.swift */; };
@@ -139,6 +141,8 @@
 		D3884D402985264D00C32AB9 /* HomefeedHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomefeedHeaderView.swift; sourceTree = "<group>"; };
 		D39CAF7C298BBB2500D9C79E /* ProfileModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileModel.swift; sourceTree = "<group>"; };
 		D39CAF7E298BBB5200D9C79E /* ProfileDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileDataManager.swift; sourceTree = "<group>"; };
+		D39CAF80298C044000D9C79E /* ProfileInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileInput.swift; sourceTree = "<group>"; };
+		D39CAF83298C080A00D9C79E /* ProfileLookupModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileLookupModel.swift; sourceTree = "<group>"; };
 		D3AF3D322987A76F00F7DF11 /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
 		D3AF3D342987AB1D00F7DF11 /* ProfileEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileEditViewController.swift; sourceTree = "<group>"; };
 		D3C0DEF129828291003A62B0 /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
@@ -209,7 +213,8 @@
 		47526649297516FF008D5F1D /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				D39CAF7B298BBB0F00D9C79E /* Profile */,
+				D39CAF82298C07E000D9C79E /* ProfileLookup */,
+				D39CAF7B298BBB0F00D9C79E /* ProfileEdit */,
 				3793653C2982D20E009ABF2C /* Upload */,
 				4752664F29751977008D5F1D /* Login */,
 				4752664A29751762008D5F1D /* SignUp */,
@@ -416,12 +421,21 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
-		D39CAF7B298BBB0F00D9C79E /* Profile */ = {
+		D39CAF7B298BBB0F00D9C79E /* ProfileEdit */ = {
 			isa = PBXGroup;
 			children = (
 				D39CAF7C298BBB2500D9C79E /* ProfileModel.swift */,
+				D39CAF80298C044000D9C79E /* ProfileInput.swift */,
 			);
-			path = Profile;
+			path = ProfileEdit;
+			sourceTree = "<group>";
+		};
+		D39CAF82298C07E000D9C79E /* ProfileLookup */ = {
+			isa = PBXGroup;
+			children = (
+				D39CAF83298C080A00D9C79E /* ProfileLookupModel.swift */,
+			);
+			path = ProfileLookup;
 			sourceTree = "<group>";
 		};
 		E479EFAB0D4A2326E8E2CA45 /* Frameworks */ = {
@@ -601,10 +615,12 @@
 				379365462982D709009ABF2C /* UploadDataManager.swift in Sources */,
 				D3884D412985264D00C32AB9 /* HomefeedHeaderView.swift in Sources */,
 				47C9C2F929796F0B00DF89D8 /* AllPostModel.swift in Sources */,
+				D39CAF81298C044000D9C79E /* ProfileInput.swift in Sources */,
 				D3AF3D332987A76F00F7DF11 /* SettingViewController.swift in Sources */,
 				47A35B0D2988021C00B39D5C /* DetailPostImageCollectionViewCell.swift in Sources */,
 				37F6EB0D29827EFC0088EAD8 /* SearchFeedViewModel.swift in Sources */,
 				47526655297529AE008D5F1D /* SignUpViewController.swift in Sources */,
+				D39CAF84298C080A00D9C79E /* ProfileLookupModel.swift in Sources */,
 				3781289F2988271E000E75B7 /* SearchTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

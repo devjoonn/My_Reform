@@ -6,12 +6,21 @@
 //
 
 import UIKit
+import PhotosUI
+
 
 class ProfileEditViewController: UIViewController, UITextFieldDelegate {
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
             self.view.endEditing(true) /// 화면을 누르면 키보드 내려가게 하는 것
     }
+    
+    var profileDataManagerUrl: String = "\(Constants.baseURL)/users/{userId}/profiles"
+    
+    var profileModel: [ProfileData] = []
+    
+    private let refreshControl = UIRefreshControl()
+    
     
     var nickname : String = ""
     var intro : String = ""
@@ -33,6 +42,9 @@ class ProfileEditViewController: UIViewController, UITextFieldDelegate {
         return button
     } ()
     
+  
+
+    
 //    lazy var editButton = { () -> UIButton in
 //        let button = UIButton()
 //        button.setTitle("프로필 편집", for: .normal)
@@ -46,6 +58,7 @@ class ProfileEditViewController: UIViewController, UITextFieldDelegate {
     lazy var name_label = { () -> UILabel in
         let label = UILabel()
         label.text = "닉네임"
+//        label.text = profileModel[0].nickname
         label.font = UIFont(name: "Pretendard-Medium", size: 13)
         label.textColor = UIColor(hex: "212121")
         return label
@@ -142,6 +155,8 @@ class ProfileEditViewController: UIViewController, UITextFieldDelegate {
         super.viewDidLoad()
         view.backgroundColor = .white
         configureNavbar()
+        
+        
         
         attribute()
         initializeSet()
@@ -310,7 +325,16 @@ class ProfileEditViewController: UIViewController, UITextFieldDelegate {
     }
     
     @objc func editBtnClicked(){
+        var config = PHPickerConfiguration()
+        config.filter = .images
+        config.selection = .ordered
+        config.selectionLimit = 1
+
+        let imagePickerViewController = PHPickerViewController(configuration: config)
+
+        imagePickerViewController.delegate = self
         
+        present(imagePickerViewController, animated: true)
     }
     
     @objc func completeBtnClicked(){
@@ -337,7 +361,8 @@ class ProfileEditViewController: UIViewController, UITextFieldDelegate {
 //        navigationItem.rightBarButtonItem?.tintColor = UIColor(red: 1, green: 0.459, blue: 0.251, alpha: 1)
         
         navigationController?.navigationBar.barTintColor = .white
-        navigationController?.navigationBar.tintColor = .label
+        navigationController?.navigationBar.backgroundColor = .white
+        navigationController?.navigationBar.tintColor = .white
     }
     /*
     // MARK: - Navigation
@@ -349,9 +374,37 @@ class ProfileEditViewController: UIViewController, UITextFieldDelegate {
     }
     */
 
+    
+    
 }
 
-extension ProfileEditViewController : UITextViewDelegate {
+
+
+
+
+extension ProfileEditViewController : UITextViewDelegate, PHPickerViewControllerDelegate {
+    func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
+        results.forEach { result in
+            let itemProvider = result.itemProvider
+            if itemProvider.canLoadObject(ofClass: UIImage.self) {
+                itemProvider.loadObject(ofClass: UIImage.self) { image, error in
+                    if image is UIImage {
+                        // 이미지 처리는 여기서...
+                        /*
+                        만약 이 부분에서 UI 변경 관련 코드를 작성할 때는
+                        DispatchQueue를 사용해 main에서 실행해줘야한다
+                        */
+                    }
+                    if error != nil {
+                        // 에러 처리는 여기서...
+                    }
+                }
+            }
+        }
+    dismiss(animated: true)
+    }
+    
+    
     func attribute() {
         descriptTextView.text = "소개글을 입력하세요."
         descriptTextView.font = .systemFont(ofSize: 13, weight: .regular)
