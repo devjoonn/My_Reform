@@ -73,7 +73,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         //KAKAOSDK 초기화
         KakaoSDK.initSDK(appKey: NATIVE_APP_KEY as! String) // NATIVE_APP_KEY
-        
+                
         return true
     }
     
@@ -85,7 +85,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
             return false
         }
-
+    
 }
 
 

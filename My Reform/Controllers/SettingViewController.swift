@@ -123,12 +123,12 @@ class SettingViewController: UIViewController {
         return label
     } ()
     
-    lazy var logoutLabel = { () -> UILabel in
-        let label = UILabel()
-        label.text = "로그아웃"
-        label.font = UIFont(name: "Pretendard-Regular", size: 16)
-        label.textColor = UIColor(hex: "000000")
-        return label
+    lazy var logoutButton = { () -> UIButton in
+        let button = UIButton()
+        button.setTitle("로그아웃", for: .normal)
+        button.titleLabel?.font = UIFont(name: "Pretendard-Regular", size: 16)
+        button.setTitleColor(UIColor.black, for: .normal)
+        return button
     } ()
     
     lazy var versionLabel = { () -> UILabel in
@@ -138,6 +138,11 @@ class SettingViewController: UIViewController {
         label.textColor = UIColor.systemGray
         return label
     } ()
+    
+    @objc func logoutBtnClicked(){
+        print("로그아웃 되게 해야함")
+        navigationController?.popViewController(animated: true)
+    }
     
     //----------------------------
 
@@ -235,7 +240,7 @@ class SettingViewController: UIViewController {
         contentView.addSubview(line2)
         contentView.addSubview(etcLabel)
         contentView.addSubview(withdrawalLabel)
-        contentView.addSubview(logoutLabel)
+        contentView.addSubview(logoutButton)
         contentView.addSubview(versionLabel)
 
         individualLabel.snp.makeConstraints{
@@ -328,11 +333,16 @@ class SettingViewController: UIViewController {
             make.leading.equalToSuperview().inset(37.54)
         }
 
-        logoutLabel.snp.makeConstraints{
+        logoutButton.snp.makeConstraints{
             (make) in
             make.top.equalTo(withdrawalLabel.snp.bottom).inset(-12)
             make.leading.equalToSuperview().inset(37.54)
+            make.width.equalTo(56)
+            make.height.equalTo(26)
         }
+        
+        
+        logoutButton.addTarget(self, action: #selector(logoutBtnClicked), for: .touchUpInside)
         
         //---------------------------
         
@@ -359,8 +369,8 @@ class SettingViewController: UIViewController {
         
 //        self.navigationItem.titleView = UIImageView(image: image)
         
-        
         navigationController?.navigationBar.barTintColor = .white
+        navigationController?.navigationBar.backgroundColor = .white
         navigationController?.navigationBar.tintColor = .label
     }
 

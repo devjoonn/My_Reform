@@ -38,7 +38,7 @@ class LoginViewController: UIViewController {
         $0.placeholder = "아이디를 입력해주세요."
         $0.font = UIFont(name: "Pretendard-Regular", size: 16)
         $0.textColor = UIColor(hex: "909090")
-        $0.backgroundColor = UIColor(hex: "EFEFEF")
+        $0.backgroundColor = UIColor.gray.withAlphaComponent(0.1)
         $0.layer.cornerRadius = 11
     }
     
@@ -152,7 +152,7 @@ class LoginViewController: UIViewController {
         }
         
         passwordTextfield.snp.makeConstraints { make in
-            make.top.equalTo(passwordLabel.snp.bottom).inset(-5)
+            make.top.equalTo(passwordLabel.snp.bottom).inset(0)
             make.leading.equalToSuperview().inset(26.5)
             make.centerX.equalToSuperview()
             make.height.equalTo(50)
@@ -167,7 +167,8 @@ class LoginViewController: UIViewController {
         
         noAccountAskLabel.snp.makeConstraints { make in
             make.top.equalTo(loginBtn.snp.bottom).inset(-10)
-            make.leading.equalToSuperview().inset(97.5)
+//            make.leading.equalToSuperview().inset(97.5)
+            make.centerX.equalToSuperview().offset(-38)
             make.width.equalTo(100)
             make.height.equalTo(16)
         }
