@@ -93,6 +93,15 @@ class UploadViewController: UIViewController, UITabBarControllerDelegate {
         setKeyboardObserver()
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        // 뷰가 사라질 때 값 초기화
+        clickCnt = 0
+        selectedImages.removeAll()
+        check = [0,0,0,0,0,0,0,0,0,0,0]
+        price_value = 0
+        print("작성화면 꺼지고 값들 초기화")
+    }
+    
 }
 
 // 컬랙션뷰의 cell 안의 요소에 맞게 동적으로 사이즈 설정
@@ -174,17 +183,11 @@ extension UploadViewController {
         
         let userData = UploadInput(nickname: "kong", categoryId: selectedCategory, title: titleTextField.text ?? "", contents: descriptionTextView.text, price: price_value)
         UploadDataManager.posts(self, userData, images: selectedImages)
-        
-        
-        
-        
-//        let vc = HomeViewController()
-//        navigationController?.pushViewController(vc, animated: false)
         print("didTapRightBarButton is Called")
     }
     @objc func didTapImagePickerButton() {
         
-        
+
         var config = PHPickerConfiguration()
         config.filter = .images
         config.selection = .ordered
@@ -192,6 +195,12 @@ extension UploadViewController {
         let imagePickerViewController = PHPickerViewController(configuration: config)
         imagePickerViewController.delegate = self
         present(imagePickerViewController, animated: true)
+    }
+    
+    // 서버에 게시물 전송이 완료되었을 때 실행되는 함수
+    func successPost() {
+        print("successPost() called - view pop")
+        navigationController?.popViewController(animated: true)
     }
 }
 

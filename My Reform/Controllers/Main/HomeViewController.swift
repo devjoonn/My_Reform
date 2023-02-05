@@ -59,6 +59,7 @@ class HomeViewController: UIViewController {
     @objc func beginRefresh(_ sender: UIRefreshControl) {
         print("beginRefresh!")
         sender.endRefreshing()
+        allPostModel.removeAll()
         fetchingAll(lastBoardId)
     }
     
@@ -75,11 +76,12 @@ class HomeViewController: UIViewController {
     }
     
     @objc func logoClicked() {
+        // 첫번째 셀로 이동하는 함수 [x]
         self.homeFeedTable.reloadData()
     }
     
     
-    // 데이터 새로고침
+    // 데이터 무한 스크롤
     private func fetchingAll(_ lastBoardId: Int) {
         
         print("fetchingAll - lastBoardId = \(lastBoardId)")
