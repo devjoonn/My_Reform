@@ -28,9 +28,10 @@ class ProfileViewController: UIViewController {
         }
     }
     
-    var profileModel: [ProfileData] = []
+    var profileLookupModel: [ProfileLookupData] = []
     
     private let refreshControl = UIRefreshControl()
+    
     lazy var myFeedTable = { () -> UITableView in
         let table = UITableView(frame: .zero, style: .grouped)
         table.register(MainTableViewCell.self, forCellReuseIdentifier: MainTableViewCell.identifier)
@@ -88,25 +89,16 @@ class ProfileViewController: UIViewController {
         return label
     } ()
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        
-        self.view.backgroundColor = .white
-//        self.view.addSubview(myFeedTable)
-        self.view.insertSubview(myFeedTable, belowSubview: backgroundImage)
-    
-        
-        myFeedTable.delegate = self
-        myFeedTable.dataSource = self
-        
+    func setUIView(){
         self.view.insertSubview(backgroundImage, belowSubview: profileImage)
         self.view.addSubview(editButton)
         self.view.addSubview(profileImage)
         self.view.addSubview(nameLabel)
         self.view.addSubview(introLabel)
         self.view.addSubview(uploadLabel)
+    }
     
+    func setUIConstraints(){
         editButton.snp.makeConstraints{
             (make) in
             make.top.equalTo(introLabel.snp.bottom).inset(-10)
@@ -151,26 +143,84 @@ class ProfileViewController: UIViewController {
             make.leading.equalToSuperview().inset(18)
         }
         
-    }
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
         myFeedTable.snp.makeConstraints {
             $0.top.equalTo(uploadLabel.snp.bottom).inset(-9.6)
             $0.leading.trailing.bottom.equalToSuperview()
         }
     }
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        self.view.backgroundColor = .white
+        self.view.insertSubview(myFeedTable, belowSubview: backgroundImage)
+
+        
+        myFeedTable.delegate = self
+        myFeedTable.dataSource = self
+        
+        setUIView()
+        setUIConstraints()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+    }
     
     override func viewWillAppear(_ animated: Bool) {
         
         configureNavbar()
-//        self.navigationController?.navigationBar.titleTextAttributes = [
-//            .foregroundColor: UIColor.white,
-//            .font: UIFont(name: "Pretendard-Bold", size: 16)!
-//        ]
         fetchingAll(100)
+        allPostGet()
+        profileChanged()
+        
+        print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\(profileLookupModel)")
     }
+    
+    func profileChanged(){
+        print("profileChanged called")
+        guard let model = profileLookupModel.first else { return }
+        print(model)
+        nameLabel.text = model.nickname
+        introLabel.text = model.introduction
+    }
+    
+    //------------------------------- 프로필 정보 불러오기
+    
+    func allPostGet() {
+        print("allPostGet Called")
+        let url = "\(Constants.baseURL)users/1/profiles"
+        
+        AF.request(url ,method: .get, parameters: nil).validate().responseDecodable(of: ProfileLookupModel.self) { response in
+                switch(response.result) {
+                case .success(let result) :
+                    print("프로필 서버통신 성공 - \(result)")
+                    switch(result.status) {
+                    case 200 :
+                        guard let data = result.data else { return }
+                        print("data!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\(data)")
+                        self.profileLookupModel.append(contentsOf: data)
+                    case 404 :
+                        print("프로필이 없는 경우입니다 - \(result.message)")
+                    default:
+                        print("데이터베이스 오류")
+                        let alert = UIAlertController()
+                        alert.title = "서버 오류"
+                        alert.message = "서버에서 오류가 발생했습니다. 잠시 후 다시 시도해주세요."
+                        let alertAction = UIAlertAction(title: "확인", style: .default, handler: nil)
+                        alert.addAction(alertAction)
+                        self.present(alert, animated: true, completion: nil)
+                        return
+                    }
+                    
+                case .failure(let error) :
+                    print(error)
+                    print(error.localizedDescription)
+                }
+            }
+    }
+    
+    //---------- 게시글 불러오기
     
     private func fetchingAll(_ lastBoardId: Int) {
         print("fetchingAll - lastBoardId = \(lastBoardId)")
@@ -206,6 +256,7 @@ class ProfileViewController: UIViewController {
     }
     
     //-------------------------
+    //버튼 클릭 시
     
     @objc func profileClicked(){
         let vc = ProfileEditViewController()
@@ -267,40 +318,32 @@ class ProfileViewController: UIViewController {
             UINavigationBar.appearance().standardAppearance = appearance
             UINavigationBar.appearance().scrollEdgeAppearance = appearance
 
-
-
-//            navigationController?.navigationBar.setBackgroundImage(UIImage(named: "please"), for: UIBarMetrics.default)
             navigationController?.navigationBar.isTranslucent = false
-//            navigationController?.navigationBar.barTintColor =
             navigationController?.navigationBar.backgroundColor = .clear
             navigationController?.navigationBar.tintColor = .clear
         } else {
 
         }
-
     }
     
         
     //----------------------------------------------------
     
-    func successProfileModel(result: [ProfileData]){
-        self.profileModel.append(contentsOf: result)
-        print(profileModel.count)
+    func successProfileModel(result: [ProfileLookupData]){
+        self.profileLookupModel.append(contentsOf: result)
+        print(profileLookupModel.count)
     }
     
     func successAllPostModel(result: [AllPostData]) {
         self.allPostModel.append(contentsOf: result)
         print(allPostModel.count)
-        
     }
-
 }
 
 extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return allPostModel.count
-//        return profileModel.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -308,15 +351,10 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
         
         let model = allPostModel[indexPath.row]
         
-        
         guard let updateAt = model.updateAt else {return UITableViewCell()}
         guard let price = model.price else { return UITableViewCell()}
         
-        
-        
-
         cell.configure(with: HomeFeedViewModel(imageUrl: model.imageUrl?.first ?? "", title: model.title ?? "", minute: updateAt, price: price))
-        
         
         return cell
     }
@@ -337,14 +375,6 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
         vc.hidesBottomBarWhenPushed = true
         self.navigationController?.pushViewController(vc, animated: true)
     }
-    
-
-// 그냥 레이블로 할거면 HomefeedHeaderView 삭제
-//    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-//        guard let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: "HomefeedHeaderView") as? HomefeedHeaderView else { return UIView() }
-//
-//        return header
-//    }
     
     private func createSpinnerFooter() -> UIView {
         let footerView = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.size.width, height: 100))
@@ -388,38 +418,6 @@ extension UIButton {
                                       range: NSRange(location: 0, length: title.count)
         )
         setAttributedTitle(attributedString, for: .normal)
-    }
-}
-
-extension UIImage {
-    // allows creating image from CALayer.
-    class func image(from layer: CALayer) -> UIImage? {
-        UIGraphicsBeginImageContextWithOptions(layer.bounds.size,
-                                               layer.isOpaque, UIScreen.main.scale)
-        defer { UIGraphicsEndImageContext() }
-        // Don't proceed unless we have context
-        guard let context = UIGraphicsGetCurrentContext() else {
-            return nil
-        }
-        layer.render(in: context)
-        return UIGraphicsGetImageFromCurrentImageContext()
-    }
-}
-
-extension UIColor {
-    convenience init(red: Int, green: Int, blue: Int) {
-        assert(red >= 0 && red <= 255, "Invalid red component")
-        assert(green >= 0 && green <= 255, "Invalid green component")
-        assert(blue >= 0 && blue <= 255, "Invalid blue component")
-        self.init(red: CGFloat(red) / 255.0, green: CGFloat(green) / 255.0, blue: CGFloat(blue) / 255.0, alpha: 1.0)
-    }
-    
-    convenience init(rgb: Int) {
-        self.init(
-            red: (rgb >> 16) & 0xFF,
-            green: (rgb >> 8) & 0xFF,
-            blue: rgb & 0xFF
-        )
     }
 }
 

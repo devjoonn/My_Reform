@@ -128,8 +128,6 @@ class SettingViewController: UIViewController {
         button.setTitle("로그아웃", for: .normal)
         button.titleLabel?.font = UIFont(name: "Pretendard-Regular", size: 16)
         button.setTitleColor(UIColor.black, for: .normal)
-//        button.addTarget(self, action: #selector(logoutBtnClicked), for: .touchUpInside)
-        button.addTarget(self, action: #selector(logoutBtnClicked), for: .touchUpInside)
         return button
     } ()
     
@@ -143,8 +141,7 @@ class SettingViewController: UIViewController {
     
     @objc func logoutBtnClicked(){
         print("로그아웃 되게 해야함")
-        let vc = ProfileViewController()
-        navigationController?.pushViewController(vc, animated: true)
+        navigationController?.popViewController(animated: true)
     }
     
     //----------------------------
@@ -343,6 +340,9 @@ class SettingViewController: UIViewController {
             make.width.equalTo(56)
             make.height.equalTo(26)
         }
+        
+        
+        logoutButton.addTarget(self, action: #selector(logoutBtnClicked), for: .touchUpInside)
         
         //---------------------------
         
