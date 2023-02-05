@@ -11,7 +11,7 @@ import Alamofire
 class SignUpDataManager {
     
     static var Headers : HTTPHeaders = ["Content-Type" : "application/json"]
-    
+
 //    // 아이디 중복검사
 //    func getsID(_ viewController: SignUpViewController, id: String){
 //        AF.request("", method: .get, parameters: ["id":id], encoding: URLEncoding.queryString).validate().responseDecodable(of: SingUpModel.self) { response in
