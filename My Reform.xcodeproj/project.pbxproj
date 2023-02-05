@@ -29,6 +29,7 @@
 		379365462982D709009ABF2C /* UploadDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 379365452982D709009ABF2C /* UploadDataManager.swift */; };
 		37F6EB0929827EC20088EAD8 /* SearchCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37F6EB0829827EC20088EAD8 /* SearchCollectionViewCell.swift */; };
 		37F6EB0D29827EFC0088EAD8 /* SearchFeedViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37F6EB0C29827EFC0088EAD8 /* SearchFeedViewModel.swift */; };
+		470D08F9298E50750075778E /* UIAlertAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470D08F8298E50750075778E /* UIAlertAction.swift */; };
 		4752663C29730A55008D5F1D /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4752663B29730A55008D5F1D /* Constants.swift */; };
 		4752663E29730AA6008D5F1D /* MainTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4752663D29730AA6008D5F1D /* MainTableViewCell.swift */; };
 		4752664029730CD3008D5F1D /* UploadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4752663F29730CD3008D5F1D /* UploadViewController.swift */; };
@@ -65,7 +66,6 @@
 		47FB54F0296867D300B3029C /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47FB54EF296867D300B3029C /* LoginViewController.swift */; };
 		47FB54F729686A2300B3029C /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47FB54F629686A2300B3029C /* UIColor.swift */; };
 		47FB550A296BE65E00B3029C /* TermsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47FB5509296BE65E00B3029C /* TermsViewController.swift */; };
-		D3884D412985264D00C32AB9 /* HomefeedHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3884D402985264D00C32AB9 /* HomefeedHeaderView.swift */; };
 		D39CAF7D298BBB2500D9C79E /* ProfileModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D39CAF7C298BBB2500D9C79E /* ProfileModel.swift */; };
 		D39CAF7F298BBB5200D9C79E /* ProfileDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D39CAF7E298BBB5200D9C79E /* ProfileDataManager.swift */; };
 		D39CAF81298C044000D9C79E /* ProfileInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = D39CAF80298C044000D9C79E /* ProfileInput.swift */; };
@@ -102,6 +102,7 @@
 		379365452982D709009ABF2C /* UploadDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadDataManager.swift; sourceTree = "<group>"; };
 		37F6EB0829827EC20088EAD8 /* SearchCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCollectionViewCell.swift; sourceTree = "<group>"; };
 		37F6EB0C29827EFC0088EAD8 /* SearchFeedViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchFeedViewModel.swift; sourceTree = "<group>"; };
+		470D08F8298E50750075778E /* UIAlertAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIAlertAction.swift; sourceTree = "<group>"; };
 		47526619296C7B52008D5F1D /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
 		4752663B29730A55008D5F1D /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		4752663D29730AA6008D5F1D /* MainTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTableViewCell.swift; sourceTree = "<group>"; };
@@ -142,7 +143,6 @@
 		47FB54F629686A2300B3029C /* UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
 		47FB5509296BE65E00B3029C /* TermsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TermsViewController.swift; sourceTree = "<group>"; };
 		5F644897E4B6FAE3A5572350 /* Pods-My Reform.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-My Reform.debug.xcconfig"; path = "Target Support Files/Pods-My Reform/Pods-My Reform.debug.xcconfig"; sourceTree = "<group>"; };
-		D3884D402985264D00C32AB9 /* HomefeedHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomefeedHeaderView.swift; sourceTree = "<group>"; };
 		D39CAF7C298BBB2500D9C79E /* ProfileModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileModel.swift; sourceTree = "<group>"; };
 		D39CAF7E298BBB5200D9C79E /* ProfileDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileDataManager.swift; sourceTree = "<group>"; };
 		D39CAF80298C044000D9C79E /* ProfileInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileInput.swift; sourceTree = "<group>"; };
@@ -266,6 +266,7 @@
 				47C9C2E229769DE500DF89D8 /* UITextField.swift */,
 				47C9C2EA297931DB00DF89D8 /* UIImage.swift */,
 				4770C648297AD686009E3E58 /* String.swift */,
+				470D08F8298E50750075778E /* UIAlertAction.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -413,7 +414,6 @@
 				47FB54E729685E9000B3029C /* SearchViewController.swift */,
 				47FB54E929685EA400B3029C /* MessageViewController.swift */,
 				47FB54ED29685EBF00B3029C /* ProfileViewController.swift */,
-				D3884D402985264D00C32AB9 /* HomefeedHeaderView.swift */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -617,11 +617,11 @@
 				47FB54F729686A2300B3029C /* UIColor.swift in Sources */,
 				3781289D29880566000E75B7 /* UploadViewCollectionViewCell.swift in Sources */,
 				47A35B0B298801D400B39D5C /* CategoryFeedViewController.swift in Sources */,
+				470D08F9298E50750075778E /* UIAlertAction.swift in Sources */,
 				47C9C2F3297964F700DF89D8 /* AddPostModel.swift in Sources */,
 				D3C0DEF2298282E3003A62B0 /* SplashViewController.swift in Sources */,
 				4770C659297ECAB4009E3E58 /* HomeFeedViewModel.swift in Sources */,
 				379365462982D709009ABF2C /* UploadDataManager.swift in Sources */,
-				D3884D412985264D00C32AB9 /* HomefeedHeaderView.swift in Sources */,
 				47C9C2F929796F0B00DF89D8 /* AllPostModel.swift in Sources */,
 				D39CAF81298C044000D9C79E /* ProfileInput.swift in Sources */,
 				D3AF3D332987A76F00F7DF11 /* SettingViewController.swift in Sources */,

@@ -317,11 +317,43 @@ class DetailPostViewController: UIViewController, UIScrollViewDelegate {
         }
     }
     
+//MARK: - 게시물 수정 & 삭제
     @objc func setBtnClicked() {
+        let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         
+        let deleteSheet = UIAlertController(title: "정말 게시물을 삭제할까요?", message: nil, preferredStyle: .alert)
+        let no = UIAlertAction(title: "아니요", style: .default, handler: nil)
+        let yes = UIAlertAction(title: "네 삭제할게요", style: .default) { _ in
+            // 게시물 삭제 api 작성 0205 [x]
+            
+        }
+        no.titleTextColor = .black
+        yes.titleTextColor = UIColor.mainColor
+        deleteSheet.addAction(no)
+        deleteSheet.addAction(yes)
+        
+        let delete = UIAlertAction(title: "삭제", style: .default) {_ in
+            self.present(deleteSheet, animated: true, completion: nil)
+        }
+        let modify = UIAlertAction(title: "수정", style: .default) { _ in
+            // 게시물 수정 api 작성 0205 [x]
+            
+        }
+        let cancel = UIAlertAction(title: "취소", style: .cancel, handler: nil)
+        delete.titleTextColor = UIColor.mainColor
+        modify.titleTextColor = .black
+        cancel.titleTextColor = .black
+        
+        actionSheet.addAction(delete)
+        actionSheet.addAction(modify)
+        
+        self.view.subviews.first?.subviews.first?.subviews.first?.backgroundColor = .white
+        
+        actionSheet.addAction(cancel)
+        present(actionSheet, animated: true, completion: nil)
     }
 }
-        
+
 
 //MARK: - 스크롤 이미지 컬렉션 뷰
 

@@ -9,20 +9,19 @@ import Foundation
 
 struct UploadModel : Decodable {
     var status : Int
-    var code : String?
+    var code : String
     var message : String
-    let data : [UploadPostData]?
 }
 
-struct UploadPostData : Decodable {
-    let boardId : Int?
-    let userId : Int?
-    let nickname : String?
-    let categoryId : [Int]?
-    let title : String?
-    let contents : String?
-    let updateAt : String?
-    let price : Int?
-    let images : [String]?
-}
-
+//struct UploadPostData : Decodable {
+//    let boardId : Int
+//    let userId : Int
+//    let nickname : String
+//    let categoryId : [Int]
+//    let title : String
+//    let contents : String
+//    let updateAt : String
+//    let time : String
+//    let price : Int
+//    let imageUrl : [String]
+//}
