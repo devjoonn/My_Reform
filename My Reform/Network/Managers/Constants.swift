@@ -15,6 +15,8 @@ struct Constants {
 //        static let baseURL = "http://211.176.69.65:8080"  //시엔님
 
     
+
+    
     enum APIError: Error {
         case failedToGetData
     }
