@@ -48,8 +48,11 @@ class SignUpDataManager {
                 print(result)
                 switch(result.status){
                 case 201:
+                    let nickname = parameter.nickname
                     let vc = CompleteSignUpViewController()
+                    vc.nickname = nickname!
                     viewController.navigationController?.pushViewController(vc, animated: true)
+                    ToastService.shared.showToast("회원가입이 완료되었습니다.")
                     return
                 case 409:
                     if result.code == "A001" {

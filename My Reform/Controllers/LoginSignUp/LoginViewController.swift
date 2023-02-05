@@ -29,7 +29,7 @@ class LoginViewController: UIViewController {
     
     private let idLabel = UILabel().then {
         $0.text = "아이디"
-        $0.textColor = UIColor(hex: "909090")
+        $0.textColor = UIColor.grayColor
         $0.font = UIFont(name: "Pretendard-Bold", size: 11)
     }
     
@@ -44,7 +44,7 @@ class LoginViewController: UIViewController {
     
     private let passwordLabel = UILabel().then {
         $0.text = "비밀번호"
-        $0.textColor = UIColor(hex: "909090")
+        $0.textColor = UIColor.grayColor
         $0.font = UIFont(name: "Pretendard-Bold", size: 11)
     }
     
@@ -104,7 +104,7 @@ class LoginViewController: UIViewController {
         view.endEditing(true)
         
         //로그인VC 접근시 기존 스택VC들 제거
-        let endIndex = (self.navigationController?.viewControllers.endIndex)!
+        guard let endIndex = (self.navigationController?.viewControllers.endIndex) else { return }
         self.navigationController?.viewControllers.removeSubrange(0..<endIndex - 1)
     }
     
@@ -185,8 +185,10 @@ class LoginViewController: UIViewController {
     }
     
     @objc func moveSignup() {
+        print("눌리나")
         let vc = TermsViewController()
-        navigationController?.pushViewController(vc, animated: true)
+        vc.modalPresentationStyle = .fullScreen
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     
     @objc func loginBtnDidTap() {

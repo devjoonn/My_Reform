@@ -25,6 +25,7 @@ class LoginDataManager {
                     print("로그인 성공")
                     viewController.navigationController?.pushViewController(MainTabBarViewController(), animated: true)
                     viewController.navigationController?.isNavigationBarHidden = true
+                    ToastService.shared.showToast("로그인이 완료되었습니다.")
                     return
                 case 404:
                     if result.code == "B001" {
