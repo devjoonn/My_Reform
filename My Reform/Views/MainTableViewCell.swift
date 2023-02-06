@@ -13,15 +13,16 @@ import SDWebImage
 
 
 class MainTableViewCell: UITableViewCell {
-
+    
+    var Like: Bool = false
     
     static let identifier = "MainTableViewCell"
     
     
-//    var heartButton = UIButton().then {
-//        $0.setImage(UIImage(systemName: "heart", withConfiguration: UIImage.SymbolConfiguration(pointSize: 25)), for: .normal)
-//        $0.tintColor = .systemGray
-//    }
+    var heartButton = UIButton().then {
+        $0.setImage(UIImage(systemName: "heart", withConfiguration: UIImage.SymbolConfiguration(pointSize: 25)), for: .normal)
+        $0.tintColor = .systemGray
+    }
     
     
     var titleCellLabel = UILabel().then {
@@ -52,7 +53,7 @@ class MainTableViewCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         contentView.addSubview(titleCellImageView)
         contentView.addSubview(titleCellLabel)
-//        contentView.addSubview(heartButton)
+        contentView.addSubview(heartButton)
         contentView.addSubview(minuteCellLabel)
         contentView.addSubview(priceCellLabel)
         
@@ -88,17 +89,18 @@ class MainTableViewCell: UITableViewCell {
             make.bottom.equalTo(contentView.snp.bottom).inset(23)
         }
         
-//        heartButton.snp.makeConstraints { make in
-//            make.trailing.equalTo(contentView.snp.trailing).inset(20)
-        //            make.centerY.equalTo(priceCellLabel.snp.centerY)
-        //            make.width.height.equalTo(40)
-        //        }
+        heartButton.snp.makeConstraints { make in
+            make.trailing.equalTo(contentView.snp.trailing).inset(20)
+                    make.centerY.equalTo(priceCellLabel.snp.centerY)
+                    make.width.height.equalTo(40)
+                }
         
     }
     
     
     
     //ViewModel 에서 포스터 URL값과 포스터 이름을 불러옴
+    //0206 게시물 좋아요에 대한 정보 받아야함
     public func configure(with model: HomeFeedViewModel) {
         guard let url = URL(string:"\(Constants.baseURL)\(model.imageUrl)") else { return }
         print(url)
@@ -107,7 +109,11 @@ class MainTableViewCell: UITableViewCell {
         minuteCellLabel.text = model.minute
         let commaPrice = numberFormatter(number: model.price)
         priceCellLabel.text = String("\(commaPrice) 원")
-        
+        if model.like == 1 {
+            heartButton.isSelected = true
+        } else {
+            heartButton.isSelected = false
+        }
     }
     
     // 세자리수 컴마찍기

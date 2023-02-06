@@ -142,8 +142,9 @@ extension CategoryFeedViewController: UITableViewDelegate, UITableViewDataSource
         let model = categoryPostModel[indexPath.row]
         print("cell 에서 model의 categoryPostModel count 출력 - \(model)")
         guard let price = model.price else { return UITableViewCell() }
+        guard let like = model.like else { return UITableViewCell() }
         
-        cell.configure(with: HomeFeedViewModel(imageUrl: model.imageUrl?.first ?? "", title: model.title ?? "", minute: model.time ?? "", price: price))
+        cell.configure(with: HomeFeedViewModel(imageUrl: model.imageUrl?.first ?? "", title: model.title ?? "", minute: model.time ?? "", price: price, like: like))
         
         return cell
     }

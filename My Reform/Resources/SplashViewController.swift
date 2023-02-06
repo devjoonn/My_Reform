@@ -33,6 +33,12 @@ class SplashViewController: UIViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        // Do any additional setup after loading the view.
+        
         self.view.addSubview(splashTitle)
         self.view.addSubview(splashTitle2)
         self.view.addSubview(splashTitle3)
@@ -67,6 +73,7 @@ class SplashViewController: UIViewController {
         self.splashTitle2.alpha=1
         self.splashTitle3.alpha=0
         
+        
         UIView.animate(withDuration: 0.3, delay: 1.0, options: .curveEaseIn, animations: {
             //애니메이션처리
             var splashTitleTopFrame = self.splashTitle.frame
@@ -75,6 +82,7 @@ class SplashViewController: UIViewController {
             splashTitleTopFrame.origin.x -= 42.56*5
             
             self.splashTitle.frame = splashTitleTopFrame
+            print("애니메이션 1")
             
         })
         
@@ -82,17 +90,8 @@ class SplashViewController: UIViewController {
             self.splashTitle.alpha = 0
             self.splashTitle2.alpha = 0
             self.splashTitle3.alpha = 1
-        }) { _ in
-            let mainTabBarViewController = MainTabBarViewController()
-            mainTabBarViewController.modalPresentationStyle = .fullScreen
-            mainTabBarViewController.modalTransitionStyle = .crossDissolve
-            self.present(mainTabBarViewController, animated: true)
-        }
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // Do any additional setup after loading the view.
+            print("애니메이션 2")
+        })
     }
 }
 
