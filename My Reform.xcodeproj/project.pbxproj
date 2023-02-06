@@ -12,6 +12,8 @@
 		373C5623297E7DEC00F00F1F /* SearchListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 373C5622297E7DEC00F00F1F /* SearchListViewController.swift */; };
 		3747F6D8298C096000DC860F /* MessageViewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3747F6D7298C096000DC860F /* MessageViewTableViewCell.swift */; };
 		3747F6DA298C0DC500DC860F /* MessagePostModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3747F6D9298C0DC500DC860F /* MessagePostModel.swift */; };
+		376705462990DA2700AFADC4 /* WebSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 376705452990DA2700AFADC4 /* WebSocket.swift */; };
+		376705482990F8C200AFADC4 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 376705472990F8C200AFADC4 /* ChatViewController.swift */; };
 		3781289B298804E2000E75B7 /* UploadModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3781289A298804E2000E75B7 /* UploadModel.swift */; };
 		3781289D29880566000E75B7 /* UploadViewCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3781289C29880566000E75B7 /* UploadViewCollectionViewCell.swift */; };
 		3781289F2988271E000E75B7 /* SearchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3781289E2988271E000E75B7 /* SearchTableViewCell.swift */; };
@@ -90,6 +92,8 @@
 		373C5622297E7DEC00F00F1F /* SearchListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchListViewController.swift; sourceTree = "<group>"; };
 		3747F6D7298C096000DC860F /* MessageViewTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageViewTableViewCell.swift; sourceTree = "<group>"; };
 		3747F6D9298C0DC500DC860F /* MessagePostModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagePostModel.swift; sourceTree = "<group>"; };
+		376705452990DA2700AFADC4 /* WebSocket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebSocket.swift; sourceTree = "<group>"; };
+		376705472990F8C200AFADC4 /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
 		3781289A298804E2000E75B7 /* UploadModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadModel.swift; sourceTree = "<group>"; };
 		3781289C29880566000E75B7 /* UploadViewCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadViewCollectionViewCell.swift; sourceTree = "<group>"; };
 		3781289E2988271E000E75B7 /* SearchTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTableViewCell.swift; sourceTree = "<group>"; };
@@ -352,13 +356,16 @@
 				47C9C2E429781CA600DF89D8 /* LoginSignUp */,
 				47FB5502296BD2A000B3029C /* Main */,
 				370D8BB7296FCF7F00E4B65E /* CategoryViewController.swift */,
+				376705472990F8C200AFADC4 /* ChatViewController.swift */,
 				47A35B0A298801D400B39D5C /* CategoryFeedViewController.swift */,
 				D3AF3D322987A76F00F7DF11 /* SettingViewController.swift */,
 				373C5622297E7DEC00F00F1F /* SearchListViewController.swift */,
 				4770C65A297ECB11009E3E58 /* DetailPostViewController.swift */,
 				D3AF3D342987AB1D00F7DF11 /* ProfileEditViewController.swift */,
 				4752663F29730CD3008D5F1D /* UploadViewController.swift */,
+				376705452990DA2700AFADC4 /* WebSocket.swift */,
 				470D09032990DDD20075778E /* ModifyViewController.swift */,
+
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -616,6 +623,7 @@
 				D39CAF7F298BBB5200D9C79E /* ProfileDataManager.swift in Sources */,
 				47C9C2EB297931DB00DF89D8 /* UIImage.swift in Sources */,
 				47FB54E629685E8300B3029C /* HomeViewController.swift in Sources */,
+				376705462990DA2700AFADC4 /* WebSocket.swift in Sources */,
 				4752664029730CD3008D5F1D /* UploadViewController.swift in Sources */,
 				47A35B112988027D00B39D5C /* CategoryPostDataManager.swift in Sources */,
 				470D09042990DDD20075778E /* ModifyViewController.swift in Sources */,
@@ -642,6 +650,7 @@
 				4770C659297ECAB4009E3E58 /* HomeFeedViewModel.swift in Sources */,
 				379365462982D709009ABF2C /* UploadDataManager.swift in Sources */,
 				47C9C2F929796F0B00DF89D8 /* AllPostModel.swift in Sources */,
+				376705482990F8C200AFADC4 /* ChatViewController.swift in Sources */,
 				D39CAF81298C044000D9C79E /* ProfileInput.swift in Sources */,
 				D3AF3D332987A76F00F7DF11 /* SettingViewController.swift in Sources */,
 				470D08FB2990C70C0075778E /* LikePostSendDataManager.swift in Sources */,
