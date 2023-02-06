@@ -166,6 +166,8 @@ class SettingViewController: UIViewController {
         
         view.backgroundColor = .white
         
+        
+        
         configureNavbar()
         
 //
