@@ -18,7 +18,7 @@ class AllPostDataManager {
         AF.request(url ,method: .get, parameters: nil).validate().responseDecodable(of: AllPostModel.self) { response in
                 switch(response.result) {
                 case .success(let result) :
-                    print("전체 게시물 서버통신 성공 - \(result)")
+//                    print("전체 게시물 서버통신 성공 - \(result)")
                     switch(result.status) {
                     case 200 :
                         guard let data = result.data else { return }

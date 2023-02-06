@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct UploadModel : Decodable {
+struct CUDModel : Decodable {
     var status : Int
     var code : String
     var message : String
