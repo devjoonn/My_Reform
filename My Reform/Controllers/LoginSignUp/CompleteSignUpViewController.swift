@@ -22,7 +22,7 @@ class CompleteSignUpViewController: UIViewController {
     
     lazy var nicknameLabel = { () ->UILabel in
         let label = UILabel()
-        label.text = "닉네임 님"
+        label.text = "\(nickname) 님"
         label.font = UIFont(name: "Pretendard-Bold", size: 23)
         label.textColor = UIColor.mainBlack
         label.font = UIFont.boldSystemFont(ofSize: 23)
@@ -68,6 +68,9 @@ class CompleteSignUpViewController: UIViewController {
         
         setUIView()
         setUIConstraints()
+        
+        self.navigationController?.isNavigationBarHidden = true
+//        self.navigationController?.navigationBar.topItem?.backBarButtonItem = nil
         
         goButton.addTarget(self, action: #selector(moveLogin), for: .touchUpInside)
     }
@@ -129,28 +132,3 @@ class CompleteSignUpViewController: UIViewController {
     }
     
 }
-
-
-
-#if DEBUG
-import SwiftUI
-struct CompleteViewControllerRepresentable: UIViewControllerRepresentable {
-    func updateUIViewController(_ uiView: UIViewController,context: Context) {
-        // leave this empty
-    }
-    @available(iOS 13.0.0, *)
-    func makeUIViewController(context: Context) -> UIViewController{
-        CompleteSignUpViewController()
-    }
-}
-@available(iOS 13.0, *)
-struct CompleteViewControllerRepresentable_PreviewProvider: PreviewProvider {
-    static var previews: some View {
-        Group {
-            CompleteViewControllerRepresentable()
-                .ignoresSafeArea()
-                .previewDisplayName(/*@START_MENU_TOKEN@*/"Preview"/*@END_MENU_TOKEN@*/)
-                .previewDevice(PreviewDevice(rawValue: "iPhone 14 Pro"))
-        }
-    }
-} #endif

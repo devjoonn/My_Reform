@@ -15,7 +15,9 @@ extension UIColor {
   )
     
 
-  static let mainBlack = UIColor(hex: "121212")
+  static let grayColor = UIColor(red: 0.567, green: 0.567, blue: 0.567, alpha: 1)
+    
+  static let mainBlack = UIColor(red: 0.071, green: 0.071, blue: 0.071, alpha: 1)
     
     
   public convenience init?(hex: String) {

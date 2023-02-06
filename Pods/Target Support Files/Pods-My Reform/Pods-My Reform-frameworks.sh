@@ -177,11 +177,9 @@ code_sign_if_enabled() {
 
 if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework"
-  install_framework "${BUILT_PRODUCTS_DIR}/InputBarAccessoryView/InputBarAccessoryView.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/KakaoSDKAuth/KakaoSDKAuth.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/KakaoSDKCommon/KakaoSDKCommon.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/KakaoSDKUser/KakaoSDKUser.framework"
-  install_framework "${BUILT_PRODUCTS_DIR}/MessageKit/MessageKit.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework"
@@ -189,11 +187,9 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework"
-  install_framework "${BUILT_PRODUCTS_DIR}/InputBarAccessoryView/InputBarAccessoryView.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/KakaoSDKAuth/KakaoSDKAuth.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/KakaoSDKCommon/KakaoSDKCommon.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/KakaoSDKUser/KakaoSDKUser.framework"
-  install_framework "${BUILT_PRODUCTS_DIR}/MessageKit/MessageKit.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework"

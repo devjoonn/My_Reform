@@ -1,8 +1,5 @@
 PODS:
   - Alamofire (5.6.2)
-  - InputBarAccessoryView (5.5.0):
-    - InputBarAccessoryView/Core (= 5.5.0)
-  - InputBarAccessoryView/Core (5.5.0)
   - KakaoSDKAuth (2.11.2):
     - KakaoSDKCommon (= 2.11.2)
   - KakaoSDKCommon (2.11.2):
@@ -14,8 +11,6 @@ PODS:
     - KakaoSDKCommon/Common (= 2.11.2)
   - KakaoSDKUser (2.11.2):
     - KakaoSDKAuth (= 2.11.2)
-  - MessageKit (3.8.0):
-    - InputBarAccessoryView (~> 5.5.0)
   - SDWebImage (5.14.3):
     - SDWebImage/Core (= 5.14.3)
   - SDWebImage/Core (5.14.3)
@@ -28,7 +23,6 @@ DEPENDENCIES:
   - KakaoSDKAuth
   - KakaoSDKCommon
   - KakaoSDKUser
-  - MessageKit
   - SDWebImage (~> 5.0)
   - SnapKit (~> 5.6.0)
   - SwiftyJSON
@@ -37,11 +31,9 @@ DEPENDENCIES:
 SPEC REPOS:
   trunk:
     - Alamofire
-    - InputBarAccessoryView
     - KakaoSDKAuth
     - KakaoSDKCommon
     - KakaoSDKUser
-    - MessageKit
     - SDWebImage
     - SnapKit
     - SwiftyJSON
@@ -49,16 +41,14 @@ SPEC REPOS:
 
 SPEC CHECKSUMS:
   Alamofire: d368e1ff8a298e6dde360e35a3e68e6c610e7204
-  InputBarAccessoryView: 1d7b0a672b36e370f01f264b3907ef39d03328e3
   KakaoSDKAuth: 98f90fb67b2c2015cc94066a4489d54bb2f2a68e
   KakaoSDKCommon: 83fef177bcad9a8f9cb728f92e04a464882d3a82
   KakaoSDKUser: bf7b02e23257199995cdd03d59feb716416d14d6
-  MessageKit: a1ba0c69ebead94029867853eb44dd05b9b3f453
   SDWebImage: 9c36e66c8ce4620b41a7407698dda44211a96764
   SnapKit: e01d52ebb8ddbc333eefe2132acf85c8227d9c25
   SwiftyJSON: 2f33a42c6fbc52764d96f13368585094bfd8aa5e
   Then: 844265ae87834bbe1147d91d5d41a404da2ec27d
 
-PODFILE CHECKSUM: e99aa1e88e50074dfd0324a99b59e2b4847051a9
+PODFILE CHECKSUM: dd20242289710d4dde7b6938ec378501ee06cb0e
 
 COCOAPODS: 1.11.3

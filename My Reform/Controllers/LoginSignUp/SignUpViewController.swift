@@ -270,7 +270,7 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
     }
     
     func setupNavigationBar() {
-        navigationItem.title = "회원가입"
+        self.title = "회원가입"
         self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: UIFont(name: "Pretendard-Bold", size: 16)!]
         
         
@@ -583,8 +583,6 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
         let userData = SignUpInput(id: id, email: email, nickname: nickname, pw: pw, marketing: marketingAllow)
         SignUpDataManager.posts(self, userData)
         
-        let vc = CompleteSignUpViewController()
-        vc.nickname = nickname
     }
     
   @objc private func textDidChange(_ notification: Notification) {

@@ -8,7 +8,6 @@
 import UIKit
 import SnapKit
 import Alamofire
-import Then
 import SDWebImage
 
 class SettingViewController: UIViewController {
@@ -140,114 +139,43 @@ class SettingViewController: UIViewController {
     } ()
     
     @objc func logoutBtnClicked(){
-        print("로그아웃 되게 해야함")
-        navigationController?.popViewController(animated: true)
+        let vc = LoginViewController()
+        navigationController?.popToRootViewController(animated: true)
+        vc.modalPresentationStyle = .fullScreen
+        vc.hidesBottomBarWhenPushed = true
+        navigationController?.pushViewController(vc, animated: true)
+//        navigationController?.present(vc, animated: true)
+//        navigationController?.modalPresentationStyle = .fullScreen
     }
     
     //----------------------------
-
-//    var tableView = UITableView(frame: .zero, style: .plain)
-//
-//    let data = [["이메일 변경","비밀번호 변경"],["앱 버전","문의하기","공지사항","서비스 이용약관","개인정보 처리방침","오픈소스 라이선스"],["회원 탈퇴","로그아웃"]]
-////    let data = [[editEmailLabel, editPasswordLabel],[appVersionLabel, questionLabel, noticeLabel, termsLabel, privacyLabel, licenseLabel],[withdrawalLabel, logoutLabel]]
-//    let header = ["개인 설정","이용 안내","기타"]
-//
     
     
     //--------------------------------------
     
-    @objc func editEmailLabelTapped(sender: UITapGestureRecognizer) {
-     // 원하는 대로 코드 구성
-        print("이동")
+    func setUIView(){
+        view.addSubview(individualLabel)
+        view.addSubview(editEmailLabel)
+        view.addSubview(editPasswordLabel)
+        view.addSubview(line)
+        view.addSubview(informationLabel)
+        view.addSubview(appVersionLabel)
+        view.addSubview(questionLabel)
+        view.addSubview(noticeLabel)
+        view.addSubview(termsLabel)
+        view.addSubview(privacyLabel)
+        view.addSubview(licenseLabel)
+        view.addSubview(line2)
+        view.addSubview(etcLabel)
+        view.addSubview(withdrawalLabel)
+        view.addSubview(logoutButton)
+        view.addSubview(versionLabel)
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        view.backgroundColor = .white
-        
-        
-        
-        configureNavbar()
-        
-//
-//        self.view.addSubview(tableView)
-//        self.tableView.dataSource = self
-//
-//        self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: "UITableViewCell")
-//        self.tableView.translatesAutoresizingMaskIntoConstraints = false
-//        self.tableView.separatorStyle = .none
-//
-//        NSLayoutConstraint.activate([
-//            self.tableView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
-//            self.tableView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor),
-//            self.tableView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor),
-//            self.tableView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor)
-//        ])
-        
-        
-        //-----------------
-        
-        
-        //-----------------------------------------------
-//        스크롤뷰
-        
-        let scrollView : UIScrollView! = UIScrollView()
-
-        let contentView : UIView! = UIView()
-
-        scrollView.translatesAutoresizingMaskIntoConstraints = false
-        contentView.translatesAutoresizingMaskIntoConstraints = false
-
-        view.addSubview(scrollView)
-        scrollView.addSubview(contentView)
-
-        NSLayoutConstraint.activate([
-            scrollView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-            scrollView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
-            scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            scrollView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
-        ])
-
-        NSLayoutConstraint.activate([
-            contentView.leadingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.leadingAnchor),
-            contentView.trailingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.trailingAnchor),
-            contentView.topAnchor.constraint(equalTo: scrollView.contentLayoutGuide.topAnchor),
-            contentView.bottomAnchor.constraint(equalTo: scrollView.contentLayoutGuide.bottomAnchor)
-        ])
-
-        contentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor).isActive = true
-
-        let contentViewHeight = contentView.heightAnchor.constraint(greaterThanOrEqualTo: view.heightAnchor)
-        contentViewHeight.priority = .defaultLow
-        contentViewHeight.isActive = false
-        
-//        ------------------------------
-//
-//
-//        -------------------------------------------------------------
-//        constraint
-        
-        contentView.addSubview(individualLabel)
-        contentView.addSubview(editEmailLabel)
-        contentView.addSubview(editPasswordLabel)
-        contentView.addSubview(line)
-        contentView.addSubview(informationLabel)
-        contentView.addSubview(appVersionLabel)
-        contentView.addSubview(questionLabel)
-        contentView.addSubview(noticeLabel)
-        contentView.addSubview(termsLabel)
-        contentView.addSubview(privacyLabel)
-        contentView.addSubview(licenseLabel)
-        contentView.addSubview(line2)
-        contentView.addSubview(etcLabel)
-        contentView.addSubview(withdrawalLabel)
-        contentView.addSubview(logoutButton)
-        contentView.addSubview(versionLabel)
-
+    func setUIConstraints(){
         individualLabel.snp.makeConstraints{
             (make) in
-            make.top.equalTo(contentView.snp.top).inset(44.87)
+            make.top.equalTo(self.view.safeAreaLayoutGuide.snp.top).inset(30)
             make.leading.equalToSuperview().inset(37.54)
         }
 
@@ -342,17 +270,18 @@ class SettingViewController: UIViewController {
             make.width.equalTo(56)
             make.height.equalTo(26)
         }
-        
-        
-        logoutButton.addTarget(self, action: #selector(logoutBtnClicked), for: .touchUpInside)
-        
-        //---------------------------
-        
-        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(editEmailLabelTapped))
-        editEmailLabel.addGestureRecognizer(tapGestureRecognizer)
+    }
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
         
-        // Do any additional setup after loading the view.
+        view.backgroundColor = .white
+        
+        configureNavbar()
+        setUIView()
+        setUIConstraints()
+
+        logoutButton.addTarget(self, action: #selector(logoutBtnClicked), for: .touchUpInside)
     }
     
     //-----------------------------
@@ -368,71 +297,9 @@ class SettingViewController: UIViewController {
             .font: UIFont(name: "Pretendard-Bold", size: 16)!
         ]
         
-        
-//        self.navigationItem.titleView = UIImageView(image: image)
-        
         navigationController?.navigationBar.barTintColor = .white
         navigationController?.navigationBar.backgroundColor = .white
         navigationController?.navigationBar.tintColor = .label
     }
 
 }
-
-//extension SettingViewController: UITableViewDataSource, UITableViewDelegate {
-//    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        return data[section].count
-//    }
-//
-//    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//        let cellWithIndexPath = tableView.dequeueReusableCell(withIdentifier: "UITableViewCell", for: indexPath)
-//        cellWithIndexPath.textLabel?.text = data[indexPath.section][indexPath.row]
-//        return cellWithIndexPath
-//    }
-//
-//    func numberOfSections(in tableView: UITableView) -> Int {
-//        return header.count
-//    }
-//
-//    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-//        return header[section]
-//    }
-//
-//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        tableView.cellForRow(at: indexPath)?.backgroundColor = .red
-//    }
-//
-//    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-//        return 100
-//    }
-//
-//    func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
-//        let header = view as! UITableViewHeaderFooterView
-//        header.textLabel?.font = UIFont(name: "Pretendard", size: 50)
-//        header.textLabel?.textColor = .systemRed
-//    }
-//}
-
-#if DEBUG
-import SwiftUI
-struct SettingViewControllerRepresentable: UIViewControllerRepresentable {
-    
-func updateUIViewController(_ uiView: UIViewController,context: Context) {
-        // leave this empty
-}
-@available(iOS 13.0.0, *)
-func makeUIViewController(context: Context) -> UIViewController{
-    SettingViewController()
-    }
-}
-@available(iOS 13.0, *)
-struct SettingViewControllerRepresentable_PreviewProvider: PreviewProvider {
-    static var previews: some View {
-        Group {
-            SettingViewControllerRepresentable()
-                .ignoresSafeArea()
-                .previewDisplayName(/*@START_MENU_TOKEN@*/"Preview"/*@END_MENU_TOKEN@*/)
-                .previewDevice(PreviewDevice(rawValue: "iPhone 11"))
-        }
-        
-    }
-} #endif
