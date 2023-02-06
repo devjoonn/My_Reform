@@ -188,6 +188,44 @@
 			path = Upload;
 			sourceTree = "<group>";
 		};
+		470D0905299147910075778E /* Category */ = {
+			isa = PBXGroup;
+			children = (
+				370D8BB7296FCF7F00E4B65E /* CategoryViewController.swift */,
+				47A35B0A298801D400B39D5C /* CategoryFeedViewController.swift */,
+			);
+			path = Category;
+			sourceTree = "<group>";
+		};
+		470D0906299147B60075778E /* Post */ = {
+			isa = PBXGroup;
+			children = (
+				4752663F29730CD3008D5F1D /* UploadViewController.swift */,
+				4770C65A297ECB11009E3E58 /* DetailPostViewController.swift */,
+				470D09032990DDD20075778E /* ModifyViewController.swift */,
+				373C5622297E7DEC00F00F1F /* SearchListViewController.swift */,
+			);
+			path = Post;
+			sourceTree = "<group>";
+		};
+		470D0907299147E90075778E /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				D3AF3D342987AB1D00F7DF11 /* ProfileEditViewController.swift */,
+				D3AF3D322987A76F00F7DF11 /* SettingViewController.swift */,
+			);
+			path = Profile;
+			sourceTree = "<group>";
+		};
+		470D0908299148190075778E /* Chat */ = {
+			isa = PBXGroup;
+			children = (
+				376705472990F8C200AFADC4 /* ChatViewController.swift */,
+				376705452990DA2700AFADC4 /* WebSocket.swift */,
+			);
+			path = Chat;
+			sourceTree = "<group>";
+		};
 		47526634297309AD008D5F1D /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -355,17 +393,10 @@
 			children = (
 				47C9C2E429781CA600DF89D8 /* LoginSignUp */,
 				47FB5502296BD2A000B3029C /* Main */,
-				370D8BB7296FCF7F00E4B65E /* CategoryViewController.swift */,
-				376705472990F8C200AFADC4 /* ChatViewController.swift */,
-				47A35B0A298801D400B39D5C /* CategoryFeedViewController.swift */,
-				D3AF3D322987A76F00F7DF11 /* SettingViewController.swift */,
-				373C5622297E7DEC00F00F1F /* SearchListViewController.swift */,
-				4770C65A297ECB11009E3E58 /* DetailPostViewController.swift */,
-				D3AF3D342987AB1D00F7DF11 /* ProfileEditViewController.swift */,
-				4752663F29730CD3008D5F1D /* UploadViewController.swift */,
-				376705452990DA2700AFADC4 /* WebSocket.swift */,
-				470D09032990DDD20075778E /* ModifyViewController.swift */,
-
+				470D0905299147910075778E /* Category */,
+				470D0906299147B60075778E /* Post */,
+				470D0907299147E90075778E /* Profile */,
+				470D0908299148190075778E /* Chat */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
