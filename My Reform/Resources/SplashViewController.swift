@@ -50,12 +50,12 @@ class SplashViewController: UIViewController {
             make.width.equalTo(152.99)
             make.height.equalTo(112.45)
         }
-        
+
         splashTitle2.snp.makeConstraints{
             (make) in
             make.centerY.equalToSuperview()
             make.leading.equalTo(splashTitle3.snp.leading).inset(0)
-            
+
             make.width.equalTo(105.08)
             make.height.equalTo(113)
         }
@@ -69,29 +69,45 @@ class SplashViewController: UIViewController {
             make.height.equalTo(89.79)
         }
         
+        self.navigationController?.navigationBar.isHidden = true
+        
         self.splashTitle.alpha=1
         self.splashTitle2.alpha=1
         self.splashTitle3.alpha=0
-        
+//
         
         UIView.animate(withDuration: 0.3, delay: 1.0, options: .curveEaseIn, animations: {
             //애니메이션처리
             var splashTitleTopFrame = self.splashTitle.frame
-            
+
 //            splashTitleTopFrame.origin.x -= splashTitleTopFrame.size.width*5
             splashTitleTopFrame.origin.x -= 42.56*5
-            
+
             self.splashTitle.frame = splashTitleTopFrame
             print("애니메이션 1")
-            
+
         })
-        
+
         UIView.animate(withDuration: 1.0, delay: 1.5, options: .curveEaseIn, animations: {
             self.splashTitle.alpha = 0
             self.splashTitle2.alpha = 0
             self.splashTitle3.alpha = 1
             print("애니메이션 2")
-        })
+        }) {
+            _ in
+            if (UserDefaults.standard.string(forKey: "senderNickname") != nil){
+                print("UserDefault 값이 있음")
+                let vc = MainTabBarViewController()
+                vc.navigationController?.isNavigationBarHidden = true
+                self.navigationController?.pushViewController(vc, animated: true)
+            }else {
+                print("UserDefault 값이 없음")
+                let vc = LoginViewController()
+                vc.navigationController?.isNavigationBarHidden = true
+                self.navigationController?.pushViewController(vc, animated: true)
+            }
+        }
+        
     }
 }
 
