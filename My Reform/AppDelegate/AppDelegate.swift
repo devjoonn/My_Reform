@@ -24,33 +24,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         sleep(2)
         // Override point for customization after application launch.
         
-//        if (UserDefaults.standard.string(forKey: "senderNickname") != nil){
-//            print("UserDefault 값이 있음")
-//            moveHomeViewController()
-//        }else {
-//            print("UserDefault 값이 없음")
-//            moveLoginViewController()
-//        }
-        
-        func moveHomeViewController(){
-            self.window = UIWindow(frame: UIScreen.main.bounds)
-//            navigationController = UINavigationController(rootViewController: MainTabBarViewController())
-//            self.window?.rootViewController = navigationController
-//            self.navigationController?.navigationBar.isHidden = true
-//            self.window?.makeKeyAndVisible()
-            navigationController?.pushViewController(MainTabBarViewController(), animated: true)
-            self.window?.backgroundColor = .white
-        }
-        
-        func moveLoginViewController(){
-            self.window = UIWindow(frame: UIScreen.main.bounds)
-//            navigationController = UINavigationController(rootViewController: LoginViewController())
-//            self.window?.rootViewController = navigationController
-//            self.window?.makeKeyAndVisible()
-            navigationController?.pushViewController(LoginViewController(), animated: true)
-            self.window?.backgroundColor = .white
-        }
-        
         func moveSplashViewController() {
             self.window = UIWindow(frame: UIScreen.main.bounds)
             self.window?.rootViewController = UINavigationController(rootViewController: SplashViewController())
