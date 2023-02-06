@@ -18,51 +18,46 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
-        sleep(1)
+        
+        
+        moveSplashViewController()
+        sleep(2)
         // Override point for customization after application launch.
         
-        if (UserDefaults.standard.string(forKey: "refreshToken") != nil){
-            self.window = UIWindow(frame: UIScreen.main.bounds)
-            
-//            if UserDefaults.standard.bool(forKey: "appPasswordCheck") == true {
-//                navigationController = UINavigationController(rootViewController: AppPasswordViewController())
-//                self.window?.rootViewController = navigationController
-//                self.window?.makeKeyAndVisible()
-//            }else {
-                moveHomeViewController()
-//            }
-            self.window?.backgroundColor = .white
-        }else {
-//            moveLoginViewController()
-            moveSplashViewController()
-            
-//            sleep(3)
-            
+//        if (UserDefaults.standard.string(forKey: "senderNickname") != nil){
+//            print("UserDefault 값이 있음")
 //            moveHomeViewController()
-        }
-        
-        func moveSplashViewController() {
-            self.window = UIWindow(frame: UIScreen.main.bounds)
-            self.window?.rootViewController = SplashViewController()
-            self.window?.makeKeyAndVisible()
-            self.window?.backgroundColor = .white
-        }
+//        }else {
+//            print("UserDefault 값이 없음")
+//            moveLoginViewController()
+//        }
         
         func moveHomeViewController(){
             self.window = UIWindow(frame: UIScreen.main.bounds)
-            // MainTabBarViewController 자체가 Navigation Controller로 되어있음
-            self.window?.rootViewController = MainTabBarViewController()
-            self.window?.makeKeyAndVisible()
+//            navigationController = UINavigationController(rootViewController: MainTabBarViewController())
+//            self.window?.rootViewController = navigationController
+//            self.navigationController?.navigationBar.isHidden = true
+//            self.window?.makeKeyAndVisible()
+            navigationController?.pushViewController(MainTabBarViewController(), animated: true)
             self.window?.backgroundColor = .white
         }
         
         func moveLoginViewController(){
             self.window = UIWindow(frame: UIScreen.main.bounds)
-            navigationController = UINavigationController(rootViewController: LoginViewController())
-            self.window?.rootViewController = navigationController
-            self.window?.makeKeyAndVisible()
+//            navigationController = UINavigationController(rootViewController: LoginViewController())
+//            self.window?.rootViewController = navigationController
+//            self.window?.makeKeyAndVisible()
+            navigationController?.pushViewController(LoginViewController(), animated: true)
+            self.window?.backgroundColor = .white
         }
         
+        func moveSplashViewController() {
+            self.window = UIWindow(frame: UIScreen.main.bounds)
+            self.window?.rootViewController = UINavigationController(rootViewController: SplashViewController())
+            navigationController?.isNavigationBarHidden = true
+            self.window?.makeKeyAndVisible()
+            self.window?.backgroundColor = .white
+        }
         
         func application(_ application: UIApplication, supportedInterfaceOrientationsFor window: UIWindow?) -> UIInterfaceOrientationMask {
             return UIInterfaceOrientationMask.portrait

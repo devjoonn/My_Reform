@@ -424,8 +424,10 @@ extension ProfileEditViewController : UITextViewDelegate, PHPickerViewController
         results.forEach { result in
             let itemProvider = result.itemProvider
             if itemProvider.canLoadObject(ofClass: UIImage.self) {
-                itemProvider.loadObject(ofClass: UIImage.self) { image, error in
-                    if image is UIImage {
+                itemProvider.loadObject(ofClass: UIImage.self) { [weak self] image, error in guard let self = self else { return }
+                    if let image = image as? UIImage {
+                        self.profileImage.image = image
+                        
                         // 이미지 처리는 여기서...
                         /*
                         만약 이 부분에서 UI 변경 관련 코드를 작성할 때는
