@@ -22,6 +22,10 @@ class LoginDataManager {
                 switch(result.status) {
                 case 200:
 //                    UserDefaults.standard.set(result.result?.token?.accessToken, forKey: "accessToken")
+                    guard let nicknameToken = result.token else { return }
+                    
+                    UserDefaults.standard.set("\(String(describing: nicknameToken))", forKey: "senderNickname")
+                    print("UserDefault에 저장되는 userNickname - \(String(describing: result.token))")
                     print("로그인 성공")
                     viewController.navigationController?.pushViewController(MainTabBarViewController(), animated: true)
                     viewController.navigationController?.isNavigationBarHidden = true
@@ -33,6 +37,7 @@ class LoginDataManager {
                         alert.title = "로그인 실패"
                         alert.message = "id를 다시 한 번 확인해주세요."
                         let alertAction = UIAlertAction(title: "확인", style: .default, handler: nil)
+                        alertAction.titleTextColor = .black
                         alert.addAction(alertAction)
                         viewController.present(alert, animated: true, completion: nil)
                         alert.modalPresentationStyle = .overFullScreen
@@ -42,6 +47,7 @@ class LoginDataManager {
                         alert.title = "로그인 실패"
                         alert.message = "비밀번호를 다시 한 번 확인해주세요."
                         let alertAction = UIAlertAction(title: "확인", style: .default, handler: nil)
+                        alertAction.titleTextColor = .black
                         alert.addAction(alertAction)
                         viewController.present(alert, animated: true, completion: nil)
                         alert.modalPresentationStyle = .overFullScreen

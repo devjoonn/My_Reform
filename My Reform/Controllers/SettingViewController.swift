@@ -139,13 +139,16 @@ class SettingViewController: UIViewController {
     } ()
     
     @objc func logoutBtnClicked(){
-        let vc = LoginViewController()
+        // 로그인할 때 저장되었던 user nickname UserDefault에서 제거 - 초기화
+        UserDefaults.standard.removeObject(forKey: "senderNickname")
+        print("SettingView에서 UserDefault에 있는 값 지웠음")
+        // 환경설정 페이지에서 루트뷰로 이동 후 로그인뷰로 이동 (쌓여있는 stack 제거)
         navigationController?.popToRootViewController(animated: true)
+        let vc = LoginViewController()
         vc.modalPresentationStyle = .fullScreen
         vc.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(vc, animated: true)
-//        navigationController?.present(vc, animated: true)
-//        navigationController?.modalPresentationStyle = .fullScreen
+        
     }
     
     //----------------------------

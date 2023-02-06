@@ -16,6 +16,10 @@ import Alamofire
 
 // 테이블 뷰에서 셀 클릭 시 넘어오는 뷰로 클릭했던 data의 indexPath 값을 이 뷰로 전송
 class DetailPostViewController: UIViewController, UIScrollViewDelegate {
+    
+    // User Default에 저장된 User Nickname
+    let senderNickname : String = UserDefaults.standard.object(forKey: "senderNickname") as! String
+    
     static let identifier = "DetailPostViewController"
     
     var detailPostModel: [AllPostData] = []
@@ -131,6 +135,11 @@ class DetailPostViewController: UIViewController, UIScrollViewDelegate {
         navigationController?.navigationBar.barTintColor = .white
         navigationController?.navigationBar.tintColor = .label
         
+        // 뒤로가기 버튼 < 만 출력
+        let backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: self, action: nil) // title 부분 수정
+        backBarButtonItem.tintColor = UIColor.mainBlack
+        self.navigationItem.backBarButtonItem = backBarButtonItem
+        
         imageCollectionView.delegate = self
         imageCollectionView.dataSource = self
         print("detailPost 출력 - \(detailPostModel)")
@@ -138,12 +147,13 @@ class DetailPostViewController: UIViewController, UIScrollViewDelegate {
         setUIConstraints()
         setInfo()
         print("카테고리 인덱스는 = \(categorysIndex)")
+        heartBtn.addTarget(self, action: #selector(heartBtnClicked), for: .touchUpInside)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         categorysIndex.removeAll()
         categoryString.removeAll()
-        detailPostModel.removeAll()
+//        detailPostModel.removeAll()
     }
     
 // MARK: - 데이터 전달& 설정 함수들
@@ -317,6 +327,36 @@ class DetailPostViewController: UIViewController, UIScrollViewDelegate {
         }
     }
     
+//MARK: - 게시물 수정 & 삭제가 완료되면 실행되는 함수
+    func successedDelete() {
+        ToastService.shared.showToast("게시물이 삭제되었습니다.")
+        navigationController?.popViewController(animated: true)
+    }
+    
+    func successedModify() {
+        ToastService.shared.showToast("게시물이 수정되었습니다.")
+        navigationController?.popViewController(animated: true)
+    }
+    
+//MARK: - 좋아요 기능
+    
+    @objc func heartBtnClicked() {
+        if heartBtn.isSelected == true {
+//            LikePostSendDataManager.like(self, LikeInput(nickname: <#T##String?#>, boardId: detailPostModel.first?.boardId))
+        } else {
+//            LikePostSendDataManager.unLike(self, LikeInput(nickname: <#T##String?#>, boardId: detailPostModel.first?.boardId))
+        }
+    }
+    
+    func successedLike() {
+        // 좋아요 버튼을 누르고 데이터가 성공적으로 넘어가면 작동하는 함수 [x]
+        heartBtn.isSelected = true
+    }
+    
+    func successedUnLike() {
+        heartBtn.isSelected = false
+    }
+    
 //MARK: - 게시물 수정 & 삭제
     @objc func setBtnClicked() {
         let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
@@ -324,7 +364,8 @@ class DetailPostViewController: UIViewController, UIScrollViewDelegate {
         let deleteSheet = UIAlertController(title: "정말 게시물을 삭제할까요?", message: nil, preferredStyle: .alert)
         let no = UIAlertAction(title: "아니요", style: .default, handler: nil)
         let yes = UIAlertAction(title: "네 삭제할게요", style: .default) { _ in
-            // 게시물 삭제 api 작성 0205 [x]
+            // 게시물 삭제 api 작성 0206 [빌드 x]
+            DeletePostDataManager.deletePosts(self, self.senderNickname, (self.detailPostModel.first?.boardId!)!)
             
         }
         no.titleTextColor = .black
@@ -336,8 +377,10 @@ class DetailPostViewController: UIViewController, UIScrollViewDelegate {
             self.present(deleteSheet, animated: true, completion: nil)
         }
         let modify = UIAlertAction(title: "수정", style: .default) { _ in
-            // 게시물 수정 api 작성 0205 [x]
-            
+            // 게시물 수정 api 작성 0206 [빌드x]
+            let vc = ModifyViewController()
+            vc.modifyPostModel = self.detailPostModel
+            self.navigationController?.pushViewController(vc, animated: true)
         }
         let cancel = UIAlertAction(title: "취소", style: .cancel, handler: nil)
         delete.titleTextColor = UIColor.mainColor

@@ -14,6 +14,8 @@ import SDWebImage
 
 class HomeViewController: UIViewController {
     
+    let senderNickname : String = UserDefaults.standard.object(forKey: "senderNickname") as! String
+    
     var lastBoardId : Int = 100
     var allPostDataManagerUrl: String = "\(Constants.baseURL)/boards?size=20&lastBoardId="
     
@@ -40,6 +42,9 @@ class HomeViewController: UIViewController {
         view.backgroundColor = .white
         view.addSubview(homeFeedTable)
         
+        // UserDefault에 저장되는 값 출력
+        print("HomeView로 넘어옴 - UserDefault에 저장되는 userNickname - \(senderNickname))")
+        
         homeFeedTable.delegate = self
         homeFeedTable.dataSource = self
         
@@ -53,6 +58,12 @@ class HomeViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         AllPostDataManager().allPostGet(self)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        let vc = DetailPostViewController()
+        vc.detailPostModel = []
+        print(vc.detailPostModel)
     }
         
     // 새로고침
@@ -91,7 +102,7 @@ class HomeViewController: UIViewController {
             }
             switch(response.result) {
             case .success(let result) :
-                print("전체 게시물 추가조회 성공 - \(result)")
+//                print("전체 게시물 추가조회 성공 - \(result)")
                 switch(result.status) {
                 case 200 :
                     DispatchQueue.main.async {
@@ -165,8 +176,9 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource, UIScro
         let model = allPostModel[indexPath.row]
 //        guard let model = allPostModel[indexPath.row] else { return UITableViewCell() } //현재 model 은 옵셔널 스트링 값
         guard let price = model.price else { return UITableViewCell()}
-//        cell.titleCellImageView =
-        cell.configure(with: HomeFeedViewModel(imageUrl: model.imageUrl?.first ?? "", title: model.title ?? "", minute: model.time ?? "", price: price))
+        guard let like = model.like else {return UITableViewCell()}
+        
+        cell.configure(with: HomeFeedViewModel(imageUrl: model.imageUrl?.first ?? "", title: model.title ?? "", minute: model.time ?? "", price: price, like: like))
         
         
         return cell

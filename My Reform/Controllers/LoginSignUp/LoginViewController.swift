@@ -185,7 +185,7 @@ class LoginViewController: UIViewController {
     }
     
     @objc func moveSignup() {
-        print("눌리나")
+        print("Signup Btn Clicked")
         let vc = TermsViewController()
         vc.modalPresentationStyle = .fullScreen
         self.navigationController?.pushViewController(vc, animated: true)
@@ -194,6 +194,7 @@ class LoginViewController: UIViewController {
     @objc func loginBtnDidTap() {
         let userData = LoginInput(id: idTextfield.text ?? "", pw: passwordTextfield.text ?? "")
         LoginDataManager.posts(self, userData)
+        print("login Btn Clicked")
     }
     
     

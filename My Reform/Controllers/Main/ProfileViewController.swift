@@ -15,9 +15,11 @@ class ProfileViewController: UIViewController {
 
     static let identifier = "ProfileViewController"
 
+    let senderNickname : String = UserDefaults.standard.object(forKey: "senderNickname") as! String
+  
     var lastBoardId : Int = 100
     
-    var profileDataManagerUrl: String = "\(Constants.baseURL)/users/{userId}/profiles"
+//    var profileDataManagerUrl: String = "\(Constants.baseURL)/users/\(senderNickname)/profiles"
     
     var myPostDataManagerUrl: String = "\(Constants.baseURL)/boards?lastBoardId=&size=&id="
     
@@ -189,12 +191,12 @@ class ProfileViewController: UIViewController {
     
     func allPostGet() {
         print("allPostGet Called")
-        let url = "\(Constants.baseURL)users/1/profiles"
-        
-        AF.request(url ,method: .get, parameters: nil).validate().responseDecodable(of: ProfileLookupModel.self) { response in
+        let url = "\(Constants.baseURL)/users/\(senderNickname)/profiles"
+        let encodeUrl = url.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
+        AF.request(encodeUrl ,method: .get, parameters: nil).validate().responseDecodable(of: ProfileLookupModel.self) { response in
                 switch(response.result) {
                 case .success(let result) :
-                    print("프로필 서버통신 성공 - \(result)")
+//                    print("프로필 서버통신 성공 - \(result)")
                     switch(result.status) {
                     case 200 :
                         guard let data = result.data else { return }
@@ -230,7 +232,7 @@ class ProfileViewController: UIViewController {
             }
             switch(response.result) {
             case .success(let result) :
-                print("게시물 추가조회 성공 - \(result)")
+//                print("게시물 추가조회 성공 - \(result)")
                 switch(result.status) {
                 case 200 :
                     DispatchQueue.main.async {
@@ -353,8 +355,9 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
         
         guard let updateAt = model.updateAt else {return UITableViewCell()}
         guard let price = model.price else { return UITableViewCell()}
+        guard let like = model.like else { return UITableViewCell()}
         
-        cell.configure(with: HomeFeedViewModel(imageUrl: model.imageUrl?.first ?? "", title: model.title ?? "", minute: updateAt, price: price))
+        cell.configure(with: HomeFeedViewModel(imageUrl: model.imageUrl?.first ?? "", title: model.title ?? "", minute: updateAt, price: price, like: like))
         
         return cell
     }
