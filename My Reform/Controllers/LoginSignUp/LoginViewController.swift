@@ -124,14 +124,16 @@ class LoginViewController: UIViewController {
     private func setUIConstraints() {
         
         logoImage.snp.makeConstraints{ (make) in
-            make.top.equalToSuperview().inset(265.12)
+//            make.top.equalToSuperview().inset(265.12)
+            make.bottom.equalTo(idLabel.snp.top).inset(-112.02)
             make.centerX.equalToSuperview()
             make.width.equalTo(251.14)
             make.height.equalTo(47.24)
         }
         
         idLabel.snp.makeConstraints { make in
-            make.top.equalTo(logoImage.snp.bottom).inset(-113.82)
+//            make.top.equalTo(logoImage.snp.bottom).inset(-113.82)
+            make.centerY.equalToSuperview().inset(18.38)
             make.leading.equalToSuperview().inset(38.5)
             make.width.equalTo(29)
             make.height.equalTo(17)
