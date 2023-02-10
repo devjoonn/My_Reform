@@ -10,8 +10,7 @@ import Alamofire
 
 class UploadDataManager{
     
-    static var Headers : HTTPHeaders = ["Content-Type" : "multipart/form-data"
-                                        ]
+    static var Headers : HTTPHeaders = ["Content-Type" : "multipart/form-data"]
     
     // 서버에 게시물 전송
     static func posts(_ viewController: UploadViewController,_ parameter: UploadInput ,images: [UIImage]) {
@@ -62,7 +61,7 @@ class UploadDataManager{
                     print("게시물 전송 성공")
                     viewController.successPost()
                 default:
-                    print("데이터 베이스 오류: " + result.message)
+                    print("데이터 베이스 오류: " + (result.message ?? ""))
                 }
             case .failure(let error) :
                 print("게시물 등록 실패: \(error)")

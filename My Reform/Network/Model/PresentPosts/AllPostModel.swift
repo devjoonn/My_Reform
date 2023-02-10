@@ -26,6 +26,6 @@ struct AllPostData : Decodable {
     let price : Int?
     let nickname : String?
     let imageUrl : [String]?
-    let like : Int?
-    let likeTotal : Int?
+    let likeOrNot : Bool?
+    let countOfLike : Int?
 }

@@ -8,9 +8,9 @@
 import Foundation
 
 struct CUDModel : Decodable {
-    var status : Int
-    var code : String
-    var message : String
+    var status : Int?
+    var code : String?
+    var message : String?
 }
 
 //struct UploadPostData : Decodable {
