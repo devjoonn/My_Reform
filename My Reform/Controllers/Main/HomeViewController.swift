@@ -57,7 +57,7 @@ class HomeViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        AllPostDataManager().allPostGet(self)
+        AllPostDataManager().allPostGet(self, senderNickname)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -96,7 +96,8 @@ class HomeViewController: UIViewController {
     private func fetchingAll(_ lastBoardId: Int) {
         
         print("fetchingAll - lastBoardId = \(lastBoardId)")
-        AF.request("\(allPostDataManagerUrl)\(lastBoardId)" ,method: .get, parameters: nil).validate().responseDecodable(of: AllPostModel.self) { response in
+        let nickname = senderNickname.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
+        AF.request("\(allPostDataManagerUrl)\(lastBoardId)&loginNickname=\(nickname)" ,method: .get, parameters: nil).validate().responseDecodable(of: AllPostModel.self) { response in
             DispatchQueue.main.async {
                 self.homeFeedTable.tableFooterView = nil
             }
@@ -176,7 +177,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource, UIScro
         let model = allPostModel[indexPath.row]
 //        guard let model = allPostModel[indexPath.row] else { return UITableViewCell() } //현재 model 은 옵셔널 스트링 값
         guard let price = model.price else { return UITableViewCell()}
-        guard let like = model.like else {return UITableViewCell()}
+        guard let like = model.likeOrNot else {return UITableViewCell()}
         
         cell.configure(with: HomeFeedViewModel(imageUrl: model.imageUrl?.first ?? "", title: model.title ?? "", minute: model.time ?? "", price: price, like: like))
         

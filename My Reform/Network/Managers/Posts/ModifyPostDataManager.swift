@@ -50,10 +50,9 @@ class ModifyPostDataManager {
             multipartFormData.append("\(valueJson)".data(using: .utf8)!, withName: "saveObj", mimeType: "application/json")
             
             
-        }, to: "\(Constants.baseURL)/boards/boardId", usingThreshold: UInt64.init(), method: .patch, headers: Headers).validate(statusCode: 200..<500).responseDecodable(of: CUDModel.self)
+            // 원래는 .patch 이지만 api상 post로 지워짐
+        }, to: "\(Constants.baseURL)/boards/\(boardId)", usingThreshold: UInt64.init(), method: .post, headers: Headers).validate(statusCode: 200..<500).responseDecodable(of: CUDModel.self)
         { response in
-            print("response ------- \(response)")
-            print("response.result ------- \(response.result)")
             switch response.result {
             case .success(let result) :
                 switch result.status {
@@ -63,11 +62,8 @@ class ModifyPostDataManager {
                 case 403 :
                     ToastService.shared.showToast("게시물을 변경할 수 있는 권한이 없습니다.")
                     print("게시물을 변경할 수 있는 권한이 없습니다.")
-                case 200 :
-                    ToastService.shared.showToast("게시물을 찾을 수 없습니다.")
-                    print("게시물을 찾을 수 없습니다.")
                 default:
-                    print("데이터 베이스 오류: " + result.message)
+                    print("데이터 베이스 오류: " + (result.message ?? ""))
                 }
             case .failure(let error) :
                 print("게시물 등록 실패: \(error)")

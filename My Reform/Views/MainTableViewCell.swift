@@ -20,7 +20,8 @@ class MainTableViewCell: UITableViewCell {
     
     
     var heartButton = UIButton().then {
-        $0.setImage(UIImage(systemName: "heart", withConfiguration: UIImage.SymbolConfiguration(pointSize: 25)), for: .normal)
+        $0.setImage(UIImage(named: "heart_off"), for: .normal)
+        $0.setImage(UIImage(named: "heart_on"), for: .selected)
         $0.tintColor = .systemGray
     }
     
@@ -109,7 +110,7 @@ class MainTableViewCell: UITableViewCell {
         minuteCellLabel.text = model.minute
         let commaPrice = numberFormatter(number: model.price)
         priceCellLabel.text = String("\(commaPrice) 원")
-        if model.like == 1 {
+        if model.like == true {
             heartButton.isSelected = true
         } else {
             heartButton.isSelected = false

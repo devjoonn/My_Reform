@@ -37,6 +37,10 @@
 		470D09002990D5D80075778E /* DeletePostDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470D08FF2990D5D80075778E /* DeletePostDataManager.swift */; };
 		470D09022990DB160075778E /* ModifyPostDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470D09012990DB160075778E /* ModifyPostDataManager.swift */; };
 		470D09042990DDD20075778E /* ModifyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470D09032990DDD20075778E /* ModifyViewController.swift */; };
+		473855D029929FED00CAD6E5 /* LikeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 473855CF29929FED00CAD6E5 /* LikeModel.swift */; };
+		473855D2299629CA00CAD6E5 /* DeleteInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 473855D1299629CA00CAD6E5 /* DeleteInput.swift */; };
+		473855D429962BB100CAD6E5 /* PostAuthCheckDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 473855D329962BB100CAD6E5 /* PostAuthCheckDataManager.swift */; };
+		473855D629962E5A00CAD6E5 /* PostAuthModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 473855D529962E5A00CAD6E5 /* PostAuthModel.swift */; };
 		4752663C29730A55008D5F1D /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4752663B29730A55008D5F1D /* Constants.swift */; };
 		4752663E29730AA6008D5F1D /* MainTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4752663D29730AA6008D5F1D /* MainTableViewCell.swift */; };
 		4752664029730CD3008D5F1D /* UploadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4752663F29730CD3008D5F1D /* UploadViewController.swift */; };
@@ -117,6 +121,10 @@
 		470D08FF2990D5D80075778E /* DeletePostDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeletePostDataManager.swift; sourceTree = "<group>"; };
 		470D09012990DB160075778E /* ModifyPostDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModifyPostDataManager.swift; sourceTree = "<group>"; };
 		470D09032990DDD20075778E /* ModifyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModifyViewController.swift; sourceTree = "<group>"; };
+		473855CF29929FED00CAD6E5 /* LikeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikeModel.swift; sourceTree = "<group>"; };
+		473855D1299629CA00CAD6E5 /* DeleteInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteInput.swift; sourceTree = "<group>"; };
+		473855D329962BB100CAD6E5 /* PostAuthCheckDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostAuthCheckDataManager.swift; sourceTree = "<group>"; };
+		473855D529962E5A00CAD6E5 /* PostAuthModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostAuthModel.swift; sourceTree = "<group>"; };
 		47526619296C7B52008D5F1D /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
 		4752663B29730A55008D5F1D /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		4752663D29730AA6008D5F1D /* MainTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTableViewCell.swift; sourceTree = "<group>"; };
@@ -331,6 +339,7 @@
 				470D08FF2990D5D80075778E /* DeletePostDataManager.swift */,
 				47A35B102988027D00B39D5C /* CategoryPostDataManager.swift */,
 				470D08FA2990C70C0075778E /* LikePostSendDataManager.swift */,
+				473855D329962BB100CAD6E5 /* PostAuthCheckDataManager.swift */,
 			);
 			path = Posts;
 			sourceTree = "<group>";
@@ -350,6 +359,9 @@
 				47C9C2F829796F0B00DF89D8 /* AllPostModel.swift */,
 				3747F6D9298C0DC500DC860F /* MessagePostModel.swift */,
 				470D08FC2990C78F0075778E /* LikeInput.swift */,
+				473855CF29929FED00CAD6E5 /* LikeModel.swift */,
+				473855D1299629CA00CAD6E5 /* DeleteInput.swift */,
+				473855D529962E5A00CAD6E5 /* PostAuthModel.swift */,
 			);
 			path = PresentPosts;
 			sourceTree = "<group>";
@@ -640,8 +652,10 @@
 				47A35B13298BA1C100B39D5C /* ToastService.swift in Sources */,
 				47C9C2F02979644600DF89D8 /* AllPostDataManager.swift in Sources */,
 				47FB54D52968590000B3029C /* MainTabBarViewController.swift in Sources */,
+				473855D029929FED00CAD6E5 /* LikeModel.swift in Sources */,
 				370D8BC0296FE0A000E4B65E /* CategoryCell.swift in Sources */,
 				47FB54D12968590000B3029C /* AppDelegate.swift in Sources */,
+				473855D2299629CA00CAD6E5 /* DeleteInput.swift in Sources */,
 				47FB54EA29685EA400B3029C /* MessageViewController.swift in Sources */,
 				3781289B298804E2000E75B7 /* UploadModel.swift in Sources */,
 				373C5623297E7DEC00F00F1F /* SearchListViewController.swift in Sources */,
@@ -654,6 +668,7 @@
 				D39CAF7F298BBB5200D9C79E /* ProfileDataManager.swift in Sources */,
 				47C9C2EB297931DB00DF89D8 /* UIImage.swift in Sources */,
 				47FB54E629685E8300B3029C /* HomeViewController.swift in Sources */,
+				473855D629962E5A00CAD6E5 /* PostAuthModel.swift in Sources */,
 				376705462990DA2700AFADC4 /* WebSocket.swift in Sources */,
 				4752664029730CD3008D5F1D /* UploadViewController.swift in Sources */,
 				47A35B112988027D00B39D5C /* CategoryPostDataManager.swift in Sources */,
@@ -683,6 +698,7 @@
 				47C9C2F929796F0B00DF89D8 /* AllPostModel.swift in Sources */,
 				376705482990F8C200AFADC4 /* ChatViewController.swift in Sources */,
 				D39CAF81298C044000D9C79E /* ProfileInput.swift in Sources */,
+				473855D429962BB100CAD6E5 /* PostAuthCheckDataManager.swift in Sources */,
 				D3AF3D332987A76F00F7DF11 /* SettingViewController.swift in Sources */,
 				470D08FB2990C70C0075778E /* LikePostSendDataManager.swift in Sources */,
 				47A35B0D2988021C00B39D5C /* DetailPostImageCollectionViewCell.swift in Sources */,

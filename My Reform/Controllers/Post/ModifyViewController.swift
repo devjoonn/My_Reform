@@ -119,8 +119,8 @@ class ModifyViewController: UIViewController, UITabBarControllerDelegate {
     
     // 수정이 완료되면 실행되는 함수
     func successedModify() {
-        self.navigationController?.popToRootViewController(animated: true)
         ToastService.shared.showToast("게시물 업데이트에 성공했습니다.")
+        self.navigationController?.popToRootViewController(animated: true)
     }
     
 }

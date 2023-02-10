@@ -355,7 +355,7 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
         
         guard let updateAt = model.updateAt else {return UITableViewCell()}
         guard let price = model.price else { return UITableViewCell()}
-        guard let like = model.like else { return UITableViewCell()}
+        guard let like = model.likeOrNot else { return UITableViewCell()}
         
         cell.configure(with: HomeFeedViewModel(imageUrl: model.imageUrl?.first ?? "", title: model.title ?? "", minute: updateAt, price: price, like: like))
         
