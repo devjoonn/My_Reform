@@ -24,6 +24,7 @@ class MessageViewTableViewCell: UITableViewCell {
         $0.contentMode = .scaleAspectFit
         $0.clipsToBounds = true
         $0.layer.cornerRadius = 25
+        $0.backgroundColor = .green
     }
     
     var minuteCellLabel = UILabel().then {
@@ -66,7 +67,7 @@ class MessageViewTableViewCell: UITableViewCell {
         titleCellImageView.snp.makeConstraints { make in
             make.top.equalTo(contentView.snp.top).inset(15)
             make.leading.equalTo(contentView.snp.leading).inset(15)
-            make.bottom.equalTo(contentView.snp.bottom).inset(-15)
+            make.bottom.equalTo(contentView.snp.bottom).inset(15)
             make.width.equalTo(110)
         }
         
@@ -91,15 +92,14 @@ class MessageViewTableViewCell: UITableViewCell {
     
     
     //ViewModel 에서 포스터 URL값과 포스터 이름을 불러옴
-//    public func configure(with model: HomeFeedViewModel) {
-//        guard let url = URL(string:"\(Constants.baseURL)\(model.imageUrl)") else { return }
-//        print(url)
-//        titleCellImageView.sd_setImage(with:url, completed: nil)
-//        titleCellLabel.text = model.title
-//        minuteCellLabel.text = model.minute
-//        let commaPrice = numberFormatter(number: model.price)
-//        recentChat.text = String("\(commaPrice) 원")
-//        
-//    }
+    public func configure(with model: MessageFeedViewModel) {
+       
+        
+        titleCellLabel.text = model.title
+        
+        name.text = model.ownerNickname
+        
+        recentChat.text = model.lastMessage
+    }
 
 }

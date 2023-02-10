@@ -7,6 +7,7 @@
 
 import Foundation
 
+
 enum WebSocketError: Error {
   case invalidURL
 }
@@ -73,24 +74,27 @@ final class WebSocket: NSObject {
     self.delegate = nil
   }
   
-  func receive(onReceive: @escaping (String?, Data?) -> ()) {
-    self.onReceiveClosure = onReceive
-    self.webSocketTask?.receive(completionHandler: { result in
-      switch result {
-      case let .success(message):
-        switch message {
-        case let .string(string):
-          onReceive(string, nil)
-        case let .data(data):
-          onReceive(nil, data)
-        @unknown default:
-          onReceive(nil, nil)
+    func receive() {
+        print("receive method called")
+      self.webSocketTask?.receive(completionHandler: { [weak self] result in
+          debugPrint("디버그:", result)
+        switch result {
+        case let .success(message):
+          switch message {
+          case let .string(string):
+              print("Got string: \(string)")
+          case let .data(data):
+              print("Got Data: \(data)")
+          @unknown default:
+              break
+          }
+        case let .failure(error):
+          print("Received error \(error)")
         }
-      case let .failure(error):
-        print("Received error \(error)")
-      }
-    })
-  }
+
+          self?.receive()
+      })
+    }
   
   private func startPing() {
     self.timer?.invalidate()
@@ -115,7 +119,10 @@ extension WebSocket: URLSessionWebSocketDelegate {
     webSocketTask: URLSessionWebSocketTask,
     didOpenWithProtocol protocol: String?
   ) {
-    self.delegate?.urlSession?(
+      print("did connect")
+      ping()
+      receive()
+      self.delegate?.urlSession?(
       session,
       webSocketTask: webSocketTask,
       didOpenWithProtocol: `protocol`
@@ -128,6 +135,7 @@ extension WebSocket: URLSessionWebSocketDelegate {
     didCloseWith closeCode: URLSessionWebSocketTask.CloseCode,
     reason: Data?
   ) {
+      print("did close")
     self.delegate?.urlSession?(
       session,
       webSocketTask: webSocketTask,
@@ -137,3 +145,23 @@ extension WebSocket: URLSessionWebSocketDelegate {
   }
 }
 
+
+
+//func receive() {
+//  self.webSocketTask?.receive(completionHandler: { [weak self] result in
+//    switch result {
+//    case let .success(message):
+//      switch message {
+//      case let .string(string):
+//          print("Got Data: \(string)")
+//      case let .data(data):
+//          print("Got Data: \(data)")
+//      @unknown default:
+//          break
+//      }
+//    case let .failure(error):
+//      print("Received error \(error)")
+//    }
+//  self?.receive()
+//  })
+//}
