@@ -12,5 +12,5 @@ struct HomeFeedViewModel {
     var title: String
     var minute: String
     var price: Int
-    var like: Int
+    var like: Bool
 }

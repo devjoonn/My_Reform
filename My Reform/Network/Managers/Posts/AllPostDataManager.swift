@@ -11,20 +11,20 @@ import Alamofire
 class AllPostDataManager {
     
     
-    func allPostGet(_ viewController: HomeViewController) {
+    func allPostGet(_ viewController: HomeViewController, _ nickname: String) {
         
-        let url = "\(Constants.baseURL)/boards?size=20"
+        let nicknameParameters = nickname.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
+        
+        let url = "\(Constants.baseURL)/boards?&loginNickname=\(nicknameParameters)&size=20"
         
         AF.request(url ,method: .get, parameters: nil).validate().responseDecodable(of: AllPostModel.self) { response in
                 switch(response.result) {
                 case .success(let result) :
-//                    print("전체 게시물 서버통신 성공 - \(result)")
+                    print("전체 게시물 서버통신 성공 - \(result)")
                     switch(result.status) {
                     case 200 :
                         guard let data = result.data else { return }
                         viewController.successAllPostModel(result: data)
-//                        print("result data count = \(result.data?.count)")
-//                        print("print - result data = \(result.data!)")
                     case 404 :
                         print("게시물이 없는 경우입니다 - \(result.message)")
                     default:

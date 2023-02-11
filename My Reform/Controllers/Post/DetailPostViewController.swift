@@ -198,11 +198,15 @@ class DetailPostViewController: UIViewController, UIScrollViewDelegate {
         titleLabel.text = detailPostModel[0].title
         categoryLabel.text = "\(categoryString)"
         contentText.text = detailPostModel[0].contents
+        
+        guard let heartSelected = detailPostModel[0].likeOrNot else { return }
+        guard let heartCount = detailPostModel[0].countOfLike else { return }
+        heartBtn.isSelected = heartSelected
+        heartLabel.text = String(describing: heartCount)
+        
         guard let price = detailPostModel[0].price else { return }
         let commaPrice = numberFormatter(number: price)
-        
         priceLabel.text = "\(commaPrice) 원"
-
     }
     
     // 세자리수 컴마찍기
@@ -342,58 +346,72 @@ class DetailPostViewController: UIViewController, UIScrollViewDelegate {
     
     @objc func heartBtnClicked() {
         if heartBtn.isSelected == true {
-//            LikePostSendDataManager.like(self, LikeInput(nickname: <#T##String?#>, boardId: detailPostModel.first?.boardId))
+            LikePostSendDataManager.unLike(self, LikeInput(nickname: senderNickname, boardId: detailPostModel.first?.boardId))
         } else {
-//            LikePostSendDataManager.unLike(self, LikeInput(nickname: <#T##String?#>, boardId: detailPostModel.first?.boardId))
+            LikePostSendDataManager.like(self, LikeInput(nickname: senderNickname, boardId: detailPostModel.first?.boardId))
         }
     }
     
-    func successedLike() {
+    func successedLike(_ likeCount:Int) {
         // 좋아요 버튼을 누르고 데이터가 성공적으로 넘어가면 작동하는 함수 [x]
         heartBtn.isSelected = true
+        heartLabel.text = String(describing: likeCount)
+        ToastService.shared.showToast("찜")
     }
     
-    func successedUnLike() {
+    func successedUnLike(_ likeCount:Int) {
+        ToastService.shared.showToast("찜 해제")
+        heartLabel.text = String(describing: likeCount)
         heartBtn.isSelected = false
     }
     
 //MARK: - 게시물 수정 & 삭제
     @objc func setBtnClicked() {
-        let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        
-        let deleteSheet = UIAlertController(title: "정말 게시물을 삭제할까요?", message: nil, preferredStyle: .alert)
-        let no = UIAlertAction(title: "아니요", style: .default, handler: nil)
-        let yes = UIAlertAction(title: "네 삭제할게요", style: .default) { _ in
-            // 게시물 삭제 api 작성 0206 [빌드 x]
-            DeletePostDataManager.deletePosts(self, self.senderNickname, (self.detailPostModel.first?.boardId!)!)
+        // 게시물의 햄버거버튼 클릭 시 권한 확인 - post에 대한 작성자 권한 체크
+        PostAuthCheckDataManager.AuthCheck(self, LikeInput(nickname: senderNickname, boardId: self.detailPostModel.first?.boardId!))
+    }
+    
+    // 권한 확인 후
+    func successedCheckAuth(_ result: Bool) {
+        // 작성자가 맞으면
+        if result == true {
+            let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
             
+            let deleteSheet = UIAlertController(title: "정말 게시물을 삭제할까요?", message: nil, preferredStyle: .alert)
+            let no = UIAlertAction(title: "아니요", style: .default, handler: nil)
+            let yes = UIAlertAction(title: "네 삭제할게요", style: .default) { _ in
+                // 게시물 삭제
+                DeletePostDataManager.deletePosts(self, DeleteInput(nickname: self.senderNickname), (self.detailPostModel.first?.boardId!)!)
+            }
+            no.titleTextColor = .black
+            yes.titleTextColor = UIColor.mainColor
+            deleteSheet.addAction(no)
+            deleteSheet.addAction(yes)
+            
+            let delete = UIAlertAction(title: "삭제", style: .default) {_ in
+                self.present(deleteSheet, animated: true, completion: nil)
+            }
+            let modify = UIAlertAction(title: "수정", style: .default) { _ in
+                // 게시물 수정화면으로 넘어감
+                let vc = ModifyViewController()
+                vc.modifyPostModel = self.detailPostModel
+                self.navigationController?.pushViewController(vc, animated: true)
+            }
+            let cancel = UIAlertAction(title: "취소", style: .cancel, handler: nil)
+            delete.titleTextColor = UIColor.mainColor
+            modify.titleTextColor = .black
+            cancel.titleTextColor = .black
+            
+            actionSheet.addAction(delete)
+            actionSheet.addAction(modify)
+            
+            self.view.subviews.first?.subviews.first?.subviews.first?.backgroundColor = .white
+            
+            actionSheet.addAction(cancel)
+            present(actionSheet, animated: true, completion: nil)
+        } else {
+            print("게시물에 대한 권한이 없습니다.")
         }
-        no.titleTextColor = .black
-        yes.titleTextColor = UIColor.mainColor
-        deleteSheet.addAction(no)
-        deleteSheet.addAction(yes)
-        
-        let delete = UIAlertAction(title: "삭제", style: .default) {_ in
-            self.present(deleteSheet, animated: true, completion: nil)
-        }
-        let modify = UIAlertAction(title: "수정", style: .default) { _ in
-            // 게시물 수정 api 작성 0206 [빌드x]
-            let vc = ModifyViewController()
-            vc.modifyPostModel = self.detailPostModel
-            self.navigationController?.pushViewController(vc, animated: true)
-        }
-        let cancel = UIAlertAction(title: "취소", style: .cancel, handler: nil)
-        delete.titleTextColor = UIColor.mainColor
-        modify.titleTextColor = .black
-        cancel.titleTextColor = .black
-        
-        actionSheet.addAction(delete)
-        actionSheet.addAction(modify)
-        
-        self.view.subviews.first?.subviews.first?.subviews.first?.backgroundColor = .white
-        
-        actionSheet.addAction(cancel)
-        present(actionSheet, animated: true, completion: nil)
     }
 }
 
