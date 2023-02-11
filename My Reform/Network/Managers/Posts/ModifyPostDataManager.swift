@@ -42,7 +42,7 @@ class ModifyPostDataManager {
             } catch {
                 print(error.localizedDescription)
             }
-            print("[create json data]")
+            print("[modified json data]")
             print("jsonObj : " , valueJson)
 
 
