@@ -11,7 +11,9 @@ import UIKit
 import SnapKit
 import Then
 
-class ChatViewController: UIViewController {
+class ChatViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+    
+    let senderNickname : String = UserDefaults.standard.object(forKey: "senderNickname") as! String
     
     var detailChatRoomModel: [MessageViewData] = []
     
@@ -57,6 +59,33 @@ class ChatViewController: UIViewController {
     
     var tableView = UITableView().then {
         $0.backgroundColor = .green
+    }
+    
+    // 메시지 담는 배열
+    var messages = [String]()
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return messages.count
+    }
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: ChatTableViewCell.identifier, for: indexPath) as? ChatTableViewCell else { return UITableViewCell() }
+        
+        let model = messages[indexPath.row]
+        
+        cell.configure(with: model)
+        
+        // 데이터 /(슬레시로) 구분 한 걸 배열로 만들어 dataSplit에 담음
+//        let dataSplit = messages[indexPath.row].components(separatedBy: "/")
+        
+        // 본인이 보낸 메시지가 맞으면 오른쪽에 배치
+//        if dataSplit[1] == senderNickname {
+//            cell = tableView.dequeueReusableCell(withIdentifier: "outgoingCell") as! ChatTableViewCell
+//        } else {
+//            cell = tableView.dequeueReusableCell(withIdentifier: "incomingCell") as! ChatTableViewCell
+//        }
+//        cell.configureCell(message: messages[indexPath.row])
+        return cell
     }
 
     override func viewDidLoad() {
@@ -108,28 +137,26 @@ class ChatViewController: UIViewController {
     
     
 }
-//MARK: - 1. send  messgae
+//MARK: - 1. send messgae
 extension ChatViewController {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        
-        guard let text = messageTextField.text else {return false}
-        
-//        let data = text
-//        let dataAsString = data.base64EncodeString()
-//        let dic : NSDictionary = ["type" : "ENTER", "chatroomId" : 1, "nickname" : "name2", "message" : text]
-//        let jsonData = try? JSONSerialization.data(withJSONObject: dic, options: [])
-//        WebSocket.shared.send(data: jsonData!)
-//        let jsonString = String(data: jsonData!, encoding: .utf8)
-//        self!.
-        
-        let result_text = "2/name2/"+text
-        WebSocket.shared.send(message: result_text)
-
+        sendMessage()
         return true
     }
     
     func sendMessage() {
-        
+        if let message = messageTextField.text {
+            if message.trimmingCharacters(in: .whitespaces) != "" {
+                // chatroom / senderNickname / message
+                let result_message = "2/name2/"+message
+                WebSocket.shared.send(message: result_message)
+                messageTextField.text = ""
+                messages.append(result_message)
+                tableView.reloadData()
+                scrollToBottomOfChat()
+                
+            }
+        }
     }
 }
 
@@ -137,12 +164,14 @@ extension ChatViewController {
 extension ChatViewController : UITextFieldDelegate {
     func attribute() {
         
+        tableView.delegate = self
+        tableView.dataSource = self
         
         messageTextField.delegate = self
         let tapGuesterShowKeyboard = UITapGestureRecognizer(target: self, action: #selector(showKeyboard))
-//        let tapGuesterHideKeyboard = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
+        let tapGuesterHideKeyboard = UITapGestureRecognizer(target: self, action: #selector(hidKeyboard))
         
-//        view.addGestureRecognizer(tapGuesterHideKeyboard)
+        tableView.addGestureRecognizer(tapGuesterHideKeyboard)
         messageTextField.superview?.addGestureRecognizer(tapGuesterShowKeyboard)
         
 
@@ -209,6 +238,11 @@ extension ChatViewController : UITextFieldDelegate {
             make.height.equalTo(inputBottomView.snp.height)
         }
     }
+    
+    func scrollToBottomOfChat(){
+        let indexPath = IndexPath(row: messages.count - 1, section: 0)
+        tableView.scrollToRow(at: indexPath, at: .bottom, animated: false)
+    }
 }
 
 //MARK: - 3 keyboard handler
@@ -216,9 +250,9 @@ extension ChatViewController {
     @objc func showKeyboard() {
         messageTextField.becomeFirstResponder()
     }
-//    @objc func hideKeyboard() {
-//        messageTextField.resignFirstResponder()
-//    }
+    @objc func hidKeyboard() {
+        messageTextField.resignFirstResponder()
+    }
     
     @objc func keyboardWillShowHandle(notification: NSNotification) {
         print("keyboardWillShowHandle() called")

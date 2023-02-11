@@ -56,7 +56,7 @@ class MessageViewController: UIViewController {
         let vc = ChatViewController()
         vc.navigationItem.title = "name2"
         vc.hidesBottomBarWhenPushed = true
-        let userData = ChatInput(senderNickname: "name2", boardId: 1)
+        let userData = ChatInput(senderNickname: senderNickname, boardId: 1)
         ChatDataManager.posts(ChatViewController.init(), userData)
         navigationController?.pushViewController(vc, animated: true)
     }
@@ -130,7 +130,7 @@ extension MessageViewController {
     override func viewWillAppear(_ animated: Bool) {
 //        let userData = MessageViewInput(nickname: senderNickname)
 //        print("userData: ",senderNickname)
-        let userData = MessageViewInput(nickname: "name2")
+        let userData = MessageViewInput(nickname: senderNickname)
 
         MessageViewDataManager().ChatListGet(self, userData)
     }
