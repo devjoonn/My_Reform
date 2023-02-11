@@ -60,7 +60,7 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     var tableView = UITableView().then {
         $0.backgroundColor = .green
     }
-    
+
     // 메시지 담는 배열
     var messages = [String]()
     
@@ -74,19 +74,9 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         let model = messages[indexPath.row]
         
         cell.configure(with: model)
-        
-        // 데이터 /(슬레시로) 구분 한 걸 배열로 만들어 dataSplit에 담음
-//        let dataSplit = messages[indexPath.row].components(separatedBy: "/")
-        
-        // 본인이 보낸 메시지가 맞으면 오른쪽에 배치
-//        if dataSplit[1] == senderNickname {
-//            cell = tableView.dequeueReusableCell(withIdentifier: "outgoingCell") as! ChatTableViewCell
-//        } else {
-//            cell = tableView.dequeueReusableCell(withIdentifier: "incomingCell") as! ChatTableViewCell
-//        }
-//        cell.configureCell(message: messages[indexPath.row])
         return cell
     }
+    
 
     override func viewDidLoad() {
         
@@ -152,11 +142,25 @@ extension ChatViewController {
                 WebSocket.shared.send(message: result_message)
                 messageTextField.text = ""
                 messages.append(result_message)
-                tableView.reloadData()
-                scrollToBottomOfChat()
+                self.updateChat(count: self.messages.count) {
+                    print("Send Message")
+                }
+//                tableView.reloadData()
+//                scrollToBottomOfChat()
                 
             }
         }
+    }
+    
+    func updateChat(count: Int, completion: @escaping ()->Void) {
+        let indexPath = IndexPath(row: count-1, section: 0)
+        
+        self.tableView.beginUpdates()
+        self.tableView.insertRows(at: [indexPath], with: .none)
+        self.tableView.endUpdates()
+        
+        self.tableView.scrollToRow(at: indexPath, at: .bottom, animated: false)
+        completion()
     }
 }
 
@@ -239,10 +243,10 @@ extension ChatViewController : UITextFieldDelegate {
         }
     }
     
-    func scrollToBottomOfChat(){
-        let indexPath = IndexPath(row: messages.count - 1, section: 0)
-        tableView.scrollToRow(at: indexPath, at: .bottom, animated: false)
-    }
+//    func scrollToBottomOfChat(){
+//        let indexPath = IndexPath(row: messages.count - 1, section: 0)
+//        tableView.scrollToRow(at: indexPath, at: .bottom, animated: false)
+//    }
 }
 
 //MARK: - 3 keyboard handler
@@ -287,6 +291,8 @@ extension ChatViewController {
         }
     }
 }
+
+
 
 
 extension ChatViewController: URLSessionWebSocketDelegate {

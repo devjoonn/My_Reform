@@ -33,7 +33,7 @@ class MainTableViewCell: UITableViewCell {
     
     
     var titleCellImageView = UIImageView().then {
-        $0.contentMode = .scaleAspectFit
+        $0.contentMode = .scaleAspectFill
         $0.clipsToBounds = true
         $0.layer.cornerRadius = 25
     }
@@ -71,8 +71,8 @@ class MainTableViewCell: UITableViewCell {
         titleCellImageView.snp.makeConstraints { make in
             make.top.equalTo(contentView.snp.top).inset(15)
             make.leading.equalTo(contentView.snp.leading).inset(15)
-            make.bottom.equalTo(contentView.snp.bottom).inset(-15)
-            make.width.equalTo(110)
+            make.bottom.equalTo(contentView.snp.bottom).inset(15)
+            make.height.width.equalTo(110)
         }
         
         titleCellLabel.snp.makeConstraints { make in

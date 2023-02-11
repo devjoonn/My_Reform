@@ -10,6 +10,8 @@ import Alamofire
 
 class SearchViewController: UIViewController,  UISearchBarDelegate, UIGestureRecognizerDelegate {
     
+    let senderNickname : String = UserDefaults.standard.object(forKey: "senderNickname") as! String
+    
     var allPostModel: [AllPostData] = [] {
         didSet {
             self.exploreCollectionView.reloadData()
@@ -35,6 +37,10 @@ class SearchViewController: UIViewController,  UISearchBarDelegate, UIGestureRec
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // 뒤로가기 버튼 < 만 출력
+        let backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: self, action: nil) // title 부분 수정
+        backBarButtonItem.tintColor = .black
+        self.navigationItem.backBarButtonItem = backBarButtonItem
         attribute()
         layout()
     }
@@ -43,6 +49,38 @@ class SearchViewController: UIViewController,  UISearchBarDelegate, UIGestureRec
         print("- requestFunc 실행")
         requestFunc()
     }
+    
+    func successSearchViewPostModel(result: [AllPostData]) {
+        self.allPostModel = result
+        print(allPostModel.count)
+        
+    }
+    
+    func requestFunc() {
+        
+        AF.request("\(Constants.baseURL)/boards?lastBoardId=100&size=20&loginNickname=\(senderNickname)&keyword=".addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? "",method: .get, parameters: nil ).validate(statusCode: 200..<500).responseDecodable(of: AllPostModel.self) { response in
+            debugPrint(response)
+            switch(response.result) {
+            case .success(let result) :
+                print("검색 UI 서버 통신 성공 - \(result)")
+                switch(result.status) {
+                case 200:
+                    guard let data = result.data else {return}
+                    self.successSearchViewPostModel(result: data)
+//                    print("result data count = \(result.data?.count)")
+                case 404:
+                    print("데이터가 없는 경우입니다. - \(result.message)")
+                default:
+                    print("데이터베이스 오류")
+                    return
+                }
+            case .failure(let error):
+                print(error)
+            }
+            
+        }
+    }
+    
 }
 
 extension SearchViewController : UICollectionViewDelegateFlowLayout {
@@ -67,13 +105,8 @@ extension SearchViewController: UICollectionViewDataSource {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "SearchCollectionViewCell", for: indexPath) as! SearchCollectionViewCell
         
         let model = allPostModel[indexPath.row]
-        
-//        guard let image = model.imageUrl?[0] else { return cell }
-        
         cell.SearchConfig(with: SearchFeedViewModel(boardId: model.boardId ?? -1, imageUrl: model.imageUrl?.first ?? ""))
         
-        
-//        cell.backgroundColor = [.systemGray, .systemGray2, .systemGray3, .systemGray4, .systemGray5, .systemGray6].randomElement()
         return cell
     }
     
@@ -88,7 +121,6 @@ extension SearchViewController: UICollectionViewDataSource {
         vc.hidesBottomBarWhenPushed = true
         print("detailPostModel에 data 저장됨")
         self.navigationController?.pushViewController(vc, animated: true)
-        
     }
 }
 
@@ -97,7 +129,7 @@ extension SearchViewController {
     @objc func beginRefresh(_ sender: UIRefreshControl) {
         print("beginRefresh!")
         sender.endRefreshing()
-        requestFunc()
+//        requestFunc()
     }
 }
 
@@ -148,7 +180,8 @@ extension SearchViewController : UISearchControllerDelegate  {
         
         print(resultController)
                 
-        AF.request("\(Constants.baseURL)/boards?lastBoardId=100&size=100&keyword=\(text)".addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? "" ,method: .get, parameters: nil ).validate().responseDecodable(of: AllPostModel.self) { response in
+        AF.request("\(Constants.baseURL)/boards?lastBoardId=100&size=20&keyword=\(text)&loginNickname=\(senderNickname)"
+            .addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? "" ,method: .get, parameters: nil ).validate().responseDecodable(of: AllPostModel.self) { response in
             DispatchQueue.main.async {
                 print(text)
                 debugPrint(response)
@@ -203,43 +236,6 @@ extension SearchViewController : UISearchControllerDelegate  {
 //        }
 //
 //    }
-}
-
-
-extension SearchViewController  {
-    
-    
-    func successSearchViewPostModel(result: [AllPostData]) {
-        self.allPostModel = result
-        print(allPostModel.count)
-        
-    }
-    
-    func requestFunc() {
-        AF.request("\(Constants.baseURL)/boards?lastBoardId=100&size=100&keyword=",method: .get, parameters: nil ).validate().responseDecodable(of: AllPostModel.self) { response in
-            debugPrint(response)
-            switch(response.result) {
-            case .success(let result) :
-                print("검색 UI 서버 통신 성공 - \(result)")
-                switch(result.status) {
-                case 200:
-                    guard let data = result.data else {return}
-                    self.successSearchViewPostModel(result: data)
-//                    print("result data count = \(result.data?.count)")
-                case 404:
-                    print("데이터가 없는 경우입니다. - \(result.message)")
-                default:
-                    print("데이터베이스 오류")
-                    return
-                }
-            case .failure(let error):
-                print(error)
-            }
-            
-        }
-    }
-    
-    
 }
 
 
