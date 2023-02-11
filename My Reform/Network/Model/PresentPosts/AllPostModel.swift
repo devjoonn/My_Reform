@@ -21,11 +21,11 @@ struct AllPostData : Decodable {
     let categoryId : [Int]?
     let title : String?
     let contents : String?
-    let time : String?
     let updateAt : String?
+    let time : String?
     let price : Int?
+    let countOfLike : Int?
+    let likeOrNot : Bool?
     let nickname : String?
     let imageUrl : [String]?
-    let likeOrNot : Bool?
-    let countOfLike : Int?
 }
