@@ -7,6 +7,8 @@
 
 import Foundation
 
+
+// 채팅방 리스트 조회
 struct MessageViewInput : Encodable{
     var nickname : String
     

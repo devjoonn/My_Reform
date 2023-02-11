@@ -11,7 +11,6 @@ struct ChatInput: Encodable{
     var senderNickname: String
     var boardId: Int
     
-    // 회원가입용 생성자
     init(senderNickname: String, boardId: Int) {
         self.senderNickname = senderNickname
         self.boardId = boardId
