@@ -6,14 +6,39 @@
 //
 
 import UIKit
+import Then
 
 class ChatTableViewCell: UITableViewCell {
     
     static let identifier = "ChatTableViewCell"
     let senderNickname : String = UserDefaults.standard.object(forKey: "senderNickname") as! String
 
-    @IBOutlet weak var messageView: UIView!
-    @IBOutlet weak var messageLabel: UILabel!
+    var messageView = UIView().then {
+        $0.layer.cornerRadius = 25
+        $0.backgroundColor = .systemBlue
+    }
+    var messageLabel = UILabel().then {
+        $0.text = "서버 연결 먼저"
+        $0.textColor = .systemGray
+    }
+    
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        contentView.addSubview(messageView)
+        contentView.addSubview(messageLabel)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    func setting_inner() {
+        messageView.snp.makeConstraints { (make) in
+            make.top.equalTo(contentView.snp.top).inset(5)
+            make.bottom.equalTo(contentView.snp.bottom).inset(5)
+            
+        }
+    }
     
     override func awakeFromNib() {
         super.awakeFromNib()
