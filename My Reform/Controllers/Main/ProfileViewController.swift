@@ -21,7 +21,10 @@ class ProfileViewController: UIViewController {
     
 //    var profileDataManagerUrl: String = "\(Constants.baseURL)/users/\(senderNickname)/profiles"
     
-    var myPostDataManagerUrl: String = "\(Constants.baseURL)/boards?lastBoardId=&size=&id="
+//    var myPostDataManagerUrl: String = "\(Constants.baseURL)/boards?lastBoardId=&size=&id="
+    
+//    var myPostDataManagerUrl: String = "\(Constants.baseURL)/boards?categoryId=&keyword=&lastBoardId=&loginNickname=\(senderNickname)&size="
+    var myPostDataManagerUrl: String = "\(Constants.baseURL)/boards?categoryId=&keyword=&lastBoardId=&"
     
 //     데이터 모델이 추가될 때 마다 테이블 뷰 갱신
     var allPostModel: [AllPostData] = []{
@@ -154,7 +157,7 @@ class ProfileViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.view.backgroundColor = .white
+        self.view.backgroundColor = .clear
         self.view.insertSubview(myFeedTable, belowSubview: backgroundImage)
 
         
@@ -172,11 +175,12 @@ class ProfileViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         
         configureNavbar()
-        fetchingAll(100)
         allPostGet()
+        fetchingAll(100)
+//        allPostGet()
         profileChanged()
         
-        print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\(profileLookupModel)")
+//        print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\(profileLookupModel)")
     }
     
     func profileChanged(){
@@ -193,10 +197,9 @@ class ProfileViewController: UIViewController {
         print("allPostGet Called")
         let url = "\(Constants.baseURL)/users/\(senderNickname)/profiles"
         let encodeUrl = url.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
-        AF.request(encodeUrl ,method: .get, parameters: nil).validate().responseDecodable(of: ProfileLookupModel.self) { response in
-                switch(response.result) {
+        AF.request(encodeUrl ,method: .get, parameters: nil).validate().responseDecodable(of: ProfileLookupModel.self) { response in switch(response.result) {
                 case .success(let result) :
-//                    print("프로필 서버통신 성공 - \(result)")
+                    print("프로필 서버통신 성공 - \(result)")
                     switch(result.status) {
                     case 200 :
                         guard let data = result.data else { return }
@@ -226,13 +229,17 @@ class ProfileViewController: UIViewController {
     
     private func fetchingAll(_ lastBoardId: Int) {
         print("fetchingAll - lastBoardId = \(lastBoardId)")
-        AF.request("\(Constants.baseURL)/boards?lastBoardId=&size=10", method: .get, parameters: nil).validate().responseDecodable(of: AllPostModel.self) { response in
+        print(senderNickname)
+        let url = "\(Constants.baseURL)/boards?categoryId=&keyword=&lastBoardId=&loginNickname=마이리폼&size=\(lastBoardId)"
+        let nickname = url.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
+//        let nickname = senderNickname.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
+        AF.request(nickname, method: .get, parameters: nil).validate().responseDecodable(of: AllPostModel.self) { response in
             DispatchQueue.main.async {
                 self.myFeedTable.tableFooterView = nil
             }
             switch(response.result) {
             case .success(let result) :
-//                print("게시물 추가조회 성공 - \(result)")
+                print("게시물 추가조회 성공 - \(result)")
                 switch(result.status) {
                 case 200 :
                     DispatchQueue.main.async {
@@ -296,8 +303,8 @@ class ProfileViewController: UIViewController {
             .font: UIFont(name: "Pretendard-Bold", size: 16)!
         ]
         self.navigationController?.navigationBar.backgroundColor = .clear
-        self.navigationController?.navigationBar.barTintColor = .clear
-        self.navigationController?.navigationBar.tintColor = .label
+//        self.navigationController?.navigationBar.barTintColor = .clear
+        self.navigationController?.navigationBar.tintColor = .clear
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
         self.navigationController?.navigationBar.shadowImage = UIImage()
         
@@ -320,6 +327,7 @@ class ProfileViewController: UIViewController {
             UINavigationBar.appearance().standardAppearance = appearance
             UINavigationBar.appearance().scrollEdgeAppearance = appearance
 
+            
             navigationController?.navigationBar.isTranslucent = false
             navigationController?.navigationBar.backgroundColor = .clear
             navigationController?.navigationBar.tintColor = .clear
