@@ -28,4 +28,6 @@ struct MessageViewData : Decodable {
     var lastMessage : String?
     // 최근 메시지 추가
     // 시간 추가
+    // 해당 board의 imageUrl
+    // 해당 board의 price
 }

@@ -111,6 +111,7 @@ extension MessageViewController: UITableViewDelegate, UITableViewDataSource {
         let model = chatRoomModel[indexPath.row]
         
         let vc = ChatViewController()
+        vc.detailChatRoomModel = [model]
         vc.hidesBottomBarWhenPushed = true
 //        vc.detailPostModel = [model]
 //        print("detailPostModel에 data 저장됨")
