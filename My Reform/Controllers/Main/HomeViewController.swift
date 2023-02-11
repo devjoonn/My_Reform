@@ -17,7 +17,7 @@ class HomeViewController: UIViewController {
     let senderNickname : String = UserDefaults.standard.object(forKey: "senderNickname") as! String
     
     var lastBoardId : Int = 100
-    var allPostDataManagerUrl: String = "\(Constants.baseURL)/boards?categoryId=1&keyword=게시글&lastBoardId=52&loginNickname=마이리폼&size=5"
+    var allPostDataManagerUrl: String = "\(Constants.baseURL)/boards?categoryId=&keyword=&lastBoardId=&loginNickname=&size="
     
 //     데이터 모델이 추가될 때 마다 테이블 뷰 갱신
     var allPostModel: [AllPostData] = []{
