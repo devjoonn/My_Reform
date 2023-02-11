@@ -18,6 +18,7 @@
 		372FC64729952FE3006C0FB2 /* MessageFeedViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 372FC64629952FE3006C0FB2 /* MessageFeedViewModel.swift */; };
 		373C5623297E7DEC00F00F1F /* SearchListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 373C5622297E7DEC00F00F1F /* SearchListViewController.swift */; };
 		3747F6D8298C096000DC860F /* MessageViewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3747F6D7298C096000DC860F /* MessageViewTableViewCell.swift */; };
+		37602A86299756D30074B4BE /* ChatTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37602A85299756D30074B4BE /* ChatTableViewCell.swift */; };
 		376705462990DA2700AFADC4 /* WebSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 376705452990DA2700AFADC4 /* WebSocket.swift */; };
 		376705482990F8C200AFADC4 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 376705472990F8C200AFADC4 /* ChatViewController.swift */; };
 		3781289B298804E2000E75B7 /* UploadModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3781289A298804E2000E75B7 /* UploadModel.swift */; };
@@ -108,6 +109,7 @@
 		372FC64629952FE3006C0FB2 /* MessageFeedViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageFeedViewModel.swift; sourceTree = "<group>"; };
 		373C5622297E7DEC00F00F1F /* SearchListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchListViewController.swift; sourceTree = "<group>"; };
 		3747F6D7298C096000DC860F /* MessageViewTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageViewTableViewCell.swift; sourceTree = "<group>"; };
+		37602A85299756D30074B4BE /* ChatTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatTableViewCell.swift; sourceTree = "<group>"; };
 		376705452990DA2700AFADC4 /* WebSocket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebSocket.swift; sourceTree = "<group>"; };
 		376705472990F8C200AFADC4 /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
 		3781289A298804E2000E75B7 /* UploadModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadModel.swift; sourceTree = "<group>"; };
@@ -494,6 +496,7 @@
 				3781289C29880566000E75B7 /* UploadViewCollectionViewCell.swift */,
 				3781289E2988271E000E75B7 /* SearchTableViewCell.swift */,
 				3747F6D7298C096000DC860F /* MessageViewTableViewCell.swift */,
+				37602A85299756D30074B4BE /* ChatTableViewCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -689,6 +692,7 @@
 				373C5623297E7DEC00F00F1F /* SearchListViewController.swift in Sources */,
 				379365422982D254009ABF2C /* UploadInput.swift in Sources */,
 				470D08FD2990C78F0075778E /* LikeInput.swift in Sources */,
+				37602A86299756D30074B4BE /* ChatTableViewCell.swift in Sources */,
 				47C9C2E829781D3000DF89D8 /* UserPrivacyAllowViewController.swift in Sources */,
 				4752665329751999008D5F1D /* LoginModel.swift in Sources */,
 				4752664C2975177D008D5F1D /* SignUpInput.swift in Sources */,
