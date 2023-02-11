@@ -18,10 +18,10 @@ class SearchTableViewCell: UITableViewCell {
     static let identifier = "SearchTableViewCell"
     
     
-//    var heartButton = UIButton().then {
-//        $0.setImage(UIImage(systemName: "heart", withConfiguration: UIImage.SymbolConfiguration(pointSize: 25)), for: .normal)
-//        $0.tintColor = .systemGray
-//    }
+    var heartButton = UIButton().then {
+        $0.setImage(UIImage(systemName: "heart", withConfiguration: UIImage.SymbolConfiguration(pointSize: 25)), for: .normal)
+        $0.tintColor = .systemGray
+    }
     
     
     var titleCellLabel = UILabel().then {
@@ -52,7 +52,7 @@ class SearchTableViewCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         contentView.addSubview(titleCellImageView)
         contentView.addSubview(titleCellLabel)
-//        contentView.addSubview(heartButton)
+        contentView.addSubview(heartButton)
         contentView.addSubview(minuteCellLabel)
         contentView.addSubview(priceCellLabel)
         
@@ -88,11 +88,11 @@ class SearchTableViewCell: UITableViewCell {
             make.bottom.equalTo(contentView.snp.bottom).inset(23)
         }
         
-//        heartButton.snp.makeConstraints { make in
-//            make.trailing.equalTo(contentView.snp.trailing).inset(20)
-        //            make.centerY.equalTo(priceCellLabel.snp.centerY)
-        //            make.width.height.equalTo(40)
-        //        }
+        heartButton.snp.makeConstraints { make in
+            make.trailing.equalTo(contentView.snp.trailing).inset(20)
+                    make.centerY.equalTo(priceCellLabel.snp.centerY)
+                    make.width.height.equalTo(40)
+                }
         
     }
     

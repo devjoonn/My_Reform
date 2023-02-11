@@ -60,7 +60,7 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     var tableView = UITableView().then {
         $0.backgroundColor = .green
     }
-    
+
     // 메시지 담는 배열
     var messages = [String]()
     
@@ -76,6 +76,7 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         cell.configure(with: model)
         return cell
     }
+    
 
     override func viewDidLoad() {
         
