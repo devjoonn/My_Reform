@@ -90,6 +90,8 @@ class LoginViewController: UIViewController {
         backBarButtonItem.tintColor = UIColor.mainBlack
         self.navigationItem.backBarButtonItem = backBarButtonItem
         
+        
+        
         navigationController?.navigationBar.tintColor = .black
         setUIView()
         setUIConstraints()

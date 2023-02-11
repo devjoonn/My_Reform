@@ -39,6 +39,8 @@ class SplashViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
+        self.navigationController?.navigationBar.isHidden = true
+        
         self.view.addSubview(splashTitle)
         self.view.addSubview(splashTitle2)
         self.view.addSubview(splashTitle3)
@@ -69,7 +71,7 @@ class SplashViewController: UIViewController {
             make.height.equalTo(89.79)
         }
         
-        self.navigationController?.navigationBar.isHidden = true
+        
         
         self.splashTitle.alpha=1
         self.splashTitle2.alpha=1
@@ -98,12 +100,10 @@ class SplashViewController: UIViewController {
             if (UserDefaults.standard.string(forKey: "senderNickname") != nil){
                 print("UserDefault 값이 있음")
                 let vc = MainTabBarViewController()
-                vc.navigationController?.isNavigationBarHidden = true
                 self.navigationController?.pushViewController(vc, animated: true)
             }else {
                 print("UserDefault 값이 없음")
                 let vc = LoginViewController()
-                vc.navigationController?.isNavigationBarHidden = true
                 self.navigationController?.pushViewController(vc, animated: true)
             }
         }

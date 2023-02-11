@@ -13,12 +13,12 @@ class MainTabBarViewController: UITabBarController {
         super.viewDidLoad()
         view.backgroundColor = .white
         
+        self.navigationController?.navigationBar.isHidden = true
+        
         let vc1 = UINavigationController(rootViewController: HomeViewController())
         let vc2 = UINavigationController(rootViewController: SearchViewController())
         let vc3 = UINavigationController(rootViewController: MessageViewController())
         let vc4 = UINavigationController(rootViewController: ProfileViewController())
-        
-        
         
         vc1.tabBarItem.image = UIImage(named: "home")?.resize(newWidth: 20)
         vc2.tabBarItem.image = UIImage(named: "search")?.resize(newWidth: 25)

@@ -154,7 +154,7 @@ class ProfileViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.view.backgroundColor = .white
+        self.view.backgroundColor = .clear
         self.view.insertSubview(myFeedTable, belowSubview: backgroundImage)
 
         
@@ -297,7 +297,7 @@ class ProfileViewController: UIViewController {
         ]
         self.navigationController?.navigationBar.backgroundColor = .clear
         self.navigationController?.navigationBar.barTintColor = .clear
-        self.navigationController?.navigationBar.tintColor = .label
+        self.navigationController?.navigationBar.tintColor = .clear
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
         self.navigationController?.navigationBar.shadowImage = UIImage()
         

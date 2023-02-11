@@ -434,72 +434,94 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
         view.addSubview(password_check_label)
         
     }
+    
     func setUIConstraints() {
-        //가운데 email_input이 기준
-        email_input.snp.makeConstraints { make in
-            make.centerY.equalToSuperview().inset(30)
+        //------------
+        //노치 있는 아이폰과 없는 아이폰 구분
+        if UIScreen.main.bounds.size.height == 667 {
+            name_label.snp.makeConstraints { make in
+                make.top.equalTo(self.view.safeAreaInsets.top).inset(59.91)
+                make.leading.equalToSuperview().inset(25.74)
+            }
+        } else {
+            name_label.snp.makeConstraints { make in
+                make.top.equalTo(self.view.safeAreaInsets.top).inset(103.47)
+                make.leading.equalToSuperview().inset(25.74)
+            }
+        }
+        
+        if UIScreen.main.bounds.size.height == 667 {
+            name_label_2.snp.makeConstraints { make in
+                make.top.equalTo(self.view.safeAreaInsets.top).inset(61.91)
+                make.leading.equalTo(name_label.snp.trailing).offset(6.7
+              )
+            }
+        } else {
+            name_label_2.snp.makeConstraints { make in
+                make.top.equalTo(self.view.safeAreaInsets.top).inset(105.91)
+                make.leading.equalTo(name_label.snp.trailing).offset(6.7
+              )
+            }
+        }
+        
+        name_input.snp.makeConstraints { make in
+            make.top.equalTo(name_label.snp.bottom).offset(3.91)
             make.leading.equalToSuperview().inset(16)
             make.trailing.equalToSuperview().inset(16)
             make.height.equalTo(50)
         }
         
-        email_label.snp.makeConstraints { make in
-            make.bottom.equalTo(email_input.snp.bottom).inset(53.78)
-            make.leading.equalToSuperview().inset(25.74)
+        name_length.snp.makeConstraints { make in
+            make.trailing.equalTo(name_input.snp.trailing).inset(16.64)
+            make.centerY.equalTo(name_input)
         }
         
-        email_label_2.snp.makeConstraints { make in
-            make.bottom.equalTo(email_input.snp.bottom).inset(54.78)
-            make.leading.equalTo(email_label.snp.trailing).offset(6.7)
+        usable_name_label.snp.makeConstraints { make in
+            make.top.equalTo(name_input.snp.bottom).offset(1.87)
+            make.leading.equalTo(name_label.snp.leading)
         }
         //-------
-        usable_id_label.snp.makeConstraints { make in
-            make.bottom.equalTo(email_label.snp.bottom).inset(35.47)
-            make.leading.equalTo(email_label.snp.leading)
+        id_label.snp.makeConstraints { make in
+            make.top.equalTo(name_input.snp.bottom).offset(34.37)
+            make.centerX.equalTo(email_label)
         }
-        id_length.snp.makeConstraints { make in
-            make.trailing.equalTo(id_input.snp.trailing).inset(16.64)
-            make.centerY.equalTo(id_input)
+        id_label_2.snp.makeConstraints { make in
+            make.top.equalTo(name_input.snp.bottom).offset(35.87)
+            make.leading.equalTo(name_label.snp.trailing).offset(6.7)
         }
         id_input.snp.makeConstraints { make in
-            make.bottom.equalTo(usable_id_label.snp.bottom).inset(19.14)
+            make.top.equalTo(id_label.snp.bottom).offset(3.63)
             make.leading.equalToSuperview().inset(20)
             make.leading.equalToSuperview().inset(16)
             make.trailing.equalToSuperview().inset(16)
             make.height.equalTo(50)
         }
-        id_label.snp.makeConstraints { make in
-            make.bottom.equalTo(id_input.snp.bottom).inset(53.63)
-            make.centerX.equalTo(email_label)
+        id_length.snp.makeConstraints { make in
+            make.trailing.equalTo(id_input.snp.trailing).inset(16.64)
+            make.centerY.equalTo(id_input)
         }
-        id_label_2.snp.makeConstraints { make in
-            make.bottom.equalTo(id_input.snp.bottom).inset(55.13)
-            make.leading.equalTo(name_label.snp.trailing).offset(6.7)
+        usable_id_label.snp.makeConstraints { make in
+            make.top.equalTo(id_input.snp.bottom).inset(2.14)
+            make.leading.equalTo(email_label.snp.leading)
         }
-        //------------
-        usable_name_label.snp.makeConstraints { make in
-            make.bottom.equalTo(id_label.snp.bottom).inset(35.5)
-            make.leading.equalTo(id_label.snp.leading)
+        //---------------
+        
+        email_label.snp.makeConstraints { make in
+            make.top.equalTo(id_input.snp.bottom).offset(34.62)
+            make.leading.equalToSuperview().inset(25.74)
         }
-        name_length.snp.makeConstraints { make in
-            make.trailing.equalTo(name_input.snp.trailing).inset(16.64)
-            make.centerY.equalTo(name_input)
+        
+        email_label_2.snp.makeConstraints { make in
+            make.top.equalTo(id_input.snp.bottom).offset(36.62)
+            make.leading.equalTo(email_label.snp.trailing).offset(6.7)
         }
-        name_input.snp.makeConstraints { make in
-            make.bottom.equalTo(usable_name_label.snp.bottom).inset(18.87)
+        email_input.snp.makeConstraints { make in
+            make.top.equalTo(email_label.snp.bottom).offset(3.87)
             make.leading.equalToSuperview().inset(16)
             make.trailing.equalToSuperview().inset(16)
             make.height.equalTo(50)
         }
-        name_label.snp.makeConstraints { make in
-            make.bottom.equalTo(name_input.snp.bottom).inset(53.91)
-            make.leading.equalToSuperview().inset(25.74)
-        }
-        name_label_2.snp.makeConstraints { make in
-            make.bottom.equalTo(name_input.snp.bottom).inset(54.91)
-            make.leading.equalTo(name_label.snp.trailing).offset(6.7
-          )
-        }
+        
         //-----
         password_label.snp.makeConstraints { make in
             make.bottom.equalTo(email_input.snp.bottom).offset(54.37)
@@ -678,7 +700,8 @@ struct SignUpViewControllerRepresentable_PreviewProvider: PreviewProvider {
       SignUpViewControllerRepresentable()
         .ignoresSafeArea()
         .previewDisplayName("Preview")
-        .previewDevice(PreviewDevice(rawValue: "iPhone 11"))
+        .previewDevice(PreviewDevice(rawValue: "iPhone SE (3rd generation)"))
+//        .previewDevice(PreviewDevice(rawValue: "iPhone 11"))
     }
   }
 } #endif
