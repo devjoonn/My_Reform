@@ -20,4 +20,6 @@ struct ProfileLookupData : Decodable {
     let id : String?
     let nickname : String?
     let introduction : String?
+    let likeBoards : [AllPostData]?
 }
+

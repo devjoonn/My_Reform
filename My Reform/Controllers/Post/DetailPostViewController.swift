@@ -145,6 +145,7 @@ class DetailPostViewController: UIViewController, UIScrollViewDelegate {
         print("detailPost 출력 - \(detailPostModel)")
         setUIView()
         setUIConstraints()
+        
         setInfo()
         print("카테고리 인덱스는 = \(categorysIndex)")
         heartBtn.addTarget(self, action: #selector(heartBtnClicked), for: .touchUpInside)
