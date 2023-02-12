@@ -19,7 +19,6 @@ class DeletePostDataManager {
         print("url - \(url)")
         print("nickname - \(String(describing: parameter.nickname))")
         
-        // 원래는 .delete 이지만 api상 post로 지워짐
         AF.request(url ,method: .post, parameters: parameter, encoder: JSONParameterEncoder.default, headers: Headers).validate(statusCode: 200..<500).responseDecodable(of: CUDModel.self) { response in
             switch(response.result) {
             case .success(let result) :
