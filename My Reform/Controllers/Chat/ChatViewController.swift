@@ -11,14 +11,16 @@ import UIKit
 import SnapKit
 import Then
 
+
 class ChatViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+    
     
     let senderNickname : String = UserDefaults.standard.object(forKey: "senderNickname") as! String
     
     var detailChatRoomModel: [MessageViewData] = []
     
     // 메시지 담는 배열
-    var messages = [String]()
+    static var messages = [String]()
     
     var itemView = UIView().then {
         $0.backgroundColor = .orange
@@ -70,8 +72,8 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        print("tableview numberOfrows called", messages.count)
-        return messages.count
+        print("tableview numberOfrows called", ChatViewController.messages.count)
+        return ChatViewController.messages.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -79,7 +81,7 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         print("----tableview cellForRowAt 실행")
         guard let cell = tableView.dequeueReusableCell(withIdentifier: ChatTableViewCell.identifier, for: indexPath) as? ChatTableViewCell else { return UITableViewCell() }
         
-        let model = messages[indexPath.row]
+        let model = ChatViewController.messages[indexPath.row]
         
         print("----tableview cellForRowAt 실행2")
         
@@ -89,7 +91,7 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        let chat = messages[indexPath.row]
+        let chat = ChatViewController.messages[indexPath.row]
         let dataSplit = chat.components(separatedBy: "/")
 
         //좌우마진 122, 40이 최대값이므로 최댓값 가로길이는 아래와같음
@@ -165,8 +167,8 @@ extension ChatViewController {
                 let result_message = "2/\(senderNickname)/"+message
                 WebSocket.shared.send(message: result_message)
                 messageTextField.text = ""
-                messages.append(result_message)
-                self.updateChat(count: self.messages.count) {
+                ChatViewController.messages.append(result_message)
+                self.updateChat(count: ChatViewController.messages.count) {
                     print("Send Message")
                 }
 //                scrollToBottomOfChat()
@@ -191,8 +193,13 @@ extension ChatViewController {
     
     func receiveMessage(_ message: String) {
         if message.trimmingCharacters(in: .whitespaces) != "" {
-            messages.append(message)
-            self.updateChat(count: self.messages.count) {
+            let dataSplit = message.components(separatedBy: "/")
+            if dataSplit[1] == senderNickname { return }
+            
+            
+            
+            ChatViewController.messages.append(message)
+            self.updateChat(count: ChatViewController.messages.count) {
                 print("receiveMessage")
             }
         }
@@ -301,7 +308,7 @@ extension ChatViewController {
             
             if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
 
-                view.frame.origin.y -= (keyboardSize.height+10)
+                view.frame.origin.y = -(keyboardSize.height+10)
             }
         }
     }

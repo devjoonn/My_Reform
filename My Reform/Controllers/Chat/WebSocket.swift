@@ -83,7 +83,12 @@ class WebSocket: NSObject {
           switch message {
           case let .string(string):
               print("Got string: \(string)")
-              ChatViewController().receiveMessage(string)
+              DispatchQueue.main.async {
+                  ChatViewController().receiveMessage(string)
+              }
+              
+//              ChatViewController.messages.append
+              
           case let .data(data):
               print("Got Data: \(data)")
           @unknown default:
