@@ -11,13 +11,15 @@ import Alamofire
 
 class ProfileEditViewController: UIViewController, UITextFieldDelegate {
     
+    let senderNickname : String = UserDefaults.standard.object(forKey: "senderNickname") as! String
+    
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
             self.view.endEditing(true) /// 화면을 누르면 키보드 내려가게 하는 것
     }
     
     var profileDataManagerUrl: String = "\(Constants.baseURL)/users/{userId}/profiles"
     
-    var profileModel: [ProfileData] = []
+    var profileModel: [ProfileLookupData] = []
     
     private let refreshControl = UIRefreshControl()
     
@@ -31,16 +33,16 @@ class ProfileEditViewController: UIViewController, UITextFieldDelegate {
         return profileImage
     } ()
     
-    lazy var editButton = { () -> UIButton in
-        let button = UIButton()
-//        button.setBackgroundImage(UIImage(named: "editProfileImage"), for: .normal)
+//    lazy var editButton = { () -> UIButton in
+//        let button = UIButton()
+////        button.setBackgroundImage(UIImage(named: "editProfileImage"), for: .normal)
+////        button.addTarget(self, action: #selector(editBtnClicked), for: .touchUpInside)
+//        button.setTitle("프로필 사진 수정", for: .normal)
+//        button.titleLabel?.font = UIFont(name: "Pretendard-Medium", size: 13)
+//        button.setTitleColor(UIColor.mainColor, for: .normal)
 //        button.addTarget(self, action: #selector(editBtnClicked), for: .touchUpInside)
-        button.setTitle("프로필 사진 수정", for: .normal)
-        button.titleLabel?.font = UIFont(name: "Pretendard-Medium", size: 13)
-        button.setTitleColor(UIColor.mainColor, for: .normal)
-        button.addTarget(self, action: #selector(editBtnClicked), for: .touchUpInside)
-        return button
-    } ()
+//        return button
+//    } ()
     
   
 
@@ -166,7 +168,7 @@ class ProfileEditViewController: UIViewController, UITextFieldDelegate {
         setAddTarget()
 
         view.addSubview(profileImage)
-        view.addSubview(editButton)
+//        view.addSubview(editButton)
         view.addSubview(name_label)
         view.addSubview(name_label_2)
         view.addSubview(name_input)
@@ -183,16 +185,16 @@ class ProfileEditViewController: UIViewController, UITextFieldDelegate {
             make.height.equalTo(116)
         }
         
-        editButton.snp.makeConstraints{
-            (make) in
-            make.top.equalTo(profileImage.snp.bottom).inset(-10)
-            make.centerX.equalToSuperview()
-            make.width.equalTo(85)
-            make.height.equalTo(13)
-        }
+//        editButton.snp.makeConstraints{
+//            (make) in
+//            make.top.equalTo(profileImage.snp.bottom).inset(-10)
+//            make.centerX.equalToSuperview()
+//            make.width.equalTo(85)
+//            make.height.equalTo(13)
+//        }
         
         name_label.snp.makeConstraints { make in
-          make.top.equalTo(editButton.snp.bottom).inset(-25)
+          make.top.equalTo(profileImage.snp.bottom).inset(-35)
           make.leading.equalToSuperview().inset(30)
         }
         name_label_2.snp.makeConstraints { make in
@@ -327,57 +329,30 @@ class ProfileEditViewController: UIViewController, UITextFieldDelegate {
         setTextFieldDelegate()
     }
     
-    @objc func editBtnClicked(){
-        var config = PHPickerConfiguration()
-        config.filter = .images
-        config.selection = .ordered
-        config.selectionLimit = 1
-
-        let imagePickerViewController = PHPickerViewController(configuration: config)
-
-        imagePickerViewController.delegate = self
-        
-        present(imagePickerViewController, animated: true)
-    }
-    
-    @objc func completeBtnClicked(){
-        navigationController?.popViewController(animated: true)
-    }
-    
-//    func allPostGet() {
-//        print("allPostGet Called")
-//        let url = "\(Constants.baseURL)users/1/profiles"
-//        
-//        AF.request(url ,method: .get, parameters: nil).validate().responseDecodable(of: ProfileModel.self) { response in
-//                switch(response.result) {
-//                case .success(let result) :
-//                    print("프로필 서버통신 성공 - \(result)")
-//                    switch(result.status) {
-//                    case 200 :
-//                        guard let data = result.data else { return }
-//                        print("data!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\(data)")
-//                        self.profileModel.append(contentsOf: data)
-////                        print("result data count = \(result.data?.count)")
-////                        print("print - result data = \(result.data!)")
-//                    case 404 :
-//                        print("프로필이 없는 경우입니다 - \(result.message)")
-//                    default:
-//                        print("데이터베이스 오류")
-//                        let alert = UIAlertController()
-//                        alert.title = "서버 오류"
-//                        alert.message = "서버에서 오류가 발생했습니다. 잠시 후 다시 시도해주세요."
-//                        let alertAction = UIAlertAction(title: "확인", style: .default, handler: nil)
-//                        alert.addAction(alertAction)
-//                        self.present(alert, animated: true, completion: nil)
-//                        return
-//                    }
-//                    
-//                case .failure(let error) :
-//                    print(error)
-//                    print(error.localizedDescription)
-//                }
-//            }
+//    @objc func editBtnClicked(){
+//        var config = PHPickerConfiguration()
+//        config.filter = .images
+//        config.selection = .ordered
+//        config.selectionLimit = 1
+//
+//        let imagePickerViewController = PHPickerViewController(configuration: config)
+//
+//        imagePickerViewController.delegate = self
+//
+//        present(imagePickerViewController, animated: true)
 //    }
+    
+    // 수정 완료 버튼 클릭 시
+    @objc func completeBtnClicked(){
+        ProfileEditDataManager.profileEdit(self,senderNickname ,ProfileInput(nickname: name_input.text, introduction: descriptTextView.text))
+    }
+    
+    // 수정이 완료되었을 때 실행되는 함수
+    func successedEdit() {
+        navigationController?.popViewController(animated: true)
+        ToastService.shared.showToast("수정되었습니다.")
+    }
+    
 
     func configureNavbar() {
         
@@ -401,15 +376,6 @@ class ProfileEditViewController: UIViewController, UITextFieldDelegate {
         navigationController?.navigationBar.backgroundColor = .white
         navigationController?.navigationBar.tintColor = .white
     }
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
     
     
@@ -419,29 +385,29 @@ class ProfileEditViewController: UIViewController, UITextFieldDelegate {
 
 
 
-extension ProfileEditViewController : UITextViewDelegate, PHPickerViewControllerDelegate {
-    func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
-        results.forEach { result in
-            let itemProvider = result.itemProvider
-            if itemProvider.canLoadObject(ofClass: UIImage.self) {
-                itemProvider.loadObject(ofClass: UIImage.self) { [weak self] image, error in guard let self = self else { return }
-                    if let image = image as? UIImage {
-                        self.profileImage.image = image
-                        
-                        // 이미지 처리는 여기서...
-                        /*
-                        만약 이 부분에서 UI 변경 관련 코드를 작성할 때는
-                        DispatchQueue를 사용해 main에서 실행해줘야한다
-                        */
-                    }
-                    if error != nil {
-                        // 에러 처리는 여기서...
-                    }
-                }
-            }
-        }
-    dismiss(animated: true)
-    }
+extension ProfileEditViewController : UITextViewDelegate {
+//    func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
+//        results.forEach { result in
+//            let itemProvider = result.itemProvider
+//            if itemProvider.canLoadObject(ofClass: UIImage.self) {
+//                itemProvider.loadObject(ofClass: UIImage.self) { [weak self] image, error in guard let self = self else { return }
+//                    if let image = image as? UIImage {
+//                        self.profileImage.image = image
+//
+//                        // 이미지 처리는 여기서...
+//                        /*
+//                        만약 이 부분에서 UI 변경 관련 코드를 작성할 때는
+//                        DispatchQueue를 사용해 main에서 실행해줘야한다
+//                        */
+//                    }
+//                    if error != nil {
+//                        // 에러 처리는 여기서...
+//                    }
+//                }
+//            }
+//        }
+//    dismiss(animated: true)
+//    }
     
     
     func attribute() {
@@ -474,6 +440,7 @@ extension ProfileEditViewController : UITextViewDelegate, PHPickerViewController
         
         return true
     }
+
 }
 
 //extension ProfileEditViewController: UITextViewDelegate {

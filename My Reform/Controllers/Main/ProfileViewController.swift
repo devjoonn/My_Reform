@@ -18,21 +18,7 @@ class ProfileViewController: UIViewController {
     let senderNickname : String = UserDefaults.standard.object(forKey: "senderNickname") as! String
   
     var lastBoardId : Int = 100
-    
-//    var profileDataManagerUrl: String = "\(Constants.baseURL)/users/\(senderNickname)/profiles"
-    
-//    var myPostDataManagerUrl: String = "\(Constants.baseURL)/boards?lastBoardId=&size=&id="
-    
-//    var myPostDataManagerUrl: String = "\(Constants.baseURL)/boards?categoryId=&keyword=&lastBoardId=&loginNickname=\(senderNickname)&size="
-    var myPostDataManagerUrl: String = "\(Constants.baseURL)/boards?categoryId=&keyword=&lastBoardId=&"
-    
-//     데이터 모델이 추가될 때 마다 테이블 뷰 갱신
-//    var allPostModel: [AllPostData] = []{
-//        didSet {
-//            self.myFeedTable.reloadData()
-//        }
-//    }
-    
+
     var profileLookupModel: [ProfileLookupData] = []
     
     private let refreshControl = UIRefreshControl()
@@ -156,7 +142,6 @@ class ProfileViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         self.view.backgroundColor = .clear
         self.view.insertSubview(myFeedTable, belowSubview: backgroundImage)
 
@@ -166,6 +151,8 @@ class ProfileViewController: UIViewController {
         
         setUIView()
         setUIConstraints()
+        profileChanged()
+        refreshControl.addTarget(self, action: #selector(beginRefresh), for: .valueChanged)
     }
     
     override func viewDidLayoutSubviews() {
@@ -175,51 +162,31 @@ class ProfileViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         
         configureNavbar()
-        allPostGet()
+        ProfileDataManager.profileGet(self,senderNickname)
 //        fetchingAll()
         profileChanged()
     }
     
+    // 새로고침
+    @objc func beginRefresh(_ sender: UIRefreshControl) {
+        print("beginRefresh!")
+        sender.endRefreshing()
+        profileLookupModel.removeAll()
+        ProfileDataManager.profileGet(self,senderNickname)
+    }
+    
+    // 프로필을 불러오면 실행되는 함수
+    func successProfileModel(result: [ProfileLookupData]) {
+        self.profileLookupModel.append(contentsOf: result)
+        print("프로필 데이터 불러옴")
+    }
+    
     func profileChanged(){
-        print("profileChanged called")
         guard let model = profileLookupModel.first else { return }
         print(model)
         nameLabel.text = model.nickname
         introLabel.text = model.introduction
-    }
-    
-    //------------------------------- 프로필 정보 불러오기
-    
-    func allPostGet() {
-        print("allPostGet Called")
-        let url = "\(Constants.baseURL)/users/\(senderNickname)/profiles"
-        let encodeUrl = url.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
-        AF.request(encodeUrl ,method: .get, parameters: nil).validate().responseDecodable(of: ProfileLookupModel.self) { response in switch(response.result) {
-                case .success(let result) :
-                    print("프로필 서버통신 성공 - \(result)")
-                    switch(result.status) {
-                    case 200 :
-                        guard let data = result.data else { return }
-                        print("data!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\(data)")
-                        self.profileLookupModel.append(contentsOf: data)
-                    case 404 :
-                        print("프로필이 없는 경우입니다 - \(result.message)")
-                    default:
-                        print("데이터베이스 오류")
-                        let alert = UIAlertController()
-                        alert.title = "서버 오류"
-                        alert.message = "서버에서 오류가 발생했습니다. 잠시 후 다시 시도해주세요."
-                        let alertAction = UIAlertAction(title: "확인", style: .default, handler: nil)
-                        alert.addAction(alertAction)
-                        self.present(alert, animated: true, completion: nil)
-                        return
-                    }
-                    
-                case .failure(let error) :
-                    print(error)
-                    print(error.localizedDescription)
-                }
-            }
+        print("profileChanged called")
     }
 
     
@@ -298,8 +265,8 @@ class ProfileViewController: UIViewController {
         
     //----------------------------------------------------
     
-    func successProfileModel(result: [ProfileLookupData]){
-        self.profileLookupModel.append(contentsOf: result)
+    func successProfileModel(result: ProfileLookupData){
+        self.profileLookupModel.append(contentsOf: [result])
         print(profileLookupModel.count)
     }
     
@@ -312,7 +279,7 @@ class ProfileViewController: UIViewController {
 extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return profileLookupModel[0].likeBoards?.count ?? 0
+        return 1
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

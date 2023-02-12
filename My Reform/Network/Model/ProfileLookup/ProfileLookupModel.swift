@@ -11,11 +11,10 @@ struct ProfileLookupModel : Decodable {
     let status : Int
     let code : String
     let message : String
-    let data : [ProfileLookupData]?
+    let data : ProfileLookupData?
 }
 
 struct ProfileLookupData : Decodable {
-    let userId : Int?
     let email : String?
     let id : String?
     let nickname : String?

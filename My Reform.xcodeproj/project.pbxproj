@@ -48,6 +48,7 @@
 		473855D2299629CA00CAD6E5 /* DeleteInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 473855D1299629CA00CAD6E5 /* DeleteInput.swift */; };
 		473855D429962BB100CAD6E5 /* PostAuthCheckDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 473855D329962BB100CAD6E5 /* PostAuthCheckDataManager.swift */; };
 		473855D629962E5A00CAD6E5 /* PostAuthModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 473855D529962E5A00CAD6E5 /* PostAuthModel.swift */; };
+		473855D82998BF5700CAD6E5 /* ProfileEditDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 473855D72998BF5700CAD6E5 /* ProfileEditDataManager.swift */; };
 		4752663C29730A55008D5F1D /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4752663B29730A55008D5F1D /* Constants.swift */; };
 		4752663E29730AA6008D5F1D /* MainTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4752663D29730AA6008D5F1D /* MainTableViewCell.swift */; };
 		4752664029730CD3008D5F1D /* UploadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4752663F29730CD3008D5F1D /* UploadViewController.swift */; };
@@ -139,6 +140,7 @@
 		473855D1299629CA00CAD6E5 /* DeleteInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteInput.swift; sourceTree = "<group>"; };
 		473855D329962BB100CAD6E5 /* PostAuthCheckDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostAuthCheckDataManager.swift; sourceTree = "<group>"; };
 		473855D529962E5A00CAD6E5 /* PostAuthModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostAuthModel.swift; sourceTree = "<group>"; };
+		473855D72998BF5700CAD6E5 /* ProfileEditDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileEditDataManager.swift; sourceTree = "<group>"; };
 		47526619296C7B52008D5F1D /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
 		4752663B29730A55008D5F1D /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		4752663D29730AA6008D5F1D /* MainTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTableViewCell.swift; sourceTree = "<group>"; };
@@ -286,6 +288,7 @@
 				4752664429750F25008D5F1D /* SignUpDataManager.swift */,
 				4752664629750F30008D5F1D /* LoginDataManager.swift */,
 				D39CAF7E298BBB5200D9C79E /* ProfileDataManager.swift */,
+				473855D72998BF5700CAD6E5 /* ProfileEditDataManager.swift */,
 				372A76082993369A00144389 /* ChatDataManager.swift */,
 			);
 			path = Users;
@@ -726,6 +729,7 @@
 				47A35B0B298801D400B39D5C /* CategoryFeedViewController.swift in Sources */,
 				470D08F9298E50750075778E /* UIAlertAction.swift in Sources */,
 				372A760B2993371800144389 /* ChatModel.swift in Sources */,
+				473855D82998BF5700CAD6E5 /* ProfileEditDataManager.swift in Sources */,
 				47C9C2F3297964F700DF89D8 /* AddPostModel.swift in Sources */,
 				D3C0DEF2298282E3003A62B0 /* SplashViewController.swift in Sources */,
 				4770C659297ECAB4009E3E58 /* HomeFeedViewModel.swift in Sources */,
