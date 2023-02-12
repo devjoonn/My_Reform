@@ -12,7 +12,7 @@ enum WebSocketError: Error {
   case invalidURL
 }
 
-final class WebSocket: NSObject {
+class WebSocket: NSObject {
   static let shared = WebSocket()
   
   var url: URL?
@@ -83,6 +83,7 @@ final class WebSocket: NSObject {
           switch message {
           case let .string(string):
               print("Got string: \(string)")
+              ChatViewController().receiveMessage(string)
           case let .data(data):
               print("Got Data: \(data)")
           @unknown default:
@@ -95,6 +96,10 @@ final class WebSocket: NSObject {
           self?.receive()
       })
     }
+    
+    
+    
+    
   
   private func startPing() {
     self.timer?.invalidate()

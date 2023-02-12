@@ -2,15 +2,18 @@
 //  ChatTableViewCell.swift
 //  My Reform
 //
-//  Created by 곽민섭 on 2023/02/11.
+//  Created by 곽민섭 on 2023/02/12.
 //
 
 import UIKit
 import Then
+import SnapKit
 
 class ChatTableViewCell: UITableViewCell {
     
     static let identifier = "ChatTableViewCell"
+    private var padding = UIEdgeInsets(top: 16.0, left: 16.0, bottom: 16.0, right: 16.0)
+    
     let senderNickname : String = UserDefaults.standard.object(forKey: "senderNickname") as! String
 
     var messageView = UIView().then {
@@ -25,7 +28,9 @@ class ChatTableViewCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         contentView.addSubview(messageView)
-        contentView.addSubview(messageLabel)
+        messageView.addSubview(messageLabel)
+        messageView.layer.cornerRadius = 16
+        
     }
     
     required init?(coder: NSCoder) {
@@ -33,10 +38,32 @@ class ChatTableViewCell: UITableViewCell {
     }
     
     func setting_inner() {
+//        messageView.backgroundColor = .blue
+        messageLabel.layer.borderWidth = 1
+        messageLabel.layer.cornerRadius = 100
+        messageLabel.backgroundColor = .mainColor
+        messageLabel.textColor = .white
         messageView.snp.makeConstraints { (make) in
             make.top.equalTo(contentView.snp.top).inset(5)
             make.bottom.equalTo(contentView.snp.bottom).inset(5)
             
+        }
+        messageLabel.snp.makeConstraints{ (make) in
+            make.top.equalTo(contentView.snp.top).inset(5)
+            make.bottom.equalTo(contentView.snp.bottom).inset(5)
+            make.trailing.equalTo(contentView.snp.trailing).inset(15)
+        }
+    }
+    
+    func setting_outer() {
+        messageLabel.layer.borderWidth = 1
+        messageLabel.layer.cornerRadius = 100
+        messageLabel.backgroundColor = .grayColor
+        messageLabel.textColor = .black
+        messageLabel.snp.makeConstraints{ (make) in
+            make.top.equalTo(contentView.snp.top).inset(5)
+            make.bottom.equalTo(contentView.snp.bottom).inset(5)
+            make.leading.equalTo(contentView.snp.leading).inset(15)
         }
     }
     
@@ -53,22 +80,17 @@ class ChatTableViewCell: UITableViewCell {
         
         // 데이터 /(슬레시로) 구분 한 걸 배열로 만들어 dataSplit에 담음
         let dataSplit = model.components(separatedBy: "/")
-        
+        print("senderNickname = ", senderNickname)
         // 본인이 보낸 메시지면 오른쪽 배치 함수 실행
         if (dataSplit[1] == senderNickname) {
-            
+            messageLabel.text = dataSplit[2]
+            setting_inner()
         } else {
-            
+            messageLabel.text = dataSplit[2]
+            setting_outer()
         }
+        
     }
     
-    
-//    func configureCell(message: String) {
-//
-//        let dataSplit = message.components(separatedBy: "/")
-//
-//        messageLabel.text = "\(dataSplit[3])"
-//    }
-
 
 }

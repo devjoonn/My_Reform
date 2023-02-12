@@ -17,6 +17,9 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     var detailChatRoomModel: [MessageViewData] = []
     
+    // 메시지 담는 배열
+    var messages = [String]()
+    
     var itemView = UIView().then {
         $0.backgroundColor = .orange
     }
@@ -57,24 +60,48 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     var inputBottomView = UIView()
     
-    var tableView = UITableView().then {
-        $0.backgroundColor = .green
-    }
+    var tableView : UITableView =  {
+        let table = UITableView(frame: .zero, style: .grouped)
+        //Views 에있는 CollectionViewTabelCell 호출
+        table.register(ChatTableViewCell.self, forCellReuseIdentifier: ChatTableViewCell.identifier)
+        return table
+    }()
     
-    // 메시지 담는 배열
-    var messages = [String]()
+    
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        print("tableview numberOfrows called", messages.count)
         return messages.count
     }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
+        print("----tableview cellForRowAt 실행")
         guard let cell = tableView.dequeueReusableCell(withIdentifier: ChatTableViewCell.identifier, for: indexPath) as? ChatTableViewCell else { return UITableViewCell() }
         
         let model = messages[indexPath.row]
         
+        print("----tableview cellForRowAt 실행2")
+        
+        
         cell.configure(with: model)
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        let chat = messages[indexPath.row]
+        let dataSplit = chat.components(separatedBy: "/")
+
+        //좌우마진 122, 40이 최대값이므로 최댓값 가로길이는 아래와같음
+        let widthOfText = view.frame.width - 122 - 40
+        let size = CGSize(width: widthOfText, height: 1000)
+        let attributes = [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 17)]
+        let estimatedFrame = NSString(string: dataSplit[2]).boundingRect(with: size, options: .usesLineFragmentOrigin, attributes: attributes, context: nil)
+        
+        print("------heightForRowAt func called")
+
+        // 위아래마진 14,14 + 여유공간 4
+        return estimatedFrame.height + 14 + 14 + 4
     }
 
     override func viewDidLoad() {
@@ -96,8 +123,6 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         WebSocket.shared.delegate = self
         WebSocket.shared.onReceiveClosure = { (string, data) in
             print(string, data)
-            
-            
         }
 
         
@@ -137,19 +162,19 @@ extension ChatViewController {
         if let message = messageTextField.text {
             if message.trimmingCharacters(in: .whitespaces) != "" {
                 // chatroom / senderNickname / message
-                let result_message = "2/name2/"+message
+                let result_message = "2/\(senderNickname)/"+message
                 WebSocket.shared.send(message: result_message)
                 messageTextField.text = ""
                 messages.append(result_message)
                 self.updateChat(count: self.messages.count) {
                     print("Send Message")
                 }
-//                tableView.reloadData()
 //                scrollToBottomOfChat()
                 
             }
         }
     }
+    
     
     func updateChat(count: Int, completion: @escaping ()->Void) {
         let indexPath = IndexPath(row: count-1, section: 0)
@@ -159,7 +184,18 @@ extension ChatViewController {
         self.tableView.endUpdates()
         
         self.tableView.scrollToRow(at: indexPath, at: .bottom, animated: false)
+        self.tableView.rowHeight = UITableView.automaticDimension
+        tableView.reloadData()
         completion()
+    }
+    
+    func receiveMessage(_ message: String) {
+        if message.trimmingCharacters(in: .whitespaces) != "" {
+            messages.append(message)
+            self.updateChat(count: self.messages.count) {
+                print("receiveMessage")
+            }
+        }
     }
 }
 
@@ -169,6 +205,8 @@ extension ChatViewController : UITextFieldDelegate {
         
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.backgroundColor = .green
+        tableView.separatorStyle = .none
         
         messageTextField.delegate = self
         let tapGuesterShowKeyboard = UITapGestureRecognizer(target: self, action: #selector(showKeyboard))
