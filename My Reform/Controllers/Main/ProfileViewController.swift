@@ -21,8 +21,6 @@ class ProfileViewController: UIViewController {
 
     var profileLookupModel: [ProfileLookupData] = []
     
-    private let refreshControl = UIRefreshControl()
-    
     lazy var myFeedTable = { () -> UITableView in
         let table = UITableView(frame: .zero, style: .grouped)
         table.register(MainTableViewCell.self, forCellReuseIdentifier: MainTableViewCell.identifier)
@@ -151,8 +149,6 @@ class ProfileViewController: UIViewController {
         
         setUIView()
         setUIConstraints()
-        profileChanged()
-        refreshControl.addTarget(self, action: #selector(beginRefresh), for: .valueChanged)
     }
     
     override func viewDidLayoutSubviews() {
@@ -166,29 +162,6 @@ class ProfileViewController: UIViewController {
 //        fetchingAll()
         profileChanged()
     }
-    
-    // 새로고침
-    @objc func beginRefresh(_ sender: UIRefreshControl) {
-        print("beginRefresh!")
-        sender.endRefreshing()
-        profileLookupModel.removeAll()
-        ProfileDataManager.profileGet(self,senderNickname)
-    }
-    
-    // 프로필을 불러오면 실행되는 함수
-    func successProfileModel(result: [ProfileLookupData]) {
-        self.profileLookupModel.append(contentsOf: result)
-        print("프로필 데이터 불러옴")
-    }
-    
-    func profileChanged(){
-        guard let model = profileLookupModel.first else { return }
-        print(model)
-        nameLabel.text = model.nickname
-        introLabel.text = model.introduction
-        print("profileChanged called")
-    }
-
     
     //-------------------------
     //버튼 클릭 시
@@ -262,18 +235,23 @@ class ProfileViewController: UIViewController {
         }
     }
     
-        
-    //----------------------------------------------------
-    
     func successProfileModel(result: ProfileLookupData){
         self.profileLookupModel.append(contentsOf: [result])
         print(profileLookupModel.count)
+        profileChanged()
     }
     
-//    func successAllPostModel(result: [AllPostData]) {
-//        self.allPostModel.append(contentsOf: result)
-//        print(allPostModel.count)
-//    }
+    
+    // 프로필 값 바꾸는 함수
+    func profileChanged(){
+        guard let model = profileLookupModel.first else { return }
+        print(model)
+        nameLabel.text = model.nickname
+        introLabel.text = model.introduction
+        print("profileChanged called")
+    }
+    
+    
 }
 
 extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
