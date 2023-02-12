@@ -71,7 +71,7 @@ class HomeViewController: UIViewController {
         print("beginRefresh!")
         sender.endRefreshing()
         allPostModel.removeAll()
-        fetchingAll(lastBoardId)
+        AllPostDataManager().allPostGet(self, senderNickname)
     }
     
     @objc func categoryBtnClicked() {
