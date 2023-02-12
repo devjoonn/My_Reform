@@ -35,13 +35,14 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
         let label = UILabel()
         label.text = "닉네임"
         label.font = UIFont(name: "Pretendard-Medium", size: 13)
-        label.textColor = UIColor(hex: "212121")
+        label.textColor = UIColor(red: 0.13, green: 0.13, blue: 0.13, alpha: 1)
         return label
     }()
     lazy var name_label_2 = { () -> UILabel in
         let label = UILabel()
         label.text = "10자 이내의 한글, 영문"
         label.font = UIFont(name: "Pretendard-Regular", size: 11)
+        label.textColor = UIColor(red: 0.071, green: 0.071, blue: 0.071, alpha: 1)
         return label
     }()
     lazy var name_input = { () -> UITextField in
@@ -54,15 +55,15 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
         )
 
         text.font = UIFont(name: "Pretendard-Regular", size: 16)
-        text.backgroundColor = UIColor.darkGray.withAlphaComponent(0.1)
-        text.layer.cornerRadius = 10.0
+        text.backgroundColor = UIColor(red: 0.938, green: 0.938, blue: 0.938, alpha: 1)
+        text.layer.cornerRadius = 11.0
         return text
     }()
     lazy var name_length = { () -> UILabel in
         let label = UILabel()
         label.text = "0/10"
-        label.font = UIFont.boldSystemFont(ofSize: 15)
-        label.alpha = 0.5
+        label.font = UIFont(name: "Pretendard-Medium", size: 15)
+        label.textColor = UIColor(red: 0.4, green: 0.4, blue: 0.4, alpha: 1)
         return label
     }()
     lazy var usable_name_label = { () -> UILabel in
@@ -79,13 +80,14 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
         let label = UILabel()
         label.text = "아이디"
         label.font = UIFont(name: "Pretendard-Medium", size: 13)
-        label.textColor = UIColor(hex: "212121")
+        label.textColor = UIColor(red: 0.13, green: 0.13, blue: 0.13, alpha: 1)
         return label
     }()
     lazy var id_label_2 = { () -> UILabel in
         let label = UILabel()
         label.text = "6~12자의 영문, 숫자"
         label.font = UIFont(name: "Pretendard-Regular", size: 11)
+        label.textColor = UIColor(red: 0.071, green: 0.071, blue: 0.071, alpha: 1)
         return label
     }()
     lazy var id_input = { () -> UITextField in
@@ -97,14 +99,14 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
         )
         text.font = UIFont(name: "Pretendard-Regular", size: 16)
         text.backgroundColor = UIColor.darkGray.withAlphaComponent(0.1)
-        text.layer.cornerRadius = 10.0
+        text.layer.cornerRadius = 11.0
         return text
     }()
     lazy var id_length = { () -> UILabel in
         let label = UILabel()
         label.text = "0/12"
-        label.font = UIFont.boldSystemFont(ofSize: 15)
-        label.alpha = 0.5
+        label.font = UIFont(name: "Pretendard-Medium", size: 13)
+        label.textColor = UIColor(red: 0.4, green: 0.4, blue: 0.4, alpha: 1)
         return label
     }()
     lazy var usable_id_label = { () -> UILabel in
@@ -120,13 +122,14 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
         let label = UILabel()
         label.text = "이메일"
         label.font = UIFont(name: "Pretendard-Medium", size: 13)
-        label.textColor = UIColor(hex: "212121")
+        label.textColor = UIColor(red: 0.13, green: 0.13, blue: 0.13, alpha: 1)
         return label
     }()
     lazy var email_label_2 = { () -> UILabel in
         let label = UILabel()
         label.text = "예시) identity@website.com"
         label.font = UIFont(name: "Pretendard-Regular", size: 11)
+        label.textColor = UIColor(red: 0.071, green: 0.071, blue: 0.071, alpha: 1)
         return label
     }()
     lazy var email_input = { () -> UITextField in
@@ -138,7 +141,7 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
         )
         text.font = UIFont(name: "Pretendard-Regular", size: 16)
         text.backgroundColor = UIColor.darkGray.withAlphaComponent(0.1)
-        text.layer.cornerRadius = 10.0
+        text.layer.cornerRadius = 11.0
         return text
     }()
     // --- 비밀번호 -----
@@ -146,13 +149,14 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
         let label = UILabel()
         label.text = "비밀번호"
         label.font = UIFont(name: "Pretendard-Medium", size: 13)
-        label.textColor = UIColor(hex: "212121")
+        label.textColor = UIColor(red: 0.13, green: 0.13, blue: 0.13, alpha: 1)
         return label
     }()
     lazy var password_label_2 = { () -> UILabel in
         let label = UILabel()
         label.text = "8자 이상 영문, 숫자, 기호"
         label.font = UIFont(name: "Pretendard-Regular", size: 11)
+        label.textColor = UIColor(red: 0.071, green: 0.071, blue: 0.071, alpha: 1)
         return label
     }()
     lazy var password_input = { () -> UITextField in
@@ -165,7 +169,7 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
         text.font = UIFont(name: "Pretendard-Regular", size: 16)
         text.isSecureTextEntry = true
         text.backgroundColor = UIColor.darkGray.withAlphaComponent(0.1)
-        text.layer.cornerRadius = 10.0
+        text.layer.cornerRadius = 11.0
         return text
     }()
     lazy var usable_password_label = { () -> UILabel in
@@ -180,7 +184,7 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
         let label = UILabel()
         label.text = "비밀번호 확인"
         label.font = UIFont(name: "Pretendard-Regular", size: 11)
-        label.textColor = UIColor(hex: "212121")
+        label.textColor = UIColor(red: 0.071, green: 0.071, blue: 0.071, alpha: 1)
         return label
     }()
     lazy var password_check_input = { () -> UITextField in
@@ -193,7 +197,7 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
         text.isSecureTextEntry = true
         text.font = UIFont(name: "Pretendard-Regular", size: 16)
         text.backgroundColor = UIColor.darkGray.withAlphaComponent(0.1)
-        text.layer.cornerRadius = 10.0
+        text.layer.cornerRadius = 11.0
         return text
     }()
     lazy var usable_password_check_label = { () -> UILabel in
@@ -209,7 +213,7 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
         btn.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: .medium)
         btn.setTitle("다음", for: .normal)
         btn.setTitleColor(.white, for: .normal)
-        btn.layer.cornerRadius = 8
+        btn.layer.cornerRadius = 11
         // 버튼 비활성화
         btn.isEnabled = false
         btn.backgroundColor = UIColor.mainColor.withAlphaComponent(0.4)
@@ -281,6 +285,7 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
 
         navigationController?.navigationBar.barTintColor = .white
         navigationController?.navigationBar.tintColor = .label
+        
 //        let leftBarButtonItem = UIBarButtonItem(
 //            image: UIImage(named: "back_icon"),
 //            style: .plain,
@@ -429,102 +434,126 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
         view.addSubview(password_check_label)
         
     }
+    
     func setUIConstraints() {
-        name_label.snp.makeConstraints { make in
-            make.top.equalTo(self.view.snp.top).inset(109.47)
-            make.leading.equalToSuperview().inset(25.57)
+        //------------
+        //노치 있는 아이폰과 없는 아이폰 구분
+        if UIScreen.main.bounds.size.height == 667 {
+            name_label.snp.makeConstraints { make in
+                make.top.equalTo(self.view.safeAreaInsets.top).inset(59.91)
+                make.leading.equalToSuperview().inset(25.74)
+            }
+        } else {
+            name_label.snp.makeConstraints { make in
+                make.top.equalTo(self.view.safeAreaInsets.top).inset(103.47)
+                make.leading.equalToSuperview().inset(25.74)
+            }
         }
-        name_label_2.snp.makeConstraints { make in
-            make.top.equalTo(self.view.snp.top).inset(111.47)
-            make.leading.equalTo(name_label.snp.trailing).offset(6.7
-          )
+        
+        if UIScreen.main.bounds.size.height == 667 {
+            name_label_2.snp.makeConstraints { make in
+                make.top.equalTo(self.view.safeAreaInsets.top).inset(61.91)
+                make.leading.equalTo(name_label.snp.trailing).offset(6.7
+              )
+            }
+        } else {
+            name_label_2.snp.makeConstraints { make in
+                make.top.equalTo(self.view.safeAreaInsets.top).inset(105.91)
+                make.leading.equalTo(name_label.snp.trailing).offset(6.7
+              )
+            }
         }
+        
         name_input.snp.makeConstraints { make in
             make.top.equalTo(name_label.snp.bottom).offset(3.91)
             make.leading.equalToSuperview().inset(16)
             make.trailing.equalToSuperview().inset(16)
             make.height.equalTo(50)
         }
+        
         name_length.snp.makeConstraints { make in
             make.trailing.equalTo(name_input.snp.trailing).inset(16.64)
-          make.centerY.equalTo(name_input)
+            make.centerY.equalTo(name_input)
         }
+        
         usable_name_label.snp.makeConstraints { make in
             make.top.equalTo(name_input.snp.bottom).offset(1.87)
-            make.leading.equalTo(id_label.snp.leading)
+            make.leading.equalTo(name_label.snp.leading)
         }
-        //------------
+        //-------
         id_label.snp.makeConstraints { make in
             make.top.equalTo(name_input.snp.bottom).offset(34.37)
-            make.centerX.equalTo(name_label)
+            make.centerX.equalTo(email_label)
         }
         id_label_2.snp.makeConstraints { make in
-//          make.bottom.equalTo(id_label.snp.bottom)
             make.top.equalTo(name_input.snp.bottom).offset(35.87)
             make.leading.equalTo(name_label.snp.trailing).offset(6.7)
         }
         id_input.snp.makeConstraints { make in
-          make.top.equalTo(id_label.snp.bottom).offset(5)
-          make.leading.equalToSuperview().inset(20)
+            make.top.equalTo(id_label.snp.bottom).offset(3.63)
+            make.leading.equalToSuperview().inset(20)
             make.leading.equalToSuperview().inset(16)
             make.trailing.equalToSuperview().inset(16)
-          make.height.equalTo(50)
+            make.height.equalTo(50)
         }
         id_length.snp.makeConstraints { make in
             make.trailing.equalTo(id_input.snp.trailing).inset(16.64)
-          make.centerY.equalTo(id_input)
+            make.centerY.equalTo(id_input)
         }
         usable_id_label.snp.makeConstraints { make in
-            make.top.equalTo(id_input.snp.bottom).offset(3)
-            make.leading.equalTo(id_label.snp.leading)
+            make.top.equalTo(id_input.snp.bottom).inset(2.14)
+            make.leading.equalTo(email_label.snp.leading)
         }
-        //-------
+        //---------------
+        
         email_label.snp.makeConstraints { make in
-            make.top.equalTo(id_input.snp.bottom).offset(34.37)
-            make.centerX.equalTo(name_label)
+            make.top.equalTo(id_input.snp.bottom).offset(34.62)
+            make.leading.equalToSuperview().inset(25.74)
         }
+        
         email_label_2.snp.makeConstraints { make in
-          make.bottom.equalTo(email_label.snp.bottom)
-          make.leading.equalTo(email_label.snp.trailing).offset(10)
+            make.top.equalTo(id_input.snp.bottom).offset(36.62)
+            make.leading.equalTo(email_label.snp.trailing).offset(6.7)
         }
         email_input.snp.makeConstraints { make in
-          make.top.equalTo(email_label.snp.bottom).offset(5)
+            make.top.equalTo(email_label.snp.bottom).offset(3.87)
             make.leading.equalToSuperview().inset(16)
             make.trailing.equalToSuperview().inset(16)
-          make.height.equalTo(50)
+            make.height.equalTo(50)
         }
+        
         //-----
         password_label.snp.makeConstraints { make in
-            make.top.equalTo(email_input.snp.bottom).offset(34.37)
+            make.bottom.equalTo(email_input.snp.bottom).offset(54.37)
             make.leading.equalTo(name_label.snp.leading)
         }
         password_label_2.snp.makeConstraints { make in
-          make.bottom.equalTo(password_label.snp.bottom)
-          make.leading.equalTo(password_label.snp.trailing).offset(10)
+            make.bottom.equalTo(email_input.snp.bottom).offset(53.47)
+          make.leading.equalTo(password_label.snp.trailing).offset(7)
         }
         password_input.snp.makeConstraints { make in
-          make.top.equalTo(password_label.snp.bottom).offset(5)
+            make.top.equalTo(password_label.snp.bottom).offset(3.91)
             make.leading.equalToSuperview().inset(16)
             make.trailing.equalToSuperview().inset(16)
-          make.height.equalTo(50)
+            make.height.equalTo(50)
         }
         usable_password_label.snp.makeConstraints { make in
-            make.top.equalTo(password_input.snp.bottom).offset(3)
+            make.top.equalTo(password_input.snp.bottom).offset(2)
             make.leading.equalTo(password_label.snp.leading)
         }
         //-----
         password_check_label.snp.makeConstraints { make in
-            make.top.equalTo(password_input.snp.bottom).offset(34.37)
+            make.top.equalTo(password_input.snp.bottom).offset(26.87)
             make.leading.equalTo(name_label.snp.leading)
         }
         password_check_input.snp.makeConstraints { make in
-            make.top.equalTo(password_check_label.snp.bottom).offset(5)
+            make.top.equalTo(password_check_label.snp.bottom).offset(2)
             make.leading.equalToSuperview().inset(16)
             make.trailing.equalToSuperview().inset(16)
             make.height.equalTo(50)
         }
         usable_password_check_label.snp.makeConstraints { make in
-            make.top.equalTo(password_check_input.snp.bottom).offset(3)
+            make.top.equalTo(password_check_input.snp.bottom).offset(2)
             make.leading.equalTo(password_check_label.snp.leading)
         }
         
@@ -671,7 +700,8 @@ struct SignUpViewControllerRepresentable_PreviewProvider: PreviewProvider {
       SignUpViewControllerRepresentable()
         .ignoresSafeArea()
         .previewDisplayName("Preview")
-        .previewDevice(PreviewDevice(rawValue: "iPhone 11"))
+        .previewDevice(PreviewDevice(rawValue: "iPhone SE (3rd generation)"))
+//        .previewDevice(PreviewDevice(rawValue: "iPhone 11"))
     }
   }
 } #endif

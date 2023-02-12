@@ -20,7 +20,7 @@ class SearchListViewController: UIViewController {
         
         let table = UITableView()
         //Views 에있는 CollectionViewTabelCell 호출
-        table.register(SearchTableViewCell.self, forCellReuseIdentifier: SearchTableViewCell.identifier)
+        table.register(MainTableViewCell.self, forCellReuseIdentifier: MainTableViewCell.identifier)
         return table
     }()
 
@@ -69,7 +69,7 @@ extension SearchListViewController: UITableViewDelegate, UITableViewDataSource, 
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: SearchTableViewCell.identifier, for: indexPath) as? SearchTableViewCell else { return UITableViewCell() }
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: MainTableViewCell.identifier, for: indexPath) as? MainTableViewCell else { return UITableViewCell() }
 
         
         let model = allPostModel[indexPath.row]
@@ -87,21 +87,20 @@ extension SearchListViewController: UITableViewDelegate, UITableViewDataSource, 
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+
         // 셀 선택시 회색화면 지우기
         print("cell indexPath = \(indexPath)")
         tableView.deselectRow(at: indexPath, animated: true)
-        
         let model = allPostModel[indexPath.row]
         
+        let vc = SearchViewController()
         
-        let next = DetailPostViewController()
-        next.detailPostModel = [model]
+//        let vc = DetailPostViewController()
+//        vc.detailPostModel = [model]
         print("detailPostModel에 data 저장됨----------")
-//        self.performSegue(withIdentifier: "DetailPostViewController", sender: nil)
-        next.hidesBottomBarWhenPushed = true
-        
-//        self.present(next, animated: true)
-        self.navigationController?.pushViewController(next, animated: true)
+        vc.hidesBottomBarWhenPushed = true
+        self.navigationController?.pushViewController(vc, animated: true)
+        print("위에까지 찍혀요")
     }
 }
 
@@ -112,7 +111,7 @@ extension SearchListViewController {
         self.allPostModel = result
         
         // 뒤에 추가하는 것들(reload 에서 다시 사용하자)
-//        self.allPostModel.append(contentsOf: result)
+        self.allPostModel.append(contentsOf: result)
         print(allPostModel.count)
         print("allPostModel----------------------------------------",allPostModel)
     }

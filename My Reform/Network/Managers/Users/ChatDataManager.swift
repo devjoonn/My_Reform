@@ -27,7 +27,7 @@ class ChatDataManager {
                     print("Chat 서버 연결 성공")
                     return
                 default:
-                    print("데이터베이스 오류")
+                    print("데이터베이스 오류") 
                     let alert = UIAlertController()
                     alert.title = "서버 오류"
                     alert.message = "서버에서 오류가 발생했습니다. 잠시 후 다시 시도해주세요."

@@ -62,6 +62,7 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     var inputBottomView = UIView()
     
+
     var tableView : UITableView =  {
         let table = UITableView(frame: .zero, style: .grouped)
         //Views 에있는 CollectionViewTabelCell 호출
@@ -70,6 +71,7 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     }()
     
     
+
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         print("tableview numberOfrows called", ChatViewController.messages.count)
@@ -105,6 +107,7 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         // 위아래마진 14,14 + 여유공간 4
         return estimatedFrame.height + 14 + 14 + 4
     }
+
 
     override func viewDidLoad() {
         

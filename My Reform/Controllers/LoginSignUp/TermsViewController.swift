@@ -102,6 +102,8 @@ class TermsViewController: UIViewController {
         super.viewDidLoad()
         self.view.backgroundColor = .white
         
+    
+        
         // 뒤로가기 버튼 < 만 출력
         let backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: self, action: nil) // title 부분 수정
             backBarButtonItem.tintColor = .black

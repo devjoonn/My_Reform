@@ -27,7 +27,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         func moveSplashViewController() {
             self.window = UIWindow(frame: UIScreen.main.bounds)
             self.window?.rootViewController = UINavigationController(rootViewController: SplashViewController())
-            navigationController?.isNavigationBarHidden = true
+//            navigationController?.isNavigationBarHidden = true
             self.window?.makeKeyAndVisible()
             self.window?.backgroundColor = .white
         }
