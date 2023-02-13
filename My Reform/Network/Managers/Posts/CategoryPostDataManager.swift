@@ -11,9 +11,9 @@ import Alamofire
 class CategoryPostDataManager {
     
     
-    func categoryPostGet(_ viewController: CategoryFeedViewController, categoryId: Int) {
+    func categoryPostGet(_ viewController: CategoryFeedViewController,_ senderId: String ,_ categoryId: Int) {
         
-        let url = "\(Constants.baseURL)/boards?&size=20&categoryId=\(categoryId)"
+        let url = "\(Constants.baseURL)/boards?&size=20&categoryId=\(categoryId)&loginId=\(senderId)"
         
         AF.request(url ,method: .get, parameters: nil).validate().responseDecodable(of: AllPostModel.self) { response in
                 switch(response.result) {

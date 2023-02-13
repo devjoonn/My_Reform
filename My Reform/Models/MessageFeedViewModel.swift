@@ -12,4 +12,5 @@ struct MessageFeedViewModel {
     var senderNickname: String
     var title: String
     var lastMessage: String
+    var image: String
 }

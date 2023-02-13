@@ -18,7 +18,7 @@ import Alamofire
 class DetailPostViewController: UIViewController, UIScrollViewDelegate {
     
     // User Default에 저장된 User Nickname
-    let senderNickname : String = UserDefaults.standard.object(forKey: "senderNickname") as! String
+    let senderId : String = UserDefaults.standard.object(forKey: "senderId") as! String
     
     static let identifier = "DetailPostViewController"
     
@@ -149,6 +149,7 @@ class DetailPostViewController: UIViewController, UIScrollViewDelegate {
         setInfo()
         print("카테고리 인덱스는 = \(categorysIndex)")
         heartBtn.addTarget(self, action: #selector(heartBtnClicked), for: .touchUpInside)
+        moveChatBtn.addTarget(self, action: #selector(moveChatView), for: .touchUpInside)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -347,9 +348,9 @@ class DetailPostViewController: UIViewController, UIScrollViewDelegate {
     
     @objc func heartBtnClicked() {
         if heartBtn.isSelected == true {
-            LikePostSendDataManager.unLike(self, LikeInput(nickname: senderNickname, boardId: detailPostModel.first?.boardId))
+            LikePostSendDataManager.unLike(self, LikeInput(id: senderId, boardId: detailPostModel.first?.boardId))
         } else {
-            LikePostSendDataManager.like(self, LikeInput(nickname: senderNickname, boardId: detailPostModel.first?.boardId))
+            LikePostSendDataManager.like(self, LikeInput(id: senderId, boardId: detailPostModel.first?.boardId))
         }
     }
     
@@ -369,7 +370,7 @@ class DetailPostViewController: UIViewController, UIScrollViewDelegate {
 //MARK: - 게시물 수정 & 삭제
     @objc func setBtnClicked() {
         // 게시물의 햄버거버튼 클릭 시 권한 확인 - post에 대한 작성자 권한 체크
-        PostAuthCheckDataManager.AuthCheck(self, LikeInput(nickname: senderNickname, boardId: self.detailPostModel.first?.boardId!))
+        PostAuthCheckDataManager.AuthCheck(self, LikeInput(id: senderId, boardId: self.detailPostModel.first?.boardId!))
     }
     
     // 권한 확인 후
@@ -382,7 +383,7 @@ class DetailPostViewController: UIViewController, UIScrollViewDelegate {
             let no = UIAlertAction(title: "아니요", style: .default, handler: nil)
             let yes = UIAlertAction(title: "네 삭제할게요", style: .default) { _ in
                 // 게시물 삭제
-                DeletePostDataManager.deletePosts(self, DeleteInput(nickname: self.senderNickname), (self.detailPostModel.first?.boardId!)!)
+                DeletePostDataManager.deletePosts(self, DeleteInput(id: self.senderId), (self.detailPostModel.first?.boardId!)!)
             }
             no.titleTextColor = .black
             yes.titleTextColor = UIColor.mainColor
@@ -458,3 +459,13 @@ extension DetailPostViewController : UICollectionViewDelegate, UICollectionViewD
         }
 }
     
+extension DetailPostViewController {
+    @objc func moveChatView() {
+        let vc = ChatViewController()
+        vc.hidesBottomBarWhenPushed = true
+        let userData = ChatInput(senderNickname: senderId, boardId: 1)
+        ChatDataManager.posts(ChatViewController.init(), userData)
+        
+        navigationController?.pushViewController(vc, animated: true)
+    }
+}

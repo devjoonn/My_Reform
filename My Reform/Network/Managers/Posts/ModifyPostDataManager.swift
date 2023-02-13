@@ -18,7 +18,7 @@ class ModifyPostDataManager {
         AF.upload(multipartFormData: { (multipartFormData) in
             
             let saveObj : [String : Any] = [
-                "nickname" : parameter.nickname,
+                "id" : parameter.id,
                 "categoryId" : parameter.categoryId,
                 "title" : parameter.title,
                 "contents" : parameter.contents,

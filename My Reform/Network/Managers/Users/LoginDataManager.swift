@@ -22,10 +22,10 @@ class LoginDataManager {
                 switch(result.status) {
                 case 200:
 //                    UserDefaults.standard.set(result.result?.token?.accessToken, forKey: "accessToken")
-                    guard let nicknameToken = result.token else { return }
+                    guard let idToken = result.token else { return }
                     
-                    UserDefaults.standard.set("\(String(describing: nicknameToken))", forKey: "senderNickname")
-                    print("UserDefault에 저장되는 userNickname - \(String(describing: result.token))")
+                    UserDefaults.standard.set("\(String(describing: idToken))", forKey: "senderId")
+                    print("UserDefault에 저장되는 userId - \(String(describing: result.token))")
                     print("로그인 성공")
                     viewController.navigationController?.pushViewController(MainTabBarViewController(), animated: true)
                     viewController.navigationController?.isNavigationBarHidden = true

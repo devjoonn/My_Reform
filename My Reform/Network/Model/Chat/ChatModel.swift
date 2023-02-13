@@ -29,11 +29,9 @@ struct ChatData : Decodable {
     var updateAt : String?
     var status : Int?
     var chatrommId : Int?
-    var ownerNickname : String?
-    var senderNickname : String?
+    var ownderUserId : String?
+    var senderUserId : String?
     var boardTitle : String?
-    var ownerId : Int?
-    var senderId : Int?
     var boardId : Int?
-    
+    var messages : [String?]
 }

@@ -12,13 +12,4 @@ struct ProfileModel: Decodable {
     let status : Int
     let code : String
     let message : String
-    let data : [ProfileData]?
-}
-
-struct ProfileData : Decodable {
-//    let imageUrl : [String]?
-    let pw : String?
-    let email : String?
-    let nickname : String?
-    let introduction : String?
 }

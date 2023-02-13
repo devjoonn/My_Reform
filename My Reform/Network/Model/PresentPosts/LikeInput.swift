@@ -8,12 +8,12 @@
 import Foundation
 
 struct LikeInput: Encodable{
-    var nickname: String?
+    var id: String?
     var boardId: Int?
     
     // 회원가입용 생성자
-    init(nickname: String?, boardId: Int?) {
-        self.nickname = nickname
+    init(id: String?, boardId: Int?) {
+        self.id = id
         self.boardId = boardId
     }
 }

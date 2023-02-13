@@ -19,12 +19,14 @@ class ChatDataManager {
             debugPrint(response)
             switch response.result {
             case .success(let result):
-                print("보낸 값: senderNickname -> \(parameter.senderNickname), boardId -> \(parameter.boardId)")
+//                print("보낸 값: senderNickname -> \(parameter.senderNickname), boardId -> \(parameter.boardId)")
                 print("Chat 데이터 전송 성공")
                 print(result)
                 switch(result.status){
                 case 200:
                     print("Chat 서버 연결 성공")
+//                    viewController.navigationItem.title = result.data?.ownder
+                    
                     return
                 default:
                     print("데이터베이스 오류") 
@@ -44,5 +46,6 @@ class ChatDataManager {
         }
     }
     
+//    static func messageGet(_ viewController: ChatViewController, _ parameter: ChatInput)
 
 }

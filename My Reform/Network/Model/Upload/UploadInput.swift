@@ -9,15 +9,15 @@ import Foundation
 import SwiftUI
 
 struct UploadInput : Encodable {
-    var nickname: String
+    var id: String
     var categoryId: [Int]
     var title: String
     var contents: String
     var price: Int
     
 
-    init(nickname: String, categoryId: [Int], title: String, contents: String, price: Int) {
-        self.nickname = nickname
+    init(id: String, categoryId: [Int], title: String, contents: String, price: Int) {
+        self.id = id
         self.categoryId = categoryId
         self.title = title
         self.contents = contents

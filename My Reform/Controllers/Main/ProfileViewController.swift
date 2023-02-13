@@ -15,27 +15,13 @@ class ProfileViewController: UIViewController {
 
     static let identifier = "ProfileViewController"
 
-    let senderNickname : String = UserDefaults.standard.object(forKey: "senderNickname") as! String
+    let senderId : String = UserDefaults.standard.object(forKey: "senderId") as! String
   
     var lastBoardId : Int = 100
-    
-//    var profileDataManagerUrl: String = "\(Constants.baseURL)/users/\(senderNickname)/profiles"
-    
-//    var myPostDataManagerUrl: String = "\(Constants.baseURL)/boards?lastBoardId=&size=&id="
-    
-//    var myPostDataManagerUrl: String = "\(Constants.baseURL)/boards?categoryId=&keyword=&lastBoardId=&loginNickname=\(senderNickname)&size="
-    var myPostDataManagerUrl: String = "\(Constants.baseURL)/boards?categoryId=&keyword=&lastBoardId=&"
-    
-//     데이터 모델이 추가될 때 마다 테이블 뷰 갱신
-//    var allPostModel: [AllPostData] = []{
-//        didSet {
-//            self.myFeedTable.reloadData()
-//        }
-//    }
-    
+
     var profileLookupModel: [ProfileLookupData] = []
     
-    private let refreshControl = UIRefreshControl()
+    var profileLikeModel : [AllPostData] = []
     
     lazy var myFeedTable = { () -> UITableView in
         let table = UITableView(frame: .zero, style: .grouped)
@@ -88,7 +74,7 @@ class ProfileViewController: UIViewController {
     
     lazy var uploadLabel = { () -> UILabel in
         let label = UILabel()
-        label.text = "업로드한 리폼"
+        label.text = "찜한 리폼"
         label.font = UIFont(name: "Pretendard-Bold", size: 16)
         label.textColor = UIColor.mainBlack
         return label
@@ -156,11 +142,9 @@ class ProfileViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         self.view.backgroundColor = .clear
         self.view.insertSubview(myFeedTable, belowSubview: backgroundImage)
 
-        
         myFeedTable.delegate = self
         myFeedTable.dataSource = self
         
@@ -175,53 +159,15 @@ class ProfileViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         
         configureNavbar()
-        allPostGet()
+        ProfileDataManager.profileGet(self,self.senderId)
+        print("profile senderId -------------------------------------\(senderId)")
 //        fetchingAll()
-        profileChanged()
     }
     
-    func profileChanged(){
-        print("profileChanged called")
-        guard let model = profileLookupModel.first else { return }
-        print(model)
-        nameLabel.text = model.nickname
-        introLabel.text = model.introduction
+    override func viewWillDisappear(_ animated: Bool) {
+        profileLookupModel.removeAll()
+        profileLikeModel.removeAll()
     }
-    
-    //------------------------------- 프로필 정보 불러오기
-    
-    func allPostGet() {
-        print("allPostGet Called")
-        let url = "\(Constants.baseURL)/users/\(senderNickname)/profiles"
-        let encodeUrl = url.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
-        AF.request(encodeUrl ,method: .get, parameters: nil).validate().responseDecodable(of: ProfileLookupModel.self) { response in switch(response.result) {
-                case .success(let result) :
-                    print("프로필 서버통신 성공 - \(result)")
-                    switch(result.status) {
-                    case 200 :
-                        guard let data = result.data else { return }
-                        print("data!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\(data)")
-                        self.profileLookupModel.append(contentsOf: data)
-                    case 404 :
-                        print("프로필이 없는 경우입니다 - \(result.message)")
-                    default:
-                        print("데이터베이스 오류")
-                        let alert = UIAlertController()
-                        alert.title = "서버 오류"
-                        alert.message = "서버에서 오류가 발생했습니다. 잠시 후 다시 시도해주세요."
-                        let alertAction = UIAlertAction(title: "확인", style: .default, handler: nil)
-                        alert.addAction(alertAction)
-                        self.present(alert, animated: true, completion: nil)
-                        return
-                    }
-                    
-                case .failure(let error) :
-                    print(error)
-                    print(error.localizedDescription)
-                }
-            }
-    }
-
     
     //-------------------------
     //버튼 클릭 시
@@ -295,37 +241,43 @@ class ProfileViewController: UIViewController {
         }
     }
     
-        
-    //----------------------------------------------------
-    
-    func successProfileModel(result: [ProfileLookupData]){
-        self.profileLookupModel.append(contentsOf: result)
-        print(profileLookupModel.count)
+    func successProfileModel(result: ProfileLookupData){
+        self.profileLookupModel.append(contentsOf: [result])
+        profileChanged()
+        self.profileLikeModel.append(contentsOf: result.likeBoards!)
+        print("profileLikeModel에 저장됨 -----------\(profileLikeModel)")
+        self.myFeedTable.reloadData()
     }
     
-//    func successAllPostModel(result: [AllPostData]) {
-//        self.allPostModel.append(contentsOf: result)
-//        print(allPostModel.count)
-//    }
+    
+    // 프로필 값 바꾸는 함수
+    func profileChanged(){
+        guard let model = profileLookupModel.first else { return }
+        print(model)
+        nameLabel.text = model.nickname
+        introLabel.text = model.introduction
+        print("profileChanged called")
+    }
+    
+    
 }
 
 extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
-    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return profileLookupModel[0].likeBoards?.count ?? 0
+        return profileLikeModel.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
         guard let cell = tableView.dequeueReusableCell(withIdentifier: MainTableViewCell.identifier, for: indexPath) as? MainTableViewCell else { return UITableViewCell()  }
+
+        let model = profileLikeModel[indexPath.row]
         
-        let model = profileLookupModel.first?.likeBoards
+        guard let price = model.price else { return UITableViewCell()}
+        guard let like = model.likeOrNot else { return UITableViewCell()}
         
-        guard let time = model?[indexPath.row].time else {return UITableViewCell()}
-        guard let price = model?[indexPath.row].price else { return UITableViewCell()}
-        guard let like = model?[indexPath.row].likeOrNot else { return UITableViewCell()}
-        
-        cell.configure(with: HomeFeedViewModel(imageUrl: model?[indexPath.row].imageUrl?.first ?? "", title: model?[indexPath.row].title ?? "", minute: time, price: price, like: like))
-        
+        cell.configure(with: HomeFeedViewModel(imageUrl: model.imageUrl?.first ?? "", title: model.title ?? "", minute: model.time ?? "", price: price, like: like))
+    
         return cell
     }
     
@@ -337,10 +289,10 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
         print("cell indexPath = \(indexPath)")
         tableView.deselectRow(at: indexPath, animated: true)
         
-        let model = profileLookupModel.first?.likeBoards
+        guard let model = profileLookupModel[0].likeBoards?[indexPath.row] else {return}
         
         let vc = DetailPostViewController()
-        vc.detailPostModel = model!
+        vc.detailPostModel = [model]
         print("detailPostModel에 data 저장됨")
         vc.hidesBottomBarWhenPushed = true
         self.navigationController?.pushViewController(vc, animated: true)

@@ -8,11 +8,11 @@
 import Foundation
 
 struct ChatInput: Encodable{
-    var senderNickname: String
+    var senderId: String
     var boardId: Int
     
     init(senderNickname: String, boardId: Int) {
-        self.senderNickname = senderNickname
+        self.senderId = senderNickname
         self.boardId = boardId
     }
 }
