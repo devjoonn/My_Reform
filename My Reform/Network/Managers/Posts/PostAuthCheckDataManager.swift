@@ -15,11 +15,11 @@ class PostAuthCheckDataManager {
     // 서버에 좋아요 값 전송
     static func AuthCheck(_ viewController: DetailPostViewController, _ parameter: LikeInput){
         
-        guard let OptionalNickname = parameter.nickname else {return}
-        let nickname = OptionalNickname.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
+        guard let optionalId = parameter.id else {return}
+        let id = optionalId.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
         guard let boardId = parameter.boardId else {return}
         
-        let url = "\(Constants.baseURL)/boards/\(String(describing: boardId))/\(String(describing: nickname))"
+        let url = "\(Constants.baseURL)/boards/\(String(describing: boardId))/\(String(describing: id))"
         print("auth check url - \(url)")
         AF.request(url, method: .post, parameters: parameter, encoder: JSONParameterEncoder.default, headers: Headers).validate(statusCode: 200..<500).responseDecodable(of: PostAuthModel.self) { response in
             switch response.result {

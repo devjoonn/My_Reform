@@ -8,9 +8,9 @@
 import Foundation
 
 class DeleteInput : Encodable {
-    var nickname : String?
+    var id : String?
     
-    init(nickname: String?) {
-        self.nickname = nickname
+    init(id: String?) {
+        self.id = id
     }
 }

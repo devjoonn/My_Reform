@@ -15,11 +15,11 @@ class LikePostSendDataManager {
     // 서버에 좋아요 값 전송
     static func like(_ viewController: DetailPostViewController, _ parameter: LikeInput){
         
-        guard let OptionalNickname = parameter.nickname else {return}
-        let nickname = OptionalNickname.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
+        guard let OptionalId = parameter.id else {return}
+        let id = OptionalId.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
         guard let boardId = parameter.boardId else {return}
         
-        let url = "\(Constants.baseURL)/likes/add?boardId=\(String(describing: boardId))&token=\(String(describing: nickname))"
+        let url = "\(Constants.baseURL)/likes/add?boardId=\(String(describing: boardId))&token=\(String(describing: id))"
         print("like url - \(url)")
         AF.request(url, method: .post, parameters: parameter, encoder: JSONParameterEncoder.default, headers: Headers).validate(statusCode: 200..<500).responseDecodable(of: LikeModel.self) { response in
             switch response.result {
@@ -53,11 +53,11 @@ class LikePostSendDataManager {
     // 서버에 좋아요 값 전송
     static func unLike(_ viewController: DetailPostViewController, _ parameter: LikeInput){
         
-        guard let OptionalNickname = parameter.nickname else {return}
-        let nickname = OptionalNickname.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
+        guard let OptionalId = parameter.id else {return}
+        let id = OptionalId.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
         guard let boardId = parameter.boardId else {return}
         
-        let url = "\(Constants.baseURL)/likes/remove?boardId=\(String(describing: boardId))&token=\(String(describing: nickname))"
+        let url = "\(Constants.baseURL)/likes/remove?boardId=\(String(describing: boardId))&token=\(String(describing: id))"
         print("like url - \(url)")
         
         AF.request(url, method: .post, parameters: parameter, encoder: JSONParameterEncoder.default, headers: Headers).validate(statusCode: 200..<500).responseDecodable(of: LikeModel.self) { response in
