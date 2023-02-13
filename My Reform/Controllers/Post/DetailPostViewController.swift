@@ -149,6 +149,7 @@ class DetailPostViewController: UIViewController, UIScrollViewDelegate {
         setInfo()
         print("카테고리 인덱스는 = \(categorysIndex)")
         heartBtn.addTarget(self, action: #selector(heartBtnClicked), for: .touchUpInside)
+        moveChatBtn.addTarget(self, action: #selector(moveChatView), for: .touchUpInside)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -458,3 +459,13 @@ extension DetailPostViewController : UICollectionViewDelegate, UICollectionViewD
         }
 }
     
+extension DetailPostViewController {
+    @objc func moveChatView() {
+        let vc = ChatViewController()
+        vc.hidesBottomBarWhenPushed = true
+        let userData = ChatInput(senderNickname: senderNickname, boardId: 1)
+        ChatDataManager.posts(ChatViewController.init(), userData)
+        
+        navigationController?.pushViewController(vc, animated: true)
+    }
+}

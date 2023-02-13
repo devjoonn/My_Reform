@@ -18,14 +18,19 @@ struct MessageViewModel : Decodable {
 
 struct MessageViewData : Decodable {
     var chatroomId : Int?
+    var ownerUserId : String?
+    var senderUserId : String?
     var ownerNickname : String?
     var senderNickname : String?
     var boardTitle : String?
     var boardId : Int?
     var lastMessage : String?
+    
     // 최근 메시지 추가
     // 시간 추가
     // 해당 board의 imageUrl
     // 해당 board의 price
-//    var time : String?
+    var time : String?
+    var price : Int?
+    var imageList : [String?]
 }

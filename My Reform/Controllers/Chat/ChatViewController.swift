@@ -75,6 +75,7 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         print("tableview numberOfrows called", ChatViewController.messages.count)
+        print(ChatViewController.messages)
         return ChatViewController.messages.count
     }
     
@@ -105,7 +106,8 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         print("------heightForRowAt func called")
 
         // 위아래마진 14,14 + 여유공간 4
-        return estimatedFrame.height + 14 + 14 + 4
+        return estimatedFrame.height + 20
+        
     }
 
 
@@ -142,9 +144,7 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
 //        guard let boardPrice = detailChatRoomModel.first?.price else { return } - 가격 정보도 추가 되어아함
         itemTitleLabel.text = boardTitle
 //        itemPriceLabel.text = boardPrice
-        // 키보드 노티 등록
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShowHandle), name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHideHandle), name: UIResponder.keyboardWillHideNotification, object: nil)
+
     }
     override func viewWillDisappear(_ animated: Bool) {
         WebSocket.shared.closeWebSocket()
@@ -184,13 +184,23 @@ extension ChatViewController {
     func updateChat(count: Int, completion: @escaping ()->Void) {
         let indexPath = IndexPath(row: count-1, section: 0)
         
-        self.tableView.beginUpdates()
-        self.tableView.insertRows(at: [indexPath], with: .none)
-        self.tableView.endUpdates()
+        print("-------updateChat called")
         
-        self.tableView.scrollToRow(at: indexPath, at: .bottom, animated: false)
+//        self.tableView.reloadData()
+        print("-------updateChat called2")
+        self.tableView.beginUpdates()
+        print("-------updateChat called3")
+        self.tableView.insertRows(at: [indexPath], with: .none)
+        print("-------updateChat called4")
+        self.tableView.endUpdates()
+        print("-------updateChat called5")
+//        self.tableView.scrollToRow(at: indexPath, at: .bottom, animated: false)
+        print("-------updateChat called6")
         self.tableView.rowHeight = UITableView.automaticDimension
-        tableView.reloadData()
+        print("-------updateChat called7")
+        self.tableView.reloadData()
+        print("-------updateChat called8")
+
         completion()
     }
     
@@ -200,10 +210,10 @@ extension ChatViewController {
             if dataSplit[1] == senderNickname { return }
             
             
-            
             ChatViewController.messages.append(message)
             self.updateChat(count: ChatViewController.messages.count) {
                 print("receiveMessage")
+                print(ChatViewController.messages)
             }
         }
     }
@@ -215,15 +225,20 @@ extension ChatViewController : UITextFieldDelegate {
         
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.backgroundColor = .green
+        tableView.backgroundColor = .systemBackground
         tableView.separatorStyle = .none
         
         messageTextField.delegate = self
         let tapGuesterShowKeyboard = UITapGestureRecognizer(target: self, action: #selector(showKeyboard))
         let tapGuesterHideKeyboard = UITapGestureRecognizer(target: self, action: #selector(hidKeyboard))
         
+        NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardOpen), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardOpen), name: UIResponder.keyboardWillHideNotification, object: nil)
+        
         tableView.addGestureRecognizer(tapGuesterHideKeyboard)
         messageTextField.superview?.addGestureRecognizer(tapGuesterShowKeyboard)
+        
+        inputBottomView.backgroundColor = .systemBackground
         
 
     }
@@ -305,22 +320,24 @@ extension ChatViewController {
         messageTextField.resignFirstResponder()
     }
     
-    @objc func keyboardWillShowHandle(notification: NSNotification) {
-        print("keyboardWillShowHandle() called")
-        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
-            
-            if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+//    @objc func keyboardWillShowHandle(notification: NSNotification) {
+//
+//        print(inputBottomView.frame.origin.y)
+//        print("keyboardWillShowHandle() called")
+//        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+//            inputBottomView.frame.origin.y -= keyboardSize.height
+//        }
+//
+//    }
+//    @objc func keyboardWillHideHandle(notification: NSNotification) {
+//        print("keyboardWillHide() called")
+//
+//        inputBottomView.frame.origin.y = 0
+//
+//    }
 
-                view.frame.origin.y = -(keyboardSize.height+10)
-            }
-        }
-    }
-    @objc func keyboardWillHideHandle(notification: NSNotification) {
-        print("keyboardWillHide() called")
-        view.frame.origin.y = 0
-    }
-    
     @objc func handleKeyboardOpen(notification: Notification) {
+        print(inputBottomView.frame.origin.y)
         if let userInfo = notification.userInfo {
             if messageTextField.isEditing {
                 let keyboardFrame = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as! CGRect
@@ -329,7 +346,6 @@ extension ChatViewController {
                 } else {
                     inputBottomView.frame.origin.y = 847
                 }
-                
                 
                 UIView.animate(withDuration: 0, delay: 0, options: .curveEaseOut, animations: {
                     self.view.layoutIfNeeded()
@@ -375,3 +391,5 @@ struct ViewControllerRepresentable_PreviewProvider: PreviewProvider {
         
     }
 } #endif
+
+
