@@ -32,5 +32,5 @@ struct MessageViewData : Decodable {
     // 해당 board의 price
     var time : String?
     var price : Int?
-    var imageList : [String?]
+    var imageList : [String?]?
 }

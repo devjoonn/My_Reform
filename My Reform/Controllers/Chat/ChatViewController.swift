@@ -23,13 +23,14 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     static var messages = [String]()
     
     var itemView = UIView().then {
-        $0.backgroundColor = .orange
+        $0.backgroundColor = .systemBackground
+        
     }
     
     var itemimageView = UIImageView().then {
-        $0.contentMode = .scaleAspectFit
+        $0.contentMode = .scaleAspectFill
         $0.clipsToBounds = true
-        $0.layer.cornerRadius = 25
+        $0.layer.cornerRadius = 15
     }
     
     var itemTitleLabel = UILabel().then {
@@ -117,7 +118,8 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         view.backgroundColor = .systemBackground
 
         WebSocket.shared.url = URL(string: "ws://211.176.69.65:8080/ws/chat")
-        
+
+        navigationItem.title = "백살 먹은 리포머"
         attribute()
         layout()
         
@@ -138,11 +140,11 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     override func viewWillAppear(_ animated: Bool) {
         // 게시물 정보를 보여주는 상단바에 내용 추가
-//        guard let imageUrl = detailChatRoomModel.first.imageUrl else { return } - 이미지 url 추가되면 넣기
-//        itemimageView.sd_setImage(with: imageUrl)
+        guard let imageUrl = URL(string: "https://images.unsplash.com/photo-1613896640137-bb5b31496315?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80") else { return }
+        itemimageView.sd_setImage(with: imageUrl)
         guard let boardTitle = detailChatRoomModel.first?.boardTitle else { return }
 //        guard let boardPrice = detailChatRoomModel.first?.price else { return } - 가격 정보도 추가 되어아함
-        itemTitleLabel.text = boardTitle
+        itemTitleLabel.text = "레트로 파우치"
 //        itemPriceLabel.text = boardPrice
 
     }
@@ -173,6 +175,7 @@ extension ChatViewController {
                 ChatViewController.messages.append(result_message)
                 self.updateChat(count: ChatViewController.messages.count) {
                     print("Send Message")
+                    print(ChatViewController.messages)
                 }
 //                scrollToBottomOfChat()
                 
@@ -182,28 +185,35 @@ extension ChatViewController {
     
     
     func updateChat(count: Int, completion: @escaping ()->Void) {
+        print("---- count : ", count)
         let indexPath = IndexPath(row: count-1, section: 0)
         
-        print("-------updateChat called")
+        DispatchQueue.main.async{
+            print("-------updateChat called")
+    //        tableView.reloadData()
+            print("-------updateChat called2")
+            self.tableView.beginUpdates()
+            print("-------updateChat called3")
+            self.tableView.insertRows(at: [indexPath], with: .none)
+            print("-------updateChat called4")
+            
+            self.tableView.endUpdates()
+            print("-------updateChat called5")
+    //        self.tableView.scrollToRow(at: indexPath, at: .bottom, animated: false)
+            print("-------updateChat called6")
+            self.tableView.rowHeight = UITableView.automaticDimension
+            print("-------updateChat called7")
+            
+            self.tableView.reloadData()
+            print("-------updateChat called8")
+        }
         
-//        self.tableView.reloadData()
-        print("-------updateChat called2")
-        self.tableView.beginUpdates()
-        print("-------updateChat called3")
-        self.tableView.insertRows(at: [indexPath], with: .none)
-        print("-------updateChat called4")
-        self.tableView.endUpdates()
-        print("-------updateChat called5")
-//        self.tableView.scrollToRow(at: indexPath, at: .bottom, animated: false)
-        print("-------updateChat called6")
-        self.tableView.rowHeight = UITableView.automaticDimension
-        print("-------updateChat called7")
-        self.tableView.reloadData()
-        print("-------updateChat called8")
 
-        completion()
+//        completion()
     }
     
+    
+    // 함수 실행 문제 X
     func receiveMessage(_ message: String) {
         if message.trimmingCharacters(in: .whitespaces) != "" {
             let dataSplit = message.components(separatedBy: "/")
@@ -263,17 +273,17 @@ extension ChatViewController : UITextFieldDelegate {
         itemimageView.snp.makeConstraints { make in
             make.height.width.equalTo(48)
             make.centerY.equalToSuperview()
-            make.leading.equalTo(30)
+            make.leading.equalTo(20)
         }
         
         itemTitleLabel.snp.makeConstraints { make in
-            make.leading.equalTo(itemimageView.snp.trailing).inset(8)
+            make.leading.equalTo(itemimageView.snp.trailing).offset(8)
             make.top.equalToSuperview().inset(15)
         }
         
         itemPriceLabel.snp.makeConstraints { make in
             make.top.equalTo(itemTitleLabel.snp.bottom).inset(-3)
-            make.leading.equalTo(itemimageView.snp.trailing).inset(10)
+            make.leading.equalTo(itemimageView.snp.trailing).offset(10)
         }
         
         sectionView.snp.makeConstraints { make in
