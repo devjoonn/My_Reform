@@ -330,7 +330,7 @@ extension UploadViewController : UITextViewDelegate, UITextFieldDelegate {
             make.width.equalTo(219)
             make.height.equalTo(52)
             make.centerX.equalToSuperview()
-            make.top.equalTo(separatorView.snp.bottom).offset(commonInset)
+            make.top.equalTo(separatorView.snp.bottom).offset(commonInset+8)
         }
         imagePickerButton.translatesAutoresizingMaskIntoConstraints = false
         imagePickerButton.widthAnchor.constraint(equalTo: imagePickerView.widthAnchor).isActive = true
@@ -349,7 +349,7 @@ extension UploadViewController : UITextViewDelegate, UITextFieldDelegate {
         }
         separatorView1.snp.makeConstraints { (make) in
             make.leading.trailing.equalToSuperview().inset(20)
-            make.top.equalTo(imagePickerView.snp.bottom).offset(commonInset)
+            make.top.equalTo(imagePickerView.snp.bottom).offset(commonInset+8)
             make.height.equalTo(0.5)
         }
         titleTextField.snp.makeConstraints { (make) in
@@ -378,7 +378,7 @@ extension UploadViewController : UITextViewDelegate, UITextFieldDelegate {
         }
         separatorView3.snp.makeConstraints { (make) in
             make.leading.trailing.equalToSuperview().inset(20)
-            make.top.equalTo(categoryScroll.snp.bottom).inset(5)
+            make.top.equalTo(categoryScroll.snp.bottom).inset(-10)
             make.height.equalTo(0.5)
         }
         wonLabel.snp.makeConstraints { (make) in

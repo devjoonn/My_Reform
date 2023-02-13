@@ -23,7 +23,7 @@ class MessageViewController: UIViewController {
     
     private let refreshControl = UIRefreshControl()
             
-    var btn = UIButton()
+//    var btn = UIButton()
                                       
     private let FeedTable: UITableView = {
         let table = UITableView()
@@ -38,15 +38,15 @@ class MessageViewController: UIViewController {
         setAttribute()
         setLayout()
         
-        view.addSubview(btn)
-        btn.backgroundColor = .green
-        btn.snp.makeConstraints { (make) in
-            make.width.height.equalTo(200)
-            make.centerX.equalTo(view.snp.centerX)
-            make.centerY.equalTo(view.snp.centerY)
-        }
-
-        btn.addTarget(self, action: #selector(moveChat), for: .touchUpInside)
+//        view.addSubview(btn)
+//        btn.backgroundColor = .green
+//        btn.snp.makeConstraints { (make) in
+//            make.width.height.equalTo(200)
+//            make.centerX.equalTo(view.snp.centerX)
+//            make.centerY.equalTo(view.snp.centerY)
+//        }
+//
+//        btn.addTarget(self, action: #selector(moveChat), for: .touchUpInside)
 //        refreshControl.addTarget(self, action: #selector(beginRefresh), for: .valueChanged)
         
         
@@ -94,7 +94,7 @@ extension MessageViewController: UITableViewDelegate, UITableViewDataSource {
         
         let model = chatRoomModel[indexPath.row]
         
-        cell.configure(with: MessageFeedViewModel(ownerNickname: model.ownerNickname ?? "", senderNickname: model.senderUserId ?? "", title: model.boardTitle ?? "", lastMessage: model.lastMessage ?? "", image: (model.imageList.first ?? "")!))
+        cell.configure(with: MessageFeedViewModel(ownerNickname: model.ownerNickname ?? "", senderNickname: model.senderUserId ?? "", title: model.boardTitle ?? "", lastMessage: model.lastMessage ?? "", image: (model.imageList?.first ?? "")!))
 
         return cell
     }
@@ -134,7 +134,7 @@ extension MessageViewController {
         
         //MARK: 수정할 사항
 //        let userData = MessageViewInput(userId: senderNickname)
-        let userData = MessageViewInput(userId: "id")
+        let userData = MessageViewInput(userId: "id3")
 
 
         MessageViewDataManager().ChatListGet(self, userData)

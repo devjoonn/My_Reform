@@ -141,8 +141,8 @@ class HomeViewController: UIViewController {
         var image = UIImage(named: "logotype")?.resize(newWidth: 150)
         image = image?.withRenderingMode(.alwaysOriginal) //색깔 원래대로
         let imageBtn = UIBarButtonItem(image: image, style: .done, target: self, action: #selector(logoClicked))
-        let categoryBtn = UIBarButtonItem(image: UIImage(named: "category")?.resize(newWidth: 25), style: .done, target: self, action: #selector(categoryBtnClicked))
-        let uploadBtn = UIBarButtonItem(image: UIImage(named: "upload")?.resize(newWidth: 25), style: .done, target: self, action: #selector(uploadBtnClicked))
+        let categoryBtn = UIBarButtonItem(image: UIImage(named: "category")?.resize(newWidth: 30), style: .done, target: self, action: #selector(categoryBtnClicked))
+        let uploadBtn = UIBarButtonItem(image: UIImage(named: "upload")?.resize(newWidth: 30), style: .done, target: self, action: #selector(uploadBtnClicked))
             
         self.navigationItem.leftBarButtonItem = imageBtn
         self.navigationItem.rightBarButtonItems = [categoryBtn, uploadBtn]

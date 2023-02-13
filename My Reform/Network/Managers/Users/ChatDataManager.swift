@@ -46,6 +46,6 @@ class ChatDataManager {
         }
     }
     
-//    static func messageGet(_ viewController: ChatViewController, _ parameter: ChatInput)
+    
 
 }
