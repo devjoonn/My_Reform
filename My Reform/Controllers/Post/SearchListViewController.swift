@@ -8,18 +8,15 @@
 import UIKit
 import Alamofire
 
+protocol SearchListViewControllerDelegate: AnyObject {
+    func selectedCell(model: AllPostData)
+}
+
 class SearchListViewController: UIViewController {
     
-//    var nc: UINavigationController?
-//    
-//    init(navigationController: UINavigationController) {
-//        super.init(nibName: nil, bundle: nil)
-//        self.nc = navigationController
-//    }
-//    
-//    required init?(coder: NSCoder) {
-//        fatalError("init(coder:) has not been implemented")
-//    }
+    var nc: UINavigationController?
+
+    weak var delegate: SearchListViewControllerDelegate?
     
     var allPostModel: [AllPostData] = [] {
         didSet {
@@ -100,19 +97,20 @@ extension SearchListViewController: UITableViewDelegate, UITableViewDataSource, 
         print("cell indexPath = \(indexPath)")
         tableView.deselectRow(at: indexPath, animated: true)
         let model = allPostModel[indexPath.row]
+        delegate?.selectedCell(model: model)
         
-        let vc = SearchViewController()
+//        let vc = SearchViewController()
         
         
 //        let vc = DetailPostViewController()
 //        let vc = UINavigationController(rootViewController: SearchViewController())
 //        vc.detailPostModel = [model]
         
-        print("detailPostModel에 dataC 저장됨----------")
-        vc.hidesBottomBarWhenPushed = true
-        print(self.navigationController)
-        self.navigationController?.pushViewController(vc, animated: true)
-        print("위에까지 찍혀요")
+//        print("detailPostModel에 dataC 저장됨----------")
+//        vc.hidesBottomBarWhenPushed = true
+//        print(self.navigationController)
+//        self.navigationController?.pushViewController(vc, animated: true)
+//        print("위에까지 찍혀요")
     }
 }
 

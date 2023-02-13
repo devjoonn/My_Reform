@@ -18,12 +18,12 @@ class SearchViewController: UIViewController,  UISearchBarDelegate, UIGestureRec
         }
     }
     
-    let searchController : UISearchController = {
-      let controller = UISearchController(searchResultsController: SearchListViewController())
-        controller.searchBar.placeholder = "검색"
-//        controller.searchBar.searchBarStyle = .minimal
-        return controller
-    }()
+//    let searchController : UISearchController = {
+//      let controller = UISearchController(searchResultsController: SearchListViewController())
+//        controller.searchBar.placeholder = "검색"
+////        controller.searchBar.searchBarStyle = .minimal
+//        return controller
+//    }()
     
 //    lazy var searchController : UISearchController = {
 //        let controller = UISearchController(searchResultsController: UINavigationController(rootViewController: SearchListViewController(navigationController: self.navigationController!)))
@@ -31,6 +31,17 @@ class SearchViewController: UIViewController,  UISearchBarDelegate, UIGestureRec
 // //        controller.searchBar.searchBarStyle = .minimal
 //         return controller
 //     }()
+    
+    lazy var searchController : UISearchController = {
+            let searchListViewController = SearchListViewController()
+    //        let controller = UISearchController(searchResultsController: SearchListViewController(navigationController: self.navigationController ?? UINavigationController()))
+            searchListViewController.delegate = self
+            let controller = UISearchController(searchResultsController: searchListViewController)
+    //        print("\(self.navigationController)")
+            controller.searchBar.placeholder = "검색"
+             return controller
+         }()
+
     
 //    let searchController : UISearchController = {
 //          let controller = UISearchController(searchResultsController: UINavigationController(rootViewController: SearchListViewController()))
@@ -185,11 +196,28 @@ extension SearchViewController : UISearchControllerDelegate  {
         
         let searchBar = searchController.searchBar
         
-        guard let text = searchBar.text,
-              !text.trimmingCharacters(in: .whitespaces).isEmpty,
-              text.trimmingCharacters(in: .whitespaces).count >= 0,
-              // resultController는 입력한 결과값이 나오는 searchResultViewController
-              let resultController = searchController.searchResultsController as? SearchListViewController else {return}
+//        guard let text = searchBar.text,
+//              !text.trimmingCharacters(in: .whitespaces).isEmpty,
+//              text.trimmingCharacters(in: .whitespaces).count >= 0,
+//              // resultController는 입력한 결과값이 나오는 searchResultViewController
+//              let resultController = searchController.searchResultsController as? SearchListViewController else {return}
+        
+        guard let text = searchBar.text else {
+            return
+        }
+    
+        guard !text.trimmingCharacters(in: .whitespaces).isEmpty else {
+            return
+        }
+            
+        guard text.trimmingCharacters(in: .whitespaces).count >= 0 else {
+            return
+        }
+               
+        guard let resultController = searchController.searchResultsController as? SearchListViewController else {
+            return
+        }
+
         
         print(resultController)
 
@@ -251,7 +279,14 @@ extension SearchViewController : UISearchControllerDelegate  {
 //    }
 }
 
-
+extension SearchViewController: SearchListViewControllerDelegate {
+    func selectedCell(model: AllPostData) {
+        let vc = DetailPostViewController()
+        vc.detailPostModel = [model]
+        vc.hidesBottomBarWhenPushed = true
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+}
 
 #if DEBUG
 import SwiftUI
