@@ -25,6 +25,20 @@ class SearchViewController: UIViewController,  UISearchBarDelegate, UIGestureRec
         return controller
     }()
     
+//    lazy var searchController : UISearchController = {
+//        let controller = UISearchController(searchResultsController: UINavigationController(rootViewController: SearchListViewController(navigationController: self.navigationController!)))
+//        controller.searchBar.placeholder = "검색"
+// //        controller.searchBar.searchBarStyle = .minimal
+//         return controller
+//     }()
+    
+//    let searchController : UISearchController = {
+//          let controller = UISearchController(searchResultsController: UINavigationController(rootViewController: SearchListViewController()))
+//            controller.searchBar.placeholder = "검색"
+//    //        controller.searchBar.searchBarStyle = .minimal
+//            return controller
+//        }()
+    
     private let refreshControl = UIRefreshControl()
     private let collectionViewLayout = UICollectionViewFlowLayout()
     private lazy var exploreCollectionView : UICollectionView = {
@@ -32,7 +46,6 @@ class SearchViewController: UIViewController,  UISearchBarDelegate, UIGestureRec
         
         return collection
     }()
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -179,7 +192,7 @@ extension SearchViewController : UISearchControllerDelegate  {
               let resultController = searchController.searchResultsController as? SearchListViewController else {return}
         
         print(resultController)
-                
+        
         AF.request("\(Constants.baseURL)/boards?lastBoardId=100&size=20&keyword=\(text)&loginNickname=\(senderNickname)"
             .addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? "" ,method: .get, parameters: nil ).validate().responseDecodable(of: AllPostModel.self) { response in
             DispatchQueue.main.async {
@@ -223,7 +236,7 @@ extension SearchViewController : UISearchControllerDelegate  {
         searchBar.resignFirstResponder()
         guard let text = searchController.searchBar.text else { return }
 //        searchBtnClicked()
-        SearchListViewController().viewWillAppear(true)
+//        SearchListViewController().viewWillAppear(true)
         print("search result : ", text)
     }
     
