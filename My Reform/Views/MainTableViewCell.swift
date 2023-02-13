@@ -20,11 +20,8 @@ class MainTableViewCell: UITableViewCell {
     
     
     var heartButton = UIButton().then {
-//        let config = UIImage.SymbolConfiguration(pointSize: 40)
-//        let heart_off = UIImage(systemName: "heart_off", withConfiguration: config)
-//        let heart_on = UIImage(systemName: "heart_on", withConfiguration: config)
-        $0.setImage(UIImage(systemName: "heart_off"), for: .normal)
-        $0.setImage(UIImage(systemName: "heart_on"), for: .selected)
+        $0.setImage(UIImage(named: "heart_off"), for: .normal)
+        $0.setImage(UIImage(named: "heart_on"), for: .selected)
 //        $0.translatesAutoresizingMaskIntoConstraints = false
 //        $0.contentMode = .scaleAspectFit
         $0.tintColor = .systemGray
@@ -97,9 +94,9 @@ class MainTableViewCell: UITableViewCell {
         
         heartButton.snp.makeConstraints { make in
             make.trailing.equalTo(contentView.snp.trailing).inset(20)
-            make.centerX.equalTo(priceCellLabel.snp.centerX)
-            make.bottom.equalTo(contentView.snp.bottom).inset(20)
-            make.width.height.equalTo(60)
+            make.centerY.equalTo(minuteCellLabel.snp.centerY)
+//            make.bottom.equalTo(contentView.snp.bottom).inset(20)
+            make.width.height.equalTo(37)
         }
         
     }

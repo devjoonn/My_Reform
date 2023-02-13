@@ -18,12 +18,37 @@ class SearchViewController: UIViewController,  UISearchBarDelegate, UIGestureRec
         }
     }
     
-    let searchController : UISearchController = {
-      let controller = UISearchController(searchResultsController: SearchListViewController())
-        controller.searchBar.placeholder = "검색"
-//        controller.searchBar.searchBarStyle = .minimal
-        return controller
-    }()
+//    let searchController : UISearchController = {
+//      let controller = UISearchController(searchResultsController: SearchListViewController())
+//        controller.searchBar.placeholder = "검색"
+////        controller.searchBar.searchBarStyle = .minimal
+//        return controller
+//    }()
+    
+//    lazy var searchController : UISearchController = {
+//        let controller = UISearchController(searchResultsController: UINavigationController(rootViewController: SearchListViewController(navigationController: self.navigationController!)))
+//        controller.searchBar.placeholder = "검색"
+// //        controller.searchBar.searchBarStyle = .minimal
+//         return controller
+//     }()
+    
+    lazy var searchController : UISearchController = {
+            let searchListViewController = SearchListViewController()
+    //        let controller = UISearchController(searchResultsController: SearchListViewController(navigationController: self.navigationController ?? UINavigationController()))
+            searchListViewController.delegate = self
+            let controller = UISearchController(searchResultsController: searchListViewController)
+    //        print("\(self.navigationController)")
+            controller.searchBar.placeholder = "검색"
+             return controller
+         }()
+
+    
+//    let searchController : UISearchController = {
+//          let controller = UISearchController(searchResultsController: UINavigationController(rootViewController: SearchListViewController()))
+//            controller.searchBar.placeholder = "검색"
+//    //        controller.searchBar.searchBarStyle = .minimal
+//            return controller
+//        }()
     
     private let refreshControl = UIRefreshControl()
     private let collectionViewLayout = UICollectionViewFlowLayout()
@@ -32,7 +57,6 @@ class SearchViewController: UIViewController,  UISearchBarDelegate, UIGestureRec
         
         return collection
     }()
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -172,14 +196,31 @@ extension SearchViewController : UISearchControllerDelegate  {
         
         let searchBar = searchController.searchBar
         
-        guard let text = searchBar.text,
-              !text.trimmingCharacters(in: .whitespaces).isEmpty,
-              text.trimmingCharacters(in: .whitespaces).count >= 0,
-              // resultController는 입력한 결과값이 나오는 searchResultViewController
-              let resultController = searchController.searchResultsController as? SearchListViewController else {return}
+//        guard let text = searchBar.text,
+//              !text.trimmingCharacters(in: .whitespaces).isEmpty,
+//              text.trimmingCharacters(in: .whitespaces).count >= 0,
+//              // resultController는 입력한 결과값이 나오는 searchResultViewController
+//              let resultController = searchController.searchResultsController as? SearchListViewController else {return}
+        
+        guard let text = searchBar.text else {
+            return
+        }
+    
+        guard !text.trimmingCharacters(in: .whitespaces).isEmpty else {
+            return
+        }
+            
+        guard text.trimmingCharacters(in: .whitespaces).count >= 0 else {
+            return
+        }
+               
+        guard let resultController = searchController.searchResultsController as? SearchListViewController else {
+            return
+        }
+
         
         print(resultController)
-                
+
         AF.request("\(Constants.baseURL)/boards?lastBoardId=100&size=100&keyword=\(text)&loginId=\(senderId)"
             .addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? "" ,method: .get, parameters: nil ).validate().responseDecodable(of: AllPostModel.self) { response in
             DispatchQueue.main.async {
@@ -223,7 +264,7 @@ extension SearchViewController : UISearchControllerDelegate  {
         searchBar.resignFirstResponder()
         guard let text = searchController.searchBar.text else { return }
 //        searchBtnClicked()
-        SearchListViewController().viewWillAppear(true)
+//        SearchListViewController().viewWillAppear(true)
         print("search result : ", text)
     }
     
@@ -238,7 +279,14 @@ extension SearchViewController : UISearchControllerDelegate  {
 //    }
 }
 
-
+extension SearchViewController: SearchListViewControllerDelegate {
+    func selectedCell(model: AllPostData) {
+        let vc = DetailPostViewController()
+        vc.detailPostModel = [model]
+        vc.hidesBottomBarWhenPushed = true
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+}
 
 #if DEBUG
 import SwiftUI
