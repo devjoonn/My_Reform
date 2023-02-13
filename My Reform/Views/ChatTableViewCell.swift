@@ -93,7 +93,7 @@ class ChatTableViewCell: UITableViewCell {
 //            messageLabel.drawText(in: CGRect())
             setting_inner()
         } else {
-            messageLabel.text = dataSplit[2]
+            messageLabel.text = dataSplit[3]
 //            messageLabel.drawText(in: CGRect())
             setting_outer()
         }

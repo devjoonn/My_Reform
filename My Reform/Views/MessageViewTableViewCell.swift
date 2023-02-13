@@ -95,7 +95,7 @@ class MessageViewTableViewCell: UITableViewCell {
     public func configure(with model: MessageFeedViewModel) {
        
         
-        titleCellLabel.text = model.title
+        titleCellLabel.text = "레트로 파우치"
         
         name.text = model.ownerNickname
         
@@ -103,7 +103,7 @@ class MessageViewTableViewCell: UITableViewCell {
         
         
 //        guard let url = URL(string: "\(Constants.baseURL)\(model.image)") else { return }
-        guard let url = URL(string: "\(model.image)") else { return }
+        guard let url = URL(string: "https://images.unsplash.com/photo-1613896640137-bb5b31496315?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80") else { return }
         
         print(url)
         
