@@ -305,7 +305,7 @@ class DetailPostViewController: UIViewController, UIScrollViewDelegate {
         heartBtn.snp.makeConstraints { make in
             make.top.equalTo(bottomView.snp.top).inset(36)
             make.leading.equalToSuperview().inset(18)
-            make.height.width.equalTo(30)
+            make.height.width.equalTo(35)
         }
         
         heartLabel.snp.makeConstraints { make in

@@ -101,7 +101,7 @@ class TermsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .white
-        
+        self.navigationController?.navigationBar.isHidden = false
     
         
         // 뒤로가기 버튼 < 만 출력
