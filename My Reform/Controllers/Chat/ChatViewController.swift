@@ -11,11 +11,16 @@ import UIKit
 import SnapKit
 import Then
 
+
 class ChatViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+    
     
     let senderNickname : String = UserDefaults.standard.object(forKey: "senderNickname") as! String
     
     var detailChatRoomModel: [MessageViewData] = []
+    
+    // 메시지 담는 배열
+    static var messages = [String]()
     
     var itemView = UIView().then {
         $0.backgroundColor = .orange
@@ -57,26 +62,54 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     var inputBottomView = UIView()
     
-    var tableView = UITableView().then {
-        $0.backgroundColor = .green
-    }
 
-    // 메시지 담는 배열
-    var messages = [String]()
+    var tableView : UITableView =  {
+        let table = UITableView(frame: .zero, style: .grouped)
+        //Views 에있는 CollectionViewTabelCell 호출
+        table.register(ChatTableViewCell.self, forCellReuseIdentifier: ChatTableViewCell.identifier)
+        return table
+    }()
+    
+    
+
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return messages.count
+        print("tableview numberOfrows called", ChatViewController.messages.count)
+        print(ChatViewController.messages)
+        return ChatViewController.messages.count
     }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
+        print("----tableview cellForRowAt 실행")
         guard let cell = tableView.dequeueReusableCell(withIdentifier: ChatTableViewCell.identifier, for: indexPath) as? ChatTableViewCell else { return UITableViewCell() }
         
-        let model = messages[indexPath.row]
+        let model = ChatViewController.messages[indexPath.row]
+        
+        print("----tableview cellForRowAt 실행2")
+        
         
         cell.configure(with: model)
         return cell
     }
     
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        let chat = ChatViewController.messages[indexPath.row]
+        let dataSplit = chat.components(separatedBy: "/")
+
+        //좌우마진 122, 40이 최대값이므로 최댓값 가로길이는 아래와같음
+        let widthOfText = view.frame.width - 122 - 40
+        let size = CGSize(width: widthOfText, height: 1000)
+        let attributes = [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 17)]
+        let estimatedFrame = NSString(string: dataSplit[2]).boundingRect(with: size, options: .usesLineFragmentOrigin, attributes: attributes, context: nil)
+        
+        print("------heightForRowAt func called")
+
+        // 위아래마진 14,14 + 여유공간 4
+        return estimatedFrame.height + 20
+        
+    }
+
 
     override func viewDidLoad() {
         
@@ -97,8 +130,6 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         WebSocket.shared.delegate = self
         WebSocket.shared.onReceiveClosure = { (string, data) in
             print(string, data)
-            
-            
         }
 
         
@@ -113,9 +144,7 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
 //        guard let boardPrice = detailChatRoomModel.first?.price else { return } - 가격 정보도 추가 되어아함
         itemTitleLabel.text = boardTitle
 //        itemPriceLabel.text = boardPrice
-        // 키보드 노티 등록
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShowHandle), name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHideHandle), name: UIResponder.keyboardWillHideNotification, object: nil)
+
     }
     override func viewWillDisappear(_ animated: Bool) {
         WebSocket.shared.closeWebSocket()
@@ -138,29 +167,55 @@ extension ChatViewController {
         if let message = messageTextField.text {
             if message.trimmingCharacters(in: .whitespaces) != "" {
                 // chatroom / senderNickname / message
-                let result_message = "2/name2/"+message
+                let result_message = "2/\(senderNickname)/"+message
                 WebSocket.shared.send(message: result_message)
                 messageTextField.text = ""
-                messages.append(result_message)
-                self.updateChat(count: self.messages.count) {
+                ChatViewController.messages.append(result_message)
+                self.updateChat(count: ChatViewController.messages.count) {
                     print("Send Message")
                 }
-//                tableView.reloadData()
 //                scrollToBottomOfChat()
                 
             }
         }
     }
     
+    
     func updateChat(count: Int, completion: @escaping ()->Void) {
         let indexPath = IndexPath(row: count-1, section: 0)
         
-        self.tableView.beginUpdates()
-        self.tableView.insertRows(at: [indexPath], with: .none)
-        self.tableView.endUpdates()
+        print("-------updateChat called")
         
-        self.tableView.scrollToRow(at: indexPath, at: .bottom, animated: false)
+//        self.tableView.reloadData()
+        print("-------updateChat called2")
+        self.tableView.beginUpdates()
+        print("-------updateChat called3")
+        self.tableView.insertRows(at: [indexPath], with: .none)
+        print("-------updateChat called4")
+        self.tableView.endUpdates()
+        print("-------updateChat called5")
+//        self.tableView.scrollToRow(at: indexPath, at: .bottom, animated: false)
+        print("-------updateChat called6")
+        self.tableView.rowHeight = UITableView.automaticDimension
+        print("-------updateChat called7")
+        self.tableView.reloadData()
+        print("-------updateChat called8")
+
         completion()
+    }
+    
+    func receiveMessage(_ message: String) {
+        if message.trimmingCharacters(in: .whitespaces) != "" {
+            let dataSplit = message.components(separatedBy: "/")
+            if dataSplit[1] == senderNickname { return }
+            
+            
+            ChatViewController.messages.append(message)
+            self.updateChat(count: ChatViewController.messages.count) {
+                print("receiveMessage")
+                print(ChatViewController.messages)
+            }
+        }
     }
 }
 
@@ -170,13 +225,20 @@ extension ChatViewController : UITextFieldDelegate {
         
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.backgroundColor = .systemBackground
+        tableView.separatorStyle = .none
         
         messageTextField.delegate = self
         let tapGuesterShowKeyboard = UITapGestureRecognizer(target: self, action: #selector(showKeyboard))
         let tapGuesterHideKeyboard = UITapGestureRecognizer(target: self, action: #selector(hidKeyboard))
         
+        NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardOpen), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardOpen), name: UIResponder.keyboardWillHideNotification, object: nil)
+        
         tableView.addGestureRecognizer(tapGuesterHideKeyboard)
         messageTextField.superview?.addGestureRecognizer(tapGuesterShowKeyboard)
+        
+        inputBottomView.backgroundColor = .systemBackground
         
 
     }
@@ -258,22 +320,24 @@ extension ChatViewController {
         messageTextField.resignFirstResponder()
     }
     
-    @objc func keyboardWillShowHandle(notification: NSNotification) {
-        print("keyboardWillShowHandle() called")
-        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
-            
-            if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+//    @objc func keyboardWillShowHandle(notification: NSNotification) {
+//
+//        print(inputBottomView.frame.origin.y)
+//        print("keyboardWillShowHandle() called")
+//        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+//            inputBottomView.frame.origin.y -= keyboardSize.height
+//        }
+//
+//    }
+//    @objc func keyboardWillHideHandle(notification: NSNotification) {
+//        print("keyboardWillHide() called")
+//
+//        inputBottomView.frame.origin.y = 0
+//
+//    }
 
-                view.frame.origin.y -= (keyboardSize.height+10)
-            }
-        }
-    }
-    @objc func keyboardWillHideHandle(notification: NSNotification) {
-        print("keyboardWillHide() called")
-        view.frame.origin.y = 0
-    }
-    
     @objc func handleKeyboardOpen(notification: Notification) {
+        print(inputBottomView.frame.origin.y)
         if let userInfo = notification.userInfo {
             if messageTextField.isEditing {
                 let keyboardFrame = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as! CGRect
@@ -282,7 +346,6 @@ extension ChatViewController {
                 } else {
                     inputBottomView.frame.origin.y = 847
                 }
-                
                 
                 UIView.animate(withDuration: 0, delay: 0, options: .curveEaseOut, animations: {
                     self.view.layoutIfNeeded()
@@ -328,3 +391,5 @@ struct ViewControllerRepresentable_PreviewProvider: PreviewProvider {
         
     }
 } #endif
+
+

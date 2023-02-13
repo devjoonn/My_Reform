@@ -94,7 +94,7 @@ extension MessageViewController: UITableViewDelegate, UITableViewDataSource {
         
         let model = chatRoomModel[indexPath.row]
         
-        cell.configure(with: MessageFeedViewModel(ownerNickname: model.ownerNickname ?? "", senderNickname: model.senderNickname ?? "", title: model.boardTitle ?? "", lastMessage: model.lastMessage ?? ""))
+        cell.configure(with: MessageFeedViewModel(ownerNickname: model.ownerNickname ?? "", senderNickname: model.senderUserId ?? "", title: model.boardTitle ?? "", lastMessage: model.lastMessage ?? "", image: (model.imageList.first ?? "")!))
 
         return cell
     }
@@ -118,8 +118,8 @@ extension MessageViewController: UITableViewDelegate, UITableViewDataSource {
 //        vc.hidesBottomBarWhenPushed = true
 //        self.navigationController?.pushViewController(vc, animated: true)
         
-        vc.navigationItem.title = model.senderNickname
-        let userData = ChatInput(senderNickname: model.senderNickname ?? "", boardId: model.boardId ?? -1)
+        vc.navigationItem.title = model.ownerNickname
+        let userData = ChatInput(senderNickname: model.senderUserId ?? "", boardId: model.boardId ?? -1)
         ChatDataManager.posts(ChatViewController.init(), userData)
         navigationController?.pushViewController(vc, animated: true)
     }
@@ -130,7 +130,12 @@ extension MessageViewController {
     override func viewWillAppear(_ animated: Bool) {
 //        let userData = MessageViewInput(nickname: senderNickname)
 //        print("userData: ",senderNickname)
-        let userData = MessageViewInput(nickname: senderNickname)
+        
+        
+        //MARK: 수정할 사항
+//        let userData = MessageViewInput(userId: senderNickname)
+        let userData = MessageViewInput(userId: "id")
+
 
         MessageViewDataManager().ChatListGet(self, userData)
     }

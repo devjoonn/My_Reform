@@ -238,6 +238,5 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource, UIScro
         // footerview 끄기랑 데이터 새로고침
         fetchingAll(lastBoardId)
     }
-    
 }
 

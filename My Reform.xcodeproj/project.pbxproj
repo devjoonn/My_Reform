@@ -18,7 +18,6 @@
 		372FC64729952FE3006C0FB2 /* MessageFeedViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 372FC64629952FE3006C0FB2 /* MessageFeedViewModel.swift */; };
 		373C5623297E7DEC00F00F1F /* SearchListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 373C5622297E7DEC00F00F1F /* SearchListViewController.swift */; };
 		3747F6D8298C096000DC860F /* MessageViewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3747F6D7298C096000DC860F /* MessageViewTableViewCell.swift */; };
-		37602A86299756D30074B4BE /* ChatTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37602A85299756D30074B4BE /* ChatTableViewCell.swift */; };
 		376705462990DA2700AFADC4 /* WebSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 376705452990DA2700AFADC4 /* WebSocket.swift */; };
 		376705482990F8C200AFADC4 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 376705472990F8C200AFADC4 /* ChatViewController.swift */; };
 		3781289B298804E2000E75B7 /* UploadModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3781289A298804E2000E75B7 /* UploadModel.swift */; };
@@ -36,8 +35,11 @@
 		378128B32988CB3C000E75B7 /* PretendardVariable.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 378128B22988CB3C000E75B7 /* PretendardVariable.ttf */; };
 		379365422982D254009ABF2C /* UploadInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 379365412982D254009ABF2C /* UploadInput.swift */; };
 		379365462982D709009ABF2C /* UploadDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 379365452982D709009ABF2C /* UploadDataManager.swift */; };
+		37BA5CB9299A1347001D964C /* GetMessageInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37BA5CB8299A1347001D964C /* GetMessageInput.swift */; };
+		37BA5CBB299A13A7001D964C /* GetMessageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37BA5CBA299A13A7001D964C /* GetMessageModel.swift */; };
 		37F6EB0929827EC20088EAD8 /* SearchCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37F6EB0829827EC20088EAD8 /* SearchCollectionViewCell.swift */; };
 		37F6EB0D29827EFC0088EAD8 /* SearchFeedViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37F6EB0C29827EFC0088EAD8 /* SearchFeedViewModel.swift */; };
+		37FDDBC52998ABB20078C02C /* ChatTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37FDDBC42998ABB20078C02C /* ChatTableViewCell.swift */; };
 		470D08F9298E50750075778E /* UIAlertAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470D08F8298E50750075778E /* UIAlertAction.swift */; };
 		470D08FB2990C70C0075778E /* LikePostSendDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470D08FA2990C70C0075778E /* LikePostSendDataManager.swift */; };
 		470D08FD2990C78F0075778E /* LikeInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470D08FC2990C78F0075778E /* LikeInput.swift */; };
@@ -110,7 +112,6 @@
 		372FC64629952FE3006C0FB2 /* MessageFeedViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageFeedViewModel.swift; sourceTree = "<group>"; };
 		373C5622297E7DEC00F00F1F /* SearchListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchListViewController.swift; sourceTree = "<group>"; };
 		3747F6D7298C096000DC860F /* MessageViewTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageViewTableViewCell.swift; sourceTree = "<group>"; };
-		37602A85299756D30074B4BE /* ChatTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatTableViewCell.swift; sourceTree = "<group>"; };
 		376705452990DA2700AFADC4 /* WebSocket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebSocket.swift; sourceTree = "<group>"; };
 		376705472990F8C200AFADC4 /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
 		3781289A298804E2000E75B7 /* UploadModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadModel.swift; sourceTree = "<group>"; };
@@ -128,8 +129,11 @@
 		378128B22988CB3C000E75B7 /* PretendardVariable.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = PretendardVariable.ttf; sourceTree = "<group>"; };
 		379365412982D254009ABF2C /* UploadInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadInput.swift; sourceTree = "<group>"; };
 		379365452982D709009ABF2C /* UploadDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadDataManager.swift; sourceTree = "<group>"; };
+		37BA5CB8299A1347001D964C /* GetMessageInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetMessageInput.swift; sourceTree = "<group>"; };
+		37BA5CBA299A13A7001D964C /* GetMessageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetMessageModel.swift; sourceTree = "<group>"; };
 		37F6EB0829827EC20088EAD8 /* SearchCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCollectionViewCell.swift; sourceTree = "<group>"; };
 		37F6EB0C29827EFC0088EAD8 /* SearchFeedViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchFeedViewModel.swift; sourceTree = "<group>"; };
+		37FDDBC42998ABB20078C02C /* ChatTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatTableViewCell.swift; sourceTree = "<group>"; };
 		470D08F8298E50750075778E /* UIAlertAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIAlertAction.swift; sourceTree = "<group>"; };
 		470D08FA2990C70C0075778E /* LikePostSendDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikePostSendDataManager.swift; sourceTree = "<group>"; };
 		470D08FC2990C78F0075778E /* LikeInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikeInput.swift; sourceTree = "<group>"; };
@@ -210,6 +214,8 @@
 				372A760A2993371800144389 /* ChatModel.swift */,
 				372FC64029950120006C0FB2 /* MessageViewInput.swift */,
 				372FC64229950180006C0FB2 /* MessageViewModel.swift */,
+				37BA5CB8299A1347001D964C /* GetMessageInput.swift */,
+				37BA5CBA299A13A7001D964C /* GetMessageModel.swift */,
 			);
 			path = Chat;
 			sourceTree = "<group>";
@@ -499,7 +505,7 @@
 				3781289C29880566000E75B7 /* UploadViewCollectionViewCell.swift */,
 				3781289E2988271E000E75B7 /* SearchTableViewCell.swift */,
 				3747F6D7298C096000DC860F /* MessageViewTableViewCell.swift */,
-				37602A85299756D30074B4BE /* ChatTableViewCell.swift */,
+				37FDDBC42998ABB20078C02C /* ChatTableViewCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -674,11 +680,13 @@
 			files = (
 				3747F6D8298C096000DC860F /* MessageViewTableViewCell.swift in Sources */,
 				47FB550A296BE65E00B3029C /* TermsViewController.swift in Sources */,
+				37BA5CBB299A13A7001D964C /* GetMessageModel.swift in Sources */,
 				47C9C2F529796CA500DF89D8 /* AddPostInput.swift in Sources */,
 				47FB54E829685E9000B3029C /* SearchViewController.swift in Sources */,
 				4752664E2975179A008D5F1D /* SignUpModel.swift in Sources */,
 				4770C649297AD686009E3E58 /* String.swift in Sources */,
 				470D09002990D5D80075778E /* DeletePostDataManager.swift in Sources */,
+				37FDDBC52998ABB20078C02C /* ChatTableViewCell.swift in Sources */,
 				D39CAF7D298BBB2500D9C79E /* ProfileModel.swift in Sources */,
 				372A76072993341F00144389 /* ChatInput.swift in Sources */,
 				4770C65B297ECB11009E3E58 /* DetailPostViewController.swift in Sources */,
@@ -695,7 +703,6 @@
 				373C5623297E7DEC00F00F1F /* SearchListViewController.swift in Sources */,
 				379365422982D254009ABF2C /* UploadInput.swift in Sources */,
 				470D08FD2990C78F0075778E /* LikeInput.swift in Sources */,
-				37602A86299756D30074B4BE /* ChatTableViewCell.swift in Sources */,
 				47C9C2E829781D3000DF89D8 /* UserPrivacyAllowViewController.swift in Sources */,
 				4752665329751999008D5F1D /* LoginModel.swift in Sources */,
 				4752664C2975177D008D5F1D /* SignUpInput.swift in Sources */,
@@ -714,6 +721,7 @@
 				470D09022990DB160075778E /* ModifyPostDataManager.swift in Sources */,
 				4752664729750F30008D5F1D /* LoginDataManager.swift in Sources */,
 				D3AF3D352987AB1D00F7DF11 /* ProfileEditViewController.swift in Sources */,
+				37BA5CB9299A1347001D964C /* GetMessageInput.swift in Sources */,
 				47FB54F0296867D300B3029C /* LoginViewController.swift in Sources */,
 				372A76092993369A00144389 /* ChatDataManager.swift in Sources */,
 				370D8BB8296FCF7F00E4B65E /* CategoryViewController.swift in Sources */,

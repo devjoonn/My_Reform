@@ -21,7 +21,7 @@ class MessageViewTableViewCell: UITableViewCell {
     
     
     var titleCellImageView = UIImageView().then {
-        $0.contentMode = .scaleAspectFit
+        $0.contentMode = .scaleAspectFill
         $0.clipsToBounds = true
         $0.layer.cornerRadius = 25
         $0.backgroundColor = .green
@@ -100,6 +100,14 @@ class MessageViewTableViewCell: UITableViewCell {
         name.text = model.ownerNickname
         
         recentChat.text = model.lastMessage
+        
+        
+//        guard let url = URL(string: "\(Constants.baseURL)\(model.image)") else { return }
+        guard let url = URL(string: "\(model.image)") else { return }
+        
+        print(url)
+        
+        titleCellImageView.sd_setImage(with: url, completed: nil)
     }
 
 }
