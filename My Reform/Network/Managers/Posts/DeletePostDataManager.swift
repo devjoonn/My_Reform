@@ -17,7 +17,7 @@ class DeletePostDataManager {
         
         let url = "\(Constants.baseURL)/boards/delete/\(boardId)"
         print("url - \(url)")
-        print("nickname - \(String(describing: parameter.nickname))")
+        print("id - \(String(describing: parameter.id))")
         
         AF.request(url ,method: .post, parameters: parameter, encoder: JSONParameterEncoder.default, headers: Headers).validate(statusCode: 200..<500).responseDecodable(of: CUDModel.self) { response in
             switch(response.result) {

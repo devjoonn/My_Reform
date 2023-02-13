@@ -10,11 +10,11 @@ import SnapKit
 import Alamofire
 import SDWebImage
 
-// 0126 메인에서 테이블 뷰가 10개 이후로 무한 스크롤 불러오는 것들 구현해야함 [x]
+// 0126 메인에서 테이블 뷰가 10개 이후로 무한 스크롤 불러오는 것들 구현해야함 [O]
 
 class HomeViewController: UIViewController {
     
-    let senderNickname : String = UserDefaults.standard.object(forKey: "senderNickname") as! String
+    let senderId : String = UserDefaults.standard.object(forKey: "senderId") as! String
     
     var lastBoardId : Int = 100
     var allPostDataManagerUrl: String = "\(Constants.baseURL)/boards?categoryId=&keyword=&lastBoardId=&loginNickname=&size="
@@ -43,7 +43,7 @@ class HomeViewController: UIViewController {
         view.addSubview(homeFeedTable)
         
         // UserDefault에 저장되는 값 출력
-        print("HomeView로 넘어옴 - UserDefault에 저장되는 userNickname - \(senderNickname))")
+        print("HomeView로 넘어옴 - UserDefault에 저장되는 userNickname - \(senderId))")
         
         homeFeedTable.delegate = self
         homeFeedTable.dataSource = self
@@ -57,7 +57,7 @@ class HomeViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        AllPostDataManager().allPostGet(self, senderNickname)
+        AllPostDataManager().allPostGet(self, senderId)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -71,7 +71,8 @@ class HomeViewController: UIViewController {
         print("beginRefresh!")
         sender.endRefreshing()
         allPostModel.removeAll()
-        AllPostDataManager().allPostGet(self, senderNickname)
+        AllPostDataManager().allPostGet(self, senderId)
+        print("HomeView로 넘어옴 - UserDefault에 저장되는 userId - \(senderId))")
     }
     
     @objc func categoryBtnClicked() {
@@ -96,8 +97,8 @@ class HomeViewController: UIViewController {
     private func fetchingAll(_ lastBoardId: Int) {
         
         print("fetchingAll - lastBoardId = \(lastBoardId)")
-        let nickname = senderNickname.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
-        AF.request("\(allPostDataManagerUrl)\(lastBoardId)&loginNickname=\(nickname)" ,method: .get, parameters: nil).validate().responseDecodable(of: AllPostModel.self) { response in
+        let userId = senderId.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
+        AF.request("\(allPostDataManagerUrl)\(lastBoardId)&loginId=\(userId)" ,method: .get, parameters: nil).validate().responseDecodable(of: AllPostModel.self) { response in
             DispatchQueue.main.async {
                 self.homeFeedTable.tableFooterView = nil
             }
@@ -175,7 +176,6 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource, UIScro
 
         
         let model = allPostModel[indexPath.row]
-//        guard let model = allPostModel[indexPath.row] else { return UITableViewCell() } //현재 model 은 옵셔널 스트링 값
         guard let price = model.price else { return UITableViewCell()}
         guard let like = model.likeOrNot else {return UITableViewCell()}
         

@@ -10,7 +10,7 @@ import Alamofire
 
 class SearchViewController: UIViewController,  UISearchBarDelegate, UIGestureRecognizerDelegate {
     
-    let senderNickname : String = UserDefaults.standard.object(forKey: "senderNickname") as! String
+    let senderId : String = UserDefaults.standard.object(forKey: "senderId") as! String
     
     var allPostModel: [AllPostData] = [] {
         didSet {
@@ -58,7 +58,7 @@ class SearchViewController: UIViewController,  UISearchBarDelegate, UIGestureRec
     
     func requestFunc() {
         
-        AF.request("\(Constants.baseURL)/boards?lastBoardId=100&size=20&loginNickname=\(senderNickname)&keyword=".addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? "",method: .get, parameters: nil ).validate(statusCode: 200..<500).responseDecodable(of: AllPostModel.self) { response in
+        AF.request("\(Constants.baseURL)/boards?lastBoardId=100&size=100&loginId=\(senderId)&keyword=".addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? "",method: .get, parameters: nil ).validate(statusCode: 200..<500).responseDecodable(of: AllPostModel.self) { response in
             debugPrint(response)
             switch(response.result) {
             case .success(let result) :
@@ -180,7 +180,7 @@ extension SearchViewController : UISearchControllerDelegate  {
         
         print(resultController)
                 
-        AF.request("\(Constants.baseURL)/boards?lastBoardId=100&size=20&keyword=\(text)&loginNickname=\(senderNickname)"
+        AF.request("\(Constants.baseURL)/boards?lastBoardId=100&size=100&keyword=\(text)&loginId=\(senderId)"
             .addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? "" ,method: .get, parameters: nil ).validate().responseDecodable(of: AllPostModel.self) { response in
             DispatchQueue.main.async {
                 print(text)

@@ -11,7 +11,7 @@ import SnapKit
 
 class ModifyViewController: UIViewController, UITabBarControllerDelegate {
     
-    let senderNickname : String = UserDefaults.standard.object(forKey: "senderNickname") as! String
+    let senderId : String = UserDefaults.standard.object(forKey: "senderId") as! String
     
     var modifyPostModel: [AllPostData] = []
     
@@ -202,7 +202,7 @@ extension ModifyViewController {
         print("price_value :", price_value)
         // 아이디 카테고리 이미지 남음
         
-        let userData = UploadInput(nickname: senderNickname, categoryId: selectedCategory, title: titleTextField.text ?? "", contents: descriptionTextView.text, price: price_value)
+        let userData = UploadInput(id: senderId, categoryId: selectedCategory, title: titleTextField.text ?? "", contents: descriptionTextView.text, price: price_value)
         ModifyPostDataManager.Modifyposts(self, userData, selectedImages, (modifyPostModel.first?.boardId)!)
         print("didTapRightBarButton is Called")
     }

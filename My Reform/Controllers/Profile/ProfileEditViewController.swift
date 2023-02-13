@@ -11,13 +11,12 @@ import Alamofire
 
 class ProfileEditViewController: UIViewController, UITextFieldDelegate {
     
-    let senderNickname : String = UserDefaults.standard.object(forKey: "senderNickname") as! String
+    let senderId : String = UserDefaults.standard.object(forKey: "senderId") as! String
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
             self.view.endEditing(true) /// 화면을 누르면 키보드 내려가게 하는 것
     }
     
-    var profileDataManagerUrl: String = "\(Constants.baseURL)/users/{userId}/profiles"
     
     var profileModel: [ProfileLookupData] = []
     
@@ -29,7 +28,7 @@ class ProfileEditViewController: UIViewController, UITextFieldDelegate {
     
     lazy var profileImage = { () -> UIImageView in
         let profileImage = UIImageView()
-        profileImage.image = UIImage(named: "profile_icon")
+        profileImage.image = UIImage(named: "no_profile")
         return profileImage
     } ()
     
@@ -344,7 +343,7 @@ class ProfileEditViewController: UIViewController, UITextFieldDelegate {
     
     // 수정 완료 버튼 클릭 시
     @objc func completeBtnClicked(){
-        ProfileEditDataManager.profileEdit(self,senderNickname ,ProfileInput(nickname: name_input.text, introduction: descriptTextView.text))
+        ProfileEditDataManager.profileEdit(self,senderId ,ProfileInput(nickname: name_input.text, introduction: descriptTextView.text))
     }
     
     // 수정이 완료되었을 때 실행되는 함수

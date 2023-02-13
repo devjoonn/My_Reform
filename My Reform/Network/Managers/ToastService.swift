@@ -25,7 +25,7 @@ class ToastService {
             window.bringSubviewToFront(toastView)
             toastView.layer.cornerRadius = 15
             toastView.snp.makeConstraints({
-                $0.width.equalTo(170)
+                $0.leading.trailing.equalToSuperview().inset(20)
                 $0.height.equalTo(50)
                 $0.centerX.equalToSuperview()
                 $0.bottom.equalToSuperview().offset(-60)
@@ -39,10 +39,10 @@ class ToastService {
             lbMsg.snp.makeConstraints({
                 $0.centerX.centerY.equalToSuperview()
             })
-            UIView.animate(withDuration: 2.0, delay: 0.0,options:[.curveEaseOut], animations: {
+            UIView.animate(withDuration: 4.0, delay: 0.0,options:[.curveEaseOut], animations: {
                 toastView.alpha = 1.0
             })
-            UIView.animate(withDuration: 2.0, delay: 0.0,options:[.curveEaseIn], animations: {
+            UIView.animate(withDuration: 4.0, delay: 0.0,options:[.curveEaseIn], animations: {
                 toastView.alpha = 0.0
             },completion: { _ in
                 toastView.removeFromSuperview()

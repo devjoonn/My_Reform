@@ -97,7 +97,7 @@ class SplashViewController: UIViewController {
             print("애니메이션 2")
         }) {
             _ in
-            if (UserDefaults.standard.string(forKey: "senderNickname") != nil){
+            if (UserDefaults.standard.string(forKey: "senderId") != nil){
                 print("UserDefault 값이 있음")
                 let vc = MainTabBarViewController()
                 self.navigationController?.pushViewController(vc, animated: true)
