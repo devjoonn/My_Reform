@@ -8,7 +8,15 @@
 import UIKit
 import Alamofire
 
+protocol SearchListViewControllerDelegate: AnyObject {
+    func selectedCell(model: AllPostData)
+}
+
 class SearchListViewController: UIViewController {
+    
+    var nc: UINavigationController?
+
+    weak var delegate: SearchListViewControllerDelegate?
     
     var allPostModel: [AllPostData] = [] {
         didSet {
@@ -17,13 +25,12 @@ class SearchListViewController: UIViewController {
     }
     
     public let searchFeedTable: UITableView = {
-        
         let table = UITableView()
         //Views 에있는 CollectionViewTabelCell 호출
         table.register(MainTableViewCell.self, forCellReuseIdentifier: MainTableViewCell.identifier)
         return table
     }()
-
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,12 +39,10 @@ class SearchListViewController: UIViewController {
         
     }
     
-//    override func viewWillAppear(_ animated: Bool) {
-//        guard let vc: String  = SearchViewController().searchController.searchBar.text else {return}
-//        self.searchFeedTable.reloadData()
-//    }
-    
-
+    override func viewWillAppear(_ animated: Bool) {
+        guard let vc: String  = SearchViewController().searchController.searchBar.text else {return}
+        self.searchFeedTable.reloadData()
+    }
 }
 
 extension SearchListViewController {
@@ -92,15 +97,20 @@ extension SearchListViewController: UITableViewDelegate, UITableViewDataSource, 
         print("cell indexPath = \(indexPath)")
         tableView.deselectRow(at: indexPath, animated: true)
         let model = allPostModel[indexPath.row]
+        delegate?.selectedCell(model: model)
         
-        let vc = SearchViewController()
+//        let vc = SearchViewController()
+        
         
 //        let vc = DetailPostViewController()
+//        let vc = UINavigationController(rootViewController: SearchViewController())
 //        vc.detailPostModel = [model]
-        print("detailPostModel에 data 저장됨----------")
-        vc.hidesBottomBarWhenPushed = true
-        self.navigationController?.pushViewController(vc, animated: true)
-        print("위에까지 찍혀요")
+        
+//        print("detailPostModel에 dataC 저장됨----------")
+//        vc.hidesBottomBarWhenPushed = true
+//        print(self.navigationController)
+//        self.navigationController?.pushViewController(vc, animated: true)
+//        print("위에까지 찍혀요")
     }
 }
 
