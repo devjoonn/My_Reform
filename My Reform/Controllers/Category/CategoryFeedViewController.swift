@@ -11,6 +11,8 @@ import Alamofire
 
 class CategoryFeedViewController: UIViewController {
 
+    let senderId : String = UserDefaults.standard.object(forKey: "senderId") as! String
+    
     var lastBoardId : Int = 5   
     var getCategoryId: Int!
     var categoryName: String = ""
@@ -54,7 +56,11 @@ class CategoryFeedViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         print("getCategoryId = \(String(describing: getCategoryId))")
-        CategoryPostDataManager().categoryPostGet(self, categoryId: getCategoryId)
+        CategoryPostDataManager().categoryPostGet(self,senderId,getCategoryId)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        categoryPostModel.removeAll()
     }
     
     func successCategoryPostModel(result: [AllPostData]) {
@@ -97,7 +103,7 @@ class CategoryFeedViewController: UIViewController {
     private func fetchingAll(_ lastBoardId: Int) {
         
         print("fetchingAll - lastBoardId = \(lastBoardId)")
-        AF.request("\(Constants.baseURL)/boards?&size=20&categoryId=\(String(describing: getCategoryId))&lastBoardId=\(lastBoardId)" ,method: .get, parameters: nil).validate().responseDecodable(of: AllPostModel.self) { response in
+        AF.request("\(Constants.baseURL)/boards?&size=20&loginId\(senderId)&categoryId=\(String(describing: getCategoryId))&lastBoardId=\(lastBoardId)" ,method: .get, parameters: nil).validate().responseDecodable(of: AllPostModel.self) { response in
             DispatchQueue.main.async {
                 self.categoryFeedTable.tableFooterView = nil
             }

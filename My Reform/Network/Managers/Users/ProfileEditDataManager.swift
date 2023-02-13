@@ -14,11 +14,11 @@ struct ProfileEditDataManager {
     
     
     // 서버에 프로필 수정부분
-    static func profileEdit(_ viewController: ProfileEditViewController,_ senderNickname: String ,_ parameter: ProfileInput){
+    static func profileEdit(_ viewController: ProfileEditViewController,_ senderId: String ,_ parameter: ProfileInput){
         
-        let nickname = senderNickname.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
         
-        AF.request("\(Constants.baseURL)/users/\(nickname)/profiles", method: .post, parameters: parameter, encoder: JSONParameterEncoder.default, headers: Headers).validate(statusCode: 200..<500).responseDecodable(of: ProfileModel.self) { response in
+        let url = "\(Constants.baseURL)/users/\(senderId)/profiles".addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
+        AF.request(url, method: .post, parameters: parameter, encoder: JSONParameterEncoder.default, headers: Headers).validate(statusCode: 200..<500).responseDecodable(of: ProfileModel.self) { response in
             switch response.result {
             case .success(let result):
                 print("프로필 수정 데이터 전송 성공")

@@ -22,7 +22,7 @@ var check = [0,0,0,0,0,0,0,0,0,0,0]
 
 class UploadViewController: UIViewController, UITabBarControllerDelegate {
     
-    let senderNickname : String = UserDefaults.standard.object(forKey: "senderNickname") as! String
+    let senderId : String = UserDefaults.standard.object(forKey: "senderId") as! String
     
     var keyBoardUp: Bool = false
     
@@ -183,7 +183,7 @@ extension UploadViewController {
         print("price_value :", price_value)
         // 아이디 카테고리 이미지 남음
         
-        let userData = UploadInput(nickname: senderNickname, categoryId: selectedCategory, title: titleTextField.text ?? "", contents: descriptionTextView.text, price: price_value)
+        let userData = UploadInput(id: senderId, categoryId: selectedCategory, title: titleTextField.text ?? "", contents: descriptionTextView.text, price: price_value)
         UploadDataManager.posts(self, userData, images: selectedImages)
         print("didTapRightBarButton is Called")
     }
@@ -201,6 +201,7 @@ extension UploadViewController {
     
     // 서버에 게시물 전송이 완료되었을 때 실행되는 함수
     func successPost() {
+        ToastService.shared.showToast("게시물이 작성되었습니다.")
         print("successPost() called - view pop")
         navigationController?.popViewController(animated: true)
     }

@@ -364,7 +364,7 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
             return
             
         case email_input:
-            
+
             isValidEmail = text.isValidEmail()
             email = text
             print(email)

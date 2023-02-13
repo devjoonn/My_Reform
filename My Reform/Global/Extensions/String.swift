@@ -20,7 +20,7 @@ extension String{
     
     //제약 없음
     func isValidEmail() -> Bool{
-        let emailRegEx = "[A-Za-z0-9]{3,}"
+        let emailRegEx = "^(.*)$"
         //"^[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
         //"[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}"
         let emailTest = NSPredicate(format: "SELF MATCHES %@", emailRegEx)

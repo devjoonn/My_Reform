@@ -13,8 +13,9 @@ class ProfileDataManager {
     
     static var Headers : HTTPHeaders = ["Content-Type" : "application/json"]
     
-    static func profileGet(_ viewController: ProfileViewController,_ senderNickname: String){
-        let url = "\(Constants.baseURL)/users/\(senderNickname)/profiles"
+    static func profileGet(_ viewController: ProfileViewController,_ senderId: String){
+        
+        let url = "\(Constants.baseURL)/users/\(senderId)/profiles"
         
         print("profileGet URL - \(url)")
         let encodeUrl = url.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!

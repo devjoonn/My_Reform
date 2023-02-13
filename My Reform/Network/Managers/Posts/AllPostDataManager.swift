@@ -11,11 +11,11 @@ import Alamofire
 class AllPostDataManager {
     
     
-    func allPostGet(_ viewController: HomeViewController, _ nickname: String) {
+    func allPostGet(_ viewController: HomeViewController, _ id: String) {
         
-        let nicknameParameters = nickname.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
+        let senderId = id.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
         
-        let url = "\(Constants.baseURL)/boards?&loginNickname=\(nicknameParameters)&size=20"
+        let url = "\(Constants.baseURL)/boards?&loginId=\(senderId)&size=20"
         
         AF.request(url ,method: .get, parameters: nil).validate().responseDecodable(of: AllPostModel.self) { response in
                 switch(response.result) {
