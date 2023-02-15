@@ -501,7 +501,7 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
             make.centerY.equalTo(id_input)
         }
         usable_id_label.snp.makeConstraints { make in
-            make.top.equalTo(id_input.snp.bottom).inset(2.14)
+            make.top.equalTo(id_input.snp.bottom).inset(-2.14)
             make.leading.equalTo(email_label.snp.leading)
         }
         //---------------
