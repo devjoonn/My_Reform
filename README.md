@@ -25,6 +25,7 @@
 
 [전체 시연 영상](https://www.youtube.com/watch?v=bIz7mGePBa4)
 
+
 <br><br>
 
 ## 👀  Preview
@@ -36,12 +37,12 @@
 |:---:|:---:|:---:|:---:|
 |<center>게시물 조회</center>|<center>찜 하기</center>|<center>카테고리</center>|<center>업로드화면</center>|
 
-|<img src="https://user-images.githubusercontent.com/82807263/219100508-55ff3f14-5836-4aa6-9fd0-b1e22159f8ff.png"  width="150" height="325">|<img src="https://user-images.githubusercontent.com/82807263/219100730-e64e2aaa-9899-483d-b84d-582024093ef4.png"  width="150" height="325">|<img src="https://user-images.githubusercontent.com/82807263/219099789-f05f84ee-d0e0-4827-863d-fb52376a5b7c.png"  width="150" height="325">|<img src="https://user-images.githubusercontent.com/82807263/219100027-ca7f722e-9b90-4e1a-83e7-b416cc9c99f2.png"  width="150" height="325">|
-|:---:|:---:|:---:|:---:|
-|<center>채팅방 화면</center>|<center>채팅 화면</center>|<center>프로필 화면</center>|<center>설정 화면</center>|
+|<img src="https://user-images.githubusercontent.com/82807263/219105873-1b636573-e257-47ae-a22c-ee76d14e7577.gif"  width="150" height="325">|<img src="https://user-images.githubusercontent.com/82807263/219099789-f05f84ee-d0e0-4827-863d-fb52376a5b7c.png"  width="150" height="325">|<img src="https://user-images.githubusercontent.com/82807263/219100027-ca7f722e-9b90-4e1a-83e7-b416cc9c99f2.png"  width="150" height="325">|
+|:---:|:---:|:---:|
+|<center>채팅방 화면</center>|<center>프로필 화면</center>|<center>설정 화면</center>|
+
 
 <br><br>
-
 
 ## 🔩  Tech & Skills
 * **UIKit**
