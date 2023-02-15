@@ -56,7 +56,7 @@
 ## 👥  Authors
 |[준](https://github.com/devjoonn)|[피빗](https://github.com/seopmin)|[우지](https://github.com/choisw16)|
 |:---:|:---:|:---:|
-|<img src="https://user-images.githubusercontent.com/82807263/219082532-a6a9be8c-f275-4820-a5b8-48656fad6651.png"  width="200" height="300">|<img src="https://user-images.githubusercontent.com/82807263/219092229-d2a84276-94ec-426b-997a-079c6e4943db.png"  width="200" height="300">|이미지 들어갈 자리|
+|<img src="https://user-images.githubusercontent.com/82807263/219082532-a6a9be8c-f275-4820-a5b8-48656fad6651.png"  width="200" height="250">|<img src="https://user-images.githubusercontent.com/82807263/219092229-d2a84276-94ec-426b-997a-079c6e4943db.png"  width="200" height="250">|이미지 들어갈 자리|
 
 
 <br><br>
