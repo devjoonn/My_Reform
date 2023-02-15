@@ -1,11 +1,10 @@
-<div align="center" style="background-color: #FFFFFF">
-    ![myreform](https://user-images.githubusercontent.com/82807263/219072205-605f6c3f-45d7-4950-aec2-3b1388815412.jpg)
-</div>
-<br><br>
+![myreform](https://user-images.githubusercontent.com/82807263/219072205-605f6c3f-45d7-4950-aec2-3b1388815412.jpg)
+
+
 
 ## 📱  App statement
 
-##### ✅ 서비스명 : 마이리폼(My Reform) <br>
+#### ✅ 서비스명 : 마이리폼(My Reform) <br>
 인간의 원초적인 욕망인 소유욕을 자극한 `**NFT**`, 원본을 가지고 복제한다는 의미인 **`레플리카`**, 낡은 것을 유행하는 것으로 만드는 **`리폼`** 이 세 단어들은 오늘날 많이 쓰이고 떠오르는 단어입니다. 저는 이들의 장점을 통합한 아이디어, ‘**마이리폼**’ 앱을 생각해보았습니다.
     
 먼저, 어떤 사람이 자신만의 스타일로 맥북을 예쁘게 꾸몄다고 가정해보겠습니다. 그 맥북은 대체 불가능한 세상에서 하나뿐인 맥북이 탄생하게 됩니다. 이제 여기서 저는 세 가지 인간의 욕망을 이용하여 기획한 앱을 설명하겠습니다.
@@ -57,7 +56,7 @@
 ## 👥  Authors
 |[준](https://github.com/devjoonn)|[피빗](https://github.com/seopmin)|[우지](https://github.com/choisw16)|
 |:---:|:---:|:---:|
-|<img src="https://user-images.githubusercontent.com/82807263/219082532-a6a9be8c-f275-4820-a5b8-48656fad6651.png"  width="125" height="160">|<img src="https://user-images.githubusercontent.com/82807263/219092229-d2a84276-94ec-426b-997a-079c6e4943db.png"  width="125" height="160">|이미지 들어갈 자리|
+|<img src="https://user-images.githubusercontent.com/82807263/219082532-a6a9be8c-f275-4820-a5b8-48656fad6651.png"  width="200" height="300">|<img src="https://user-images.githubusercontent.com/82807263/219092229-d2a84276-94ec-426b-997a-079c6e4943db.png"  width="200" height="300">|이미지 들어갈 자리|
 
 
 <br><br>
