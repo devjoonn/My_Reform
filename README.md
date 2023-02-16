@@ -31,11 +31,11 @@
 ## 👀  Preview
 |<img src="https://user-images.githubusercontent.com/82807263/219094736-aa642245-98b5-4816-a266-9d7d3dd13788.png"  width="150" height="325">|<img src="https://user-images.githubusercontent.com/82807263/219094915-941bd045-a67f-49cb-9e36-fedb547bb1fe.png"  width="150" height="325">|<img src="https://user-images.githubusercontent.com/82807263/219095241-4511268c-d083-4666-9bcf-8bb4020c559a.png"  width="150" height="325">|<img src="https://user-images.githubusercontent.com/82807263/219095495-2bb81887-e38f-42e2-91e6-66d6666335e6.png"  width="150" height="325">|
 |:---:|:---:|:---:|:---:|
-|<center>로그인</center>|<center>회원가입</center>|<center>홈화면</center>|<center>검색화면</center>|
+|<center>로그인</center>|<center>회원가입</center>|<center>홈 화면</center>|<center>검색 화면</center>|
 
 |<img src="https://user-images.githubusercontent.com/82807263/219099112-bf39a2e7-7d41-44d0-ad26-17d23e259476.gif"  width="150" height="325">|<img src="https://user-images.githubusercontent.com/82807263/219099323-3301328c-06ec-4f62-bd11-05d3c4240ef4.gif"  width="150" height="325">|<img src="https://user-images.githubusercontent.com/82807263/219098607-312bd0a9-dc97-4b40-bbe6-df2e89c357cb.png"  width="150" height="325">|<img src="https://user-images.githubusercontent.com/82807263/219098796-fb1081f2-61be-44e7-8091-c6da108c3fbc.png"  width="150" height="325">|
 |:---:|:---:|:---:|:---:|
-|<center>게시물 조회</center>|<center>찜 하기</center>|<center>카테고리</center>|<center>업로드화면</center>|
+|<center>게시물 조회</center>|<center>찜 하기</center>|<center>카테고리</center>|<center>업로드 화면</center>|
 
 |<img src="https://user-images.githubusercontent.com/82807263/219105873-1b636573-e257-47ae-a22c-ee76d14e7577.gif"  width="150" height="325">|<img src="https://user-images.githubusercontent.com/82807263/219099789-f05f84ee-d0e0-4827-863d-fb52376a5b7c.png"  width="150" height="325">|<img src="https://user-images.githubusercontent.com/82807263/219100027-ca7f722e-9b90-4e1a-83e7-b416cc9c99f2.png"  width="150" height="325">|
 |:---:|:---:|:---:|
@@ -52,12 +52,14 @@
 * **SDWebImage**
 
 
-<br><br> 
+<br><br>
+
+
 
 ## 👥  Authors
 |[준](https://github.com/devjoonn)|[피빗](https://github.com/seopmin)|[우지](https://github.com/choisw16)|
 |:---:|:---:|:---:|
-|<img src="https://user-images.githubusercontent.com/82807263/219082532-a6a9be8c-f275-4820-a5b8-48656fad6651.png"  width="200" height="250">|<img src="https://user-images.githubusercontent.com/82807263/219092229-d2a84276-94ec-426b-997a-079c6e4943db.png"  width="200" height="250">|이미지 들어갈 자리|
+|<img src="https://user-images.githubusercontent.com/82807263/219266692-152cb744-6d15-4225-856f-a4f155b50a0c.png"  width="200" height="250">|<img src="https://user-images.githubusercontent.com/82807263/219092229-d2a84276-94ec-426b-997a-079c6e4943db.png"  width="200" height="250">|<img src="https://user-images.githubusercontent.com/82807263/219266258-e5b170b0-a3ce-43a3-b24b-bba3c4be46a8.png"  width="200" height="250">|
 
 
 <br><br>
